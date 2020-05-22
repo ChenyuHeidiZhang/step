@@ -2,17 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Chenyu's portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
+      <h1>Chenyu Zhang</h1>
+      <img src="/images/avatar.JPG" height="100"/>
+      <p>I am an undergraduate student at Johns Hopkins University. 
+          This portfolio webpage is written during my internship at Google in summer 2020.</p>
+      
+      <p>LinkedIn page: <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/">link</a></p>
+      <p>GitHub page: <a href="https://github.com/ChenyuHeidiZhang">link</a></p>
+
       <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+
+      <button onclick="addFavoriteQuote()">My Favorite Quote</button>
+      <p id="favorite-quote-container"></p>
+
+      <button onclick="addFunFact()">Fun Fact</button>
+      <p id="fun-fact-container"></p>
     </div>
   </body>
 </html>

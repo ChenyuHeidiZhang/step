@@ -13,16 +13,35 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a favorite quote to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addFavoriteQuote() {
+  const quotes =
+      ["Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice. \n —Gabriel García Márquez, One Hundred Years of Solitude",
+      "Hope is a dangerous thing. Hope can drive a man insane. \n - The Shawshank Redemption",
+      "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. \n ― George R.R. Martin, A Game of Thrones"];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const quoteContainer = document.getElementById('favorite-quote-container');
+  quoteContainer.innerText = quote;
+}
+
+/**
+ * Adds a fun fact to the page.
+ */
+function addFunFact() {
+  const facts =
+      ["Do you want to meet my sister?", 
+      "I like all sorts of collections (books, stickers, snacks, etc)",
+      "I like to take pictures of others but not to have my picture taken."];
+
+  // Pick a random greeting.
+  const fact= facts[Math.floor(Math.random() * facts.length)];
+
+  // Add it to the page.
+  const factContainer = document.getElementById('fun-fact-container');
+  factContainer.innerText = fact;
 }
