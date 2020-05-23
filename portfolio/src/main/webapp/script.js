@@ -36,7 +36,9 @@ function addFunFact() {
   const facts =
       ["Do you want to meet my sister?", 
       "I like all sorts of collections (books, stickers, snacks, etc)",
-      "I like to take pictures of others but not to have my picture taken."];
+      "I like to take pictures of others but not to have my picture taken.",
+      "My English name is Heidi.",
+      "Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name."];
 
   // Pick a random greeting.
   const fact= facts[Math.floor(Math.random() * facts.length)];
@@ -45,3 +47,9 @@ function addFunFact() {
   const factContainer = document.getElementById('fun-fact-container');
   factContainer.innerText = fact;
 }
+
+/* toggles the drop down text */
+function toggleDropDown(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+

@@ -1,9 +1,51 @@
 #content {
+  margin-top: auto;
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  padding: 20px;
+  max-width: 800px;
 }
 
-#greeting-container {
-  margin-top: 20px;
+#header-container {
+  margin-bottom: 20px;
 }
+
+/* top image hidden by default */
+.img-top {
+  display: none;
+}
+#avatar img{
+  max-height: 100px;
+  float: left;
+  margin-right: 20px;  
+}
+/* on hover, display top image */
+#avatar:hover img {
+  display: none;
+}
+#avatar:hover .img-top {
+  display: inline;
+}
+
+/* Dropdown button */
+.dropdown-click {
+  background-color: rgb(159, 204, 234);
+  color: rgb(54, 53, 53);
+  padding: 5px;
+  cursor: pointer;
+}
+/* dropdown text on hover & focus */
+.dropdown-click:hover, .drop-click:focus {
+  background-color: #6db4e2;
+}
+/* dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: relative;
+
+}
+/* show the dropdown content */
+.show {
+  display:block;
+}
+

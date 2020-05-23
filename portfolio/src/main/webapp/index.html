@@ -8,13 +8,65 @@
   </head>
   <body>
     <div id="content">
-      <h1>Chenyu Zhang</h1>
-      <img src="/images/avatar.JPG" height="100"/>
-      <p>I am an undergraduate student at Johns Hopkins University. 
+      <div id="header-container">
+        <div id="avatar">
+          <img src="/images/avatar.JPG" alt="Me"/>
+          <img src="/images/avatar2.JPG" alt="Me2" class="img-top"/>
+        </div>
+        <h1 id="name">Chenyu Zhang</h1>
+        <p id="intro">I am an undergraduate student at Johns Hopkins University. 
+          I was born in Nanjing, China, and I currently live in Baltimore, Maryland, USA.
           This portfolio webpage is written during my internship at Google in summer 2020.</p>
+      </div>
       
-      <p>LinkedIn page: <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/">link</a></p>
-      <p>GitHub page: <a href="https://github.com/ChenyuHeidiZhang">link</a></p>
+      <p>At JHU, my majors are Applied Math, Computer Science, and Cognitive Science. 
+        I enjoy all three of my majors and I think they complement each other very well.
+        Aside from school, I am part of the Blue Orchid Dance Club, where we practice trational Chineses dances and give performances at various events 
+        (which are, sadly, suspended due to COVID-19). 
+        I am also a research assistant at the Mind Brain Institute, and a software developer on the Otoglobal Health design team. 
+        </p>
+      
+      <div id="projects">
+        <h2>My Projects & Roles</h2>
+        
+        <h4 onClick="toggleDropDown('dropdown-1')" class="dropdown-click">Spam Slayer Web App, Sep 2019</h4>
+        <p id="dropdown-1" class="dropdown-content">I made Spam Slayer with a couple of friends at HopHacks. 
+          This web application is a Amazon review filter that, given a product URL, 
+          detects fake reviews using an SCNN algorithm and displays genuine reviews. 
+          It is not yet deployed, but you can check out how it works at this 
+          <a href="https://www.youtube.com/watch?v=TvOOvH1l8Fc">YouTube link</a>.</p>
+        
+        <h4 onClick="toggleDropDown('dropdown-2')" class="dropdown-click">Intern at Megapro Corporation, May 2019 - Aug 2019</h4>
+        <p id="dropdown-2" class="dropdown-content">During freshman summer, I interned at Megapro, a trading company based in St. Louis. 
+          I worked on financial data collection and data analysis.</p>
+        
+        <h4 onClick="toggleDropDown('dropdown-3')" class="dropdown-click">Experiment Game, Oct 2018 - Present</h4>
+        <p id="dropdown-3" class="dropdown-content">Experiment Game is a android application that I developed for a research project on multi-attribute decision making 
+            at the Mind Brain Institute at Hopkins. The project is under the supervision of Dr. Ernst Niebur.</p>
+        
+        <h4 onClick="toggleDropDown('dropdown-4')" class="dropdown-click">Otoglobal Health, Sep 2019 - Present</h4>
+        <p id="dropdown-4" class="dropdown-content">In this project, we develop a low-cost otoacoustic emission (OAE) device that easily identifies pediatric hearing loss in developing countries. 
+          It originated from a BME design team project and I am part of the software team.</p>
+        
+        <h4 onClick="toggleDropDown('dropdown-5')" class="dropdown-click">Computational Psycholinguistic Research, Sep 2019 - Dec 2019</h4>
+        <p id="dropdown-5" class="dropdown-content">This is my independent project on "Assessing LSTM's ability to predict Chinese nominal classifiers based on syntactic cues."
+          I was mentored by Dr. Tal Linzen at the Cognitive Science department of Hopkins.</p>
+
+        <h4 onClick="toggleDropDown('dropdown-6')" class="dropdown-click">My favorite courses taken so far</h4>
+        <p id="dropdown-6" class="dropdown-content">Natural Lanague Processing, Computational Psycholinguistics, Artificial Intelligence, Data Structures, 
+            Foundations of Brain Behavior & Cognition, Intro to Cognitive Psychology [to be continued]</p>
+      </div>
+
+      <div>
+        <h2>Relevant Links</h2>
+        <p>LinkedIn page: <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/">link</a></p>
+        <p>GitHub page: <a href="https://github.com/ChenyuHeidiZhang">link</a></p>
+      </div>
+
+      <div>
+        <h2>Photo Gallery</h2>
+
+      </div>
 
       <p>Click here to get a random message:</p>
 
