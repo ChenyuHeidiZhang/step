@@ -12,6 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+/* toggles the drop down text */
+function toggleDropDown(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+
+/* display the content corresponding to the tab-button clicked */
+function displayGallery(event, tab_name) {
+  // hide all tab contents
+  var tab_contents = document.getElementsByClassName("tab-content");
+  for (var i = 0; i < tab_contents.length; i++) {
+    tab_contents[i].style.display = "none";
+  }
+
+  // remove the class "active" from the previously active tab-button
+  //var active_button = document.getElementsByClassName("tab-button active");
+  //active_button[0].classList.toggle("active");
+  
+  var tab_buttons = document.getElementsByClassName("tab-button");
+  for (i = 0; i < tab_buttons.length; i++) {
+    tab_buttons[i].className = tab_buttons[i].className.replace(" active", "");
+  }
+  
+  // add an "active" class the tab-button clicked and show the corresponding tab content
+  event.currentTarget.className += " active";
+  document.getElementById(tab_name).style.display = "flex";
+
+}
+
 /**
  * Adds a favorite quote to the page.
  */
@@ -37,7 +66,7 @@ function addFunFact() {
       ["Do you want to meet my sister?", 
       "I like all sorts of collections (books, stickers, snacks, etc)",
       "I like to take pictures of others but not to have my picture taken.",
-      "My English name is Heidi.",
+      "My English name is Heidi. Many people can't pronounce that.",
       "Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name."];
 
   // Pick a random greeting.
@@ -46,10 +75,5 @@ function addFunFact() {
   // Add it to the page.
   const factContainer = document.getElementById('fun-fact-container');
   factContainer.innerText = fact;
-}
-
-/* toggles the drop down text */
-function toggleDropDown(id) {
-  document.getElementById(id).classList.toggle("show");
 }
 

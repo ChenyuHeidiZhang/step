@@ -65,6 +65,320 @@
 
       <div>
         <h2>Photo Gallery</h2>
+        <div class="tabs">
+          <button class="tab-button active" onclick="displayGallery(event, 'travel')">Travel</button>
+          <button class="tab-button" onclick="displayGallery(event, 'food')">Food</button>
+          <button class="tab-button" onclick="displayGallery(event, 'selfies')">Selfies</button>
+          <button class="tab-button" onclick="displayGallery(event, 'animals')">Animals</button>
+        </div>
+
+        <div id="travel" class="row tab-content">
+          <div class="column">
+            <a href="/images/travel/baltimore.jpg">
+              <div class="photo">
+                <img src="/images/travel/baltimore.jpg" alt="Baltimore"/>
+                <div class="overlay">
+                  <div class="text">Baltimore inner harbor</div>
+                </div>
+              </div>
+            </a>
+            <a href="/images/travel/ontario.jpg">
+              <div class="photo">
+                <img src="/images/travel/ontario.jpg" alt="Ontario"/>
+                <div class="overlay">
+                  <div class="text">Art Gallery of Ontario</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/travel/disney.jpg">
+              <div class="photo">
+                <img src="/images/travel/disney.jpg" alt="Disney"/>
+                <div class="overlay">
+                  <div class="text">Disney Magic Kingdom, Orlando</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/travel/pilly.jpg">
+              <div class="photo">
+                <img src="/images/travel/pilly.jpg" alt="Philadelphia"/>
+                <div class="overlay">
+                  <div class="text">Philadelphia</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/travel/elephant.JPG">
+              <div class="photo">
+                <img src="/images/travel/elephant.JPG" alt="Elephant"/>
+                <div class="overlay">
+                  <div class="text">Thailand</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/travel/sail.jpg">
+              <div class="photo">
+                <img src="/images/travel/sail.jpg" alt="Sailing"/>
+                <div class="overlay">
+                  <div class="text">Sailing in Havana, Cuba</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/travel/horse_riding.JPG">
+              <div class="photo">
+                <img src="/images/travel/horse_riding.JPG" alt="Horse_riding"/>
+                <div class="overlay">
+                  <div class="text">Somewhere in Cuba</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/travel/sakura.jpg">
+              <div class="photo">
+                <img src="/images/travel/sakura.jpg" alt="Sakura"/>
+                <div class="overlay">
+                  <div class="text">Johns Hopkins University</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/travel/nyc.jpg">
+              <div class="photo">
+                <img src="/images/travel/nyc.jpg" alt="NYC"/>
+                <div class="overlay">
+                  <div class="text">New York City</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/travel/st_louis.jpg">
+              <div class="photo">
+                <img src="/images/travel/st_louis.jpg" alt="St. Louis"/>
+                <div class="overlay">
+                  <div class="text">St. Louis</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div id="food" class="row tab-content" style="display:none">
+          <div class="column">
+            <a href="images/food/cheesecake.jpg">
+              <div class="photo">
+                <img src="/images/food/cheesecake.jpg" alt="Cheesecake"/>
+                <div class="overlay">
+                  <div class="text">Homemade cheesecake</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/food/nanjing_food.jpg">
+              <div class="photo">
+                <img src="/images/food/nanjing_food.jpg" alt="Nanjing"/>
+                <div class="overlay">
+                  <div class="text">Nanjing</div>
+                </div>
+              </div>
+            </a>                
+          </div>
+          
+          <div class="column">
+            <a href="images/food/curry.jpg">
+              <div class="photo">
+                <img src="/images/food/curry.jpg" alt="Curry"/>
+                <div class="overlay">
+                  <div class="text">Homemade Curry</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/food/ramen.JPG">
+              <div class="photo">
+                <img src="/images/food/ramen.JPG" alt="Ramen"/>
+                <div class="overlay">
+                  <div class="text">Ramen</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/food/healthy.jpg">
+              <div class="photo">
+                <img src="/images/food/healthy.jpg" alt="Healthy salad"/>
+                <div class="overlay">
+                  <div class="text">Healthy salad</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/food/hotpot.jpg">
+              <div class="photo">
+                <img src="/images/food/hotpot.jpg" alt="Hotpot"/>
+                <div class="overlay">
+                  <div class="text">Hotpot</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/food/tomato_beef.jpg">
+              <div class="photo">
+                <img src="/images/food/tomato_beef.jpg" alt="Tomato Beef Stew"/>
+                <div class="overlay">
+                  <div class="text">Homemade tomato-beef stew</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/food/havana_food.jpg">
+              <div class="photo">
+                <img src="/images/food/havana_food.jpg" alt="Havana"/>
+                <div class="overlay">
+                  <div class="text">Cuban dishes</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div id="selfies" class="row tab-content" style="display:none">
+          <div class="column">
+            <a href="images/selfies/rabbits.JPG">
+              <div class="photo">
+                <img src="/images/selfies/rabbits.JPG" alt="Rabbits"/>
+                <div class="overlay">
+                  <div class="text">Getting fat (average rabbit vs. me)</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/selfies/curly_selfie.jpg">
+              <div class="photo">
+                <img src="/images/selfies/curly_selfie.jpg" alt="Curly hair"/>
+                <div class="overlay">
+                  <div class="text">Just did my hair : )</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/selfies/cutie_selfie.JPG">
+              <div class="photo">
+                <img src="/images/selfies/cutie_selfie.JPG" alt="Cutie"/>
+                <div class="overlay">
+                  <div class="text">I'm so cute</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/selfies/cuba_selfie.jpg">
+              <div class="photo">
+                <img src="/images/selfies/cuba_selfie.jpg" alt="Cuba"/>
+                <div class="overlay">
+                  <div class="text">About to onboard</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/selfies/hair2_selfie.JPG">
+              <div class="photo">
+                <img src="/images/selfies/hair2_selfie.JPG" alt="Hair"/>
+                <div class="overlay">
+                  <div class="text">Ohh</div>
+                </div>
+              </div>
+            </a>
+            <a href="images/selfies/high_school.jpg">
+              <div class="photo">
+                <img src="/images/selfies/high_school.jpg" alt="High School"/>
+                <div class="overlay">
+                  <div class="text">Me in high school</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/selfies/hair_selfie.JPG">
+              <div class="photo">
+                <img src="/images/selfies/hair_selfie.JPG" alt="Hair"/>
+                <div class="overlay">
+                  <div class="text">Oh my hair</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/selfies/mountain_selfie.jpg">
+              <div class="photo">
+                <img src="/images/selfies/mountain_selfie.jpg" alt="Mountain"/>
+                <div class="overlay">
+                  <div class="text">Up on the mountains</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div id="animals" class="row tab-content" style="display:none">
+          <div class="column">
+            <a href="images/animals/tangyuan.JPG">
+              <div class="photo">
+                <img src="/images/animals/tangyuan.JPG" alt="Tangyuan"/>
+                <div class="overlay">
+                  <div class="text">My bestie's cat</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/animals/tangyuan2.JPG">
+              <div class="photo">
+                <img src="/images/animals/tangyuan2.JPG" alt="Tangyuan"/>
+                <div class="overlay">
+                  <div class="text">Still my bestie's cat</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/animals/pikachu.JPG">
+              <div class="photo">
+                <img src="/images/animals/pikachu.JPG" alt="Pikachu"/>
+                <div class="overlay">
+                  <div class="text">I love Pikachu</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="column">
+            <a href="images/animals/dog.JPG">
+              <div class="photo">
+                <img src="/images/animals/dog.JPG" alt="Doggie"/>
+                <div class="overlay">
+                  <div class="text">My favorite dog</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <p>I've always wanted to keep a pet but has never been able to have anything more than a goldfish or a turtle. Next semester my roommate and I are planning to have a hedgehog. I'm super excited!</p>
+
+        </div>
 
       </div>
 
