@@ -1,23 +1,40 @@
-#content {
+.content {
   margin-top: auto;
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
-#header-container {
-  margin-bottom: 20px;
+.info-bar {
+  border-right: 1px solid #ccc;
 }
 
-/* top image hidden by default */
+#name {
+  font-weight: bold;
+}
+
+#links {
+  margin-top: 20px;
+}
+
+#links a {
+  display: block;
+}
+
+.fa-linkedin-square {
+  color: #308ECA;
+}
+.fa-github {
+  color: black;
+}
+
+/* avatar top image hidden by default */
 .img-top {
   display: none;
 }
 #avatar img{
   max-height: 100px;
-  float: left;
-  margin-right: 20px;  
 }
 /* on hover, only display top image */
 #avatar:hover img {
@@ -27,14 +44,63 @@
   display: inline;
 }
 
-/* dropdown button */
+.top-nav {
+  padding: 4px;
+}
+
+/* index.html */
+
+#fun-div {
+  text-align: center;
+}
+
+#fun-div button {
+  border-radius: 10px;
+  border: 2px solid;
+  color: white;
+  padding: 5px 20px;
+  margin-bottom: 10px;
+}
+#fun-div button:hover {
+  background-color: white;
+  color: black;
+}
+
+#button-quote {
+  background-color: #35bd59;  /* green */
+}
+#button-quote:hover {
+  border: 2px solid #35bd59;
+}
+
+#button-fact {
+  background-color: #3aa7d6;  /* blue */
+}
+#button-fact:hover {
+  border: 2px solid #3aa7d6;
+}
+
+.img-fact {
+  max-width: 80px;
+}
+
+/* projects.html */
+
+.subtitle {
+  margin: 20px;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* dropdown button in the projects page */
 .dropdown-click {
   background-color: rgb(159, 204, 234);
   color: rgb(54, 53, 53);
-  padding: 5px;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  padding: 8px;
   cursor: pointer;
 }
-/* dropdown text on hover & focus */
 .dropdown-click:hover, .dropdown-click:focus {
   background-color: #6db4e2;
 }
@@ -48,38 +114,20 @@
   display:block;
 }
 
-/* gallery tabs bar */
-.tabs {
-  overflow: hidden;
-  background-color: #ffd54a;
-}
-.tabs button {
-  float: left;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: inherit;
-  text-align: center;
-  padding: 15px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.tabs button:hover {
-  background-color: #fae49b;
-  color:black;
-}
-.tabs button.active {
-  background-color: #de6f3c;
-  color: white;
+/* gallery.html */
+
+/* gallery side nav bar */
+.side-nav {
+  position: fixed;
+  padding: 20px;
 }
 
-/* gallery tab contents, displayed in grid layout */
+/* gallery contents, displayed in grid layout */
 .row, .tab-content {
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
-  border: 1px solid #ccc;
-  border-top: none;
+  border: none;
 }
 .column {
   flex: 10%;
@@ -116,6 +164,7 @@
 }
 .text {
   color: black;
+  font-size: 15px;
 }
 
 

@@ -18,29 +18,6 @@ function toggleDropDown(id) {
   document.getElementById(id).classList.toggle("show");
 }
 
-/* display the content corresponding to the tab-button clicked */
-function displayGallery(event, tab_name) {
-  // hide all tab contents
-  var tab_contents = document.getElementsByClassName("tab-content");
-  for (var i = 0; i < tab_contents.length; i++) {
-    tab_contents[i].style.display = "none";
-  }
-
-  // remove the class "active" from the previously active tab-button
-  //var active_button = document.getElementsByClassName("tab-button active");
-  //active_button[0].classList.toggle("active");
-  
-  var tab_buttons = document.getElementsByClassName("tab-button");
-  for (i = 0; i < tab_buttons.length; i++) {
-    tab_buttons[i].className = tab_buttons[i].className.replace(" active", "");
-  }
-  
-  // add an "active" class the tab-button clicked and show the corresponding tab content
-  event.currentTarget.className += " active";
-  document.getElementById(tab_name).style.display = "flex";
-
-}
-
 /**
  * Adds a favorite quote to the page.
  */
@@ -50,7 +27,7 @@ function addFavoriteQuote() {
       "Hope is a dangerous thing. Hope can drive a man insane. \n - The Shawshank Redemption",
       "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. \n ― George R.R. Martin, A Game of Thrones"];
 
-  // Pick a random greeting.
+  // Pick a random quote.
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   // Add it to the page.
@@ -63,17 +40,22 @@ function addFavoriteQuote() {
  */
 function addFunFact() {
   const facts =
-      ["Do you want to meet my sister?", 
-      "I like all sorts of collections (books, stickers, snacks, etc)",
-      "I like to take pictures of others but not to have my picture taken.",
+      ["sister", 
+      "selfie",
+      "I'm a fan of collections. I collect postcards, stickers, books, snacks, etc.",
       "My English name is Heidi. Many people can't pronounce that.",
       "Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name."];
 
-  // Pick a random greeting.
-  const fact= facts[Math.floor(Math.random() * facts.length)];
+  // Pick a random index for the fun fact.
+  const index = Math.floor(Math.random() * facts.length);
 
   // Add it to the page.
   const factContainer = document.getElementById('fun-fact-container');
-  factContainer.innerText = fact;
+  if (index == 0 || index == 1) {
+  	factContainer.innerHTML = document.getElementById('fun-fact-' + facts[index]).innerText;
+  } else {
+  	factContainer.innerText = facts[index];
+  }
+
 }
 

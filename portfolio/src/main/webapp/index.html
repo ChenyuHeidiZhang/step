@@ -3,392 +3,105 @@
   <head>
     <meta charset="UTF-8">
     <title>Chenyu's portfolio</title>
+
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+
   </head>
   <body>
-    <div id="content">
-      <div id="header-container">
-        <div id="avatar">
-          <img src="/images/avatar.JPG" alt="Me"/>
-          <img src="/images/avatar2.JPG" alt="Me2" class="img-top"/>
-        </div>
-        <h1 id="name">Chenyu Zhang</h1>
-        <p id="intro">I am an undergraduate student at Johns Hopkins University. 
-          I was born in Nanjing, China, and I currently live in Baltimore, Maryland, USA.
-          This portfolio webpage is written during my internship at Google in summer 2020.</p>
-      </div>
-      
-      <p>At JHU, my majors are Applied Math, Computer Science, and Cognitive Science. 
-        I enjoy all three of my majors and I think they complement each other very well.
-        Aside from school, I am part of the Blue Orchid Dance Club, where we practice trational Chineses dances and give performances at various events 
-        (which are, sadly, suspended due to COVID-19). 
-        I am also a research assistant at the Mind Brain Institute, and a software developer on the Otoglobal Health design team. 
-        </p>
-      
-      <div id="projects">
-        <h2>My Projects & Roles</h2>
-        
-        <h4 onClick="toggleDropDown('dropdown-1')" class="dropdown-click">Spam Slayer Web App, Sep 2019</h4>
-        <p id="dropdown-1" class="dropdown-content">I made Spam Slayer with a couple of friends at HopHacks. 
-          This web application is a Amazon review filter that, given a product URL, 
-          detects fake reviews using an SCNN algorithm and displays genuine reviews. 
-          It is not yet deployed, but you can check out how it works at this 
-          <a href="https://www.youtube.com/watch?v=TvOOvH1l8Fc">YouTube link</a>.</p>
-        
-        <h4 onClick="toggleDropDown('dropdown-2')" class="dropdown-click">Intern at Megapro Corporation, May 2019 - Aug 2019</h4>
-        <p id="dropdown-2" class="dropdown-content">During freshman summer, I interned at Megapro, a trading company based in St. Louis. 
-          I worked on financial data collection and data analysis.</p>
-        
-        <h4 onClick="toggleDropDown('dropdown-3')" class="dropdown-click">Experiment Game, Oct 2018 - Present</h4>
-        <p id="dropdown-3" class="dropdown-content">Experiment Game is a android application that I developed for a research project on multi-attribute decision making 
-            at the Mind Brain Institute at Hopkins. The project is under the supervision of Dr. Ernst Niebur.</p>
-        
-        <h4 onClick="toggleDropDown('dropdown-4')" class="dropdown-click">Otoglobal Health, Sep 2019 - Present</h4>
-        <p id="dropdown-4" class="dropdown-content">In this project, we develop a low-cost otoacoustic emission (OAE) device that easily identifies pediatric hearing loss in developing countries. 
-          It originated from a BME design team project and I am part of the software team.</p>
-        
-        <h4 onClick="toggleDropDown('dropdown-5')" class="dropdown-click">Computational Psycholinguistic Research, Sep 2019 - Dec 2019</h4>
-        <p id="dropdown-5" class="dropdown-content">This is my independent project on "Assessing LSTM's ability to predict Chinese nominal classifiers based on syntactic cues."
-          I was mentored by Dr. Tal Linzen at the Cognitive Science department of Hopkins.</p>
-
-        <h4 onClick="toggleDropDown('dropdown-6')" class="dropdown-click">My favorite courses taken so far</h4>
-        <p id="dropdown-6" class="dropdown-content">Natural Lanague Processing, Computational Psycholinguistics, Artificial Intelligence, Data Structures, 
-            Foundations of Brain Behavior & Cognition, Intro to Cognitive Psychology [to be continued]</p>
-      </div>
-
-      <div>
-        <h2>Relevant Links</h2>
-        <p>LinkedIn page: <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/">link</a></p>
-        <p>GitHub page: <a href="https://github.com/ChenyuHeidiZhang">link</a></p>
-      </div>
-
-      <div>
-        <h2>Photo Gallery</h2>
-        <div class="tabs">
-          <button class="tab-button active" onclick="displayGallery(event, 'travel')">Travel</button>
-          <button class="tab-button" onclick="displayGallery(event, 'food')">Food</button>
-          <button class="tab-button" onclick="displayGallery(event, 'selfies')">Selfies</button>
-          <button class="tab-button" onclick="displayGallery(event, 'animals')">Animals</button>
-        </div>
-
-        <div id="travel" class="row tab-content">
-          <div class="column">
-            <a href="/images/travel/baltimore.jpg">
-              <div class="photo">
-                <img src="/images/travel/baltimore.jpg" alt="Baltimore"/>
-                <div class="overlay">
-                  <div class="text">Baltimore inner harbor</div>
-                </div>
-              </div>
-            </a>
-            <a href="/images/travel/ontario.jpg">
-              <div class="photo">
-                <img src="/images/travel/ontario.jpg" alt="Ontario"/>
-                <div class="overlay">
-                  <div class="text">Art Gallery of Ontario</div>
-                </div>
-              </div>
-            </a>
+    <div class="content container-fluid">
+      <div class="row">
+        <!-- the left info bar -->
+        <div class="col-sm-2 info-bar">
+          <div id="avatar">
+            <img src="images/avatar.JPG" alt="Me"/>
+            <img src="images/avatar2.JPG" alt="Me2" class="img-top"/>
           </div>
-
-          <div class="column">
-            <a href="images/travel/disney.jpg">
-              <div class="photo">
-                <img src="/images/travel/disney.jpg" alt="Disney"/>
-                <div class="overlay">
-                  <div class="text">Disney Magic Kingdom, Orlando</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/travel/pilly.jpg">
-              <div class="photo">
-                <img src="/images/travel/pilly.jpg" alt="Philadelphia"/>
-                <div class="overlay">
-                  <div class="text">Philadelphia</div>
-                </div>
-              </div>
-            </a>
+          <p id="name">Chenyu Zhang</p>
+          <div id="location">
+            <i class="fa fa-map-marker" aria-hidden="true" style="font-size:24px"></i>
+            <span>Baltimore, MD</span>
           </div>
-
-          <div class="column">
-            <a href="images/travel/elephant.JPG">
-              <div class="photo">
-                <img src="/images/travel/elephant.JPG" alt="Elephant"/>
-                <div class="overlay">
-                  <div class="text">Thailand</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/travel/sail.jpg">
-              <div class="photo">
-                <img src="/images/travel/sail.jpg" alt="Sailing"/>
-                <div class="overlay">
-                  <div class="text">Sailing in Havana, Cuba</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/travel/horse_riding.JPG">
-              <div class="photo">
-                <img src="/images/travel/horse_riding.JPG" alt="Horse_riding"/>
-                <div class="overlay">
-                  <div class="text">Somewhere in Cuba</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/travel/sakura.jpg">
-              <div class="photo">
-                <img src="/images/travel/sakura.jpg" alt="Sakura"/>
-                <div class="overlay">
-                  <div class="text">Johns Hopkins University</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/travel/nyc.jpg">
-              <div class="photo">
-                <img src="/images/travel/nyc.jpg" alt="NYC"/>
-                <div class="overlay">
-                  <div class="text">New York City</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/travel/st_louis.jpg">
-              <div class="photo">
-                <img src="/images/travel/st_louis.jpg" alt="St. Louis"/>
-                <div class="overlay">
-                  <div class="text">St. Louis</div>
-                </div>
-              </div>
-            </a>
+          <div id="links">
+            <span>Relevant links:</span>
+            <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/"><i class="fa fa-linkedin-square" style="font-size:24px"></i> link</a>
+            <a href="https://github.com/ChenyuHeidiZhang"><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i> link</a>
           </div>
         </div>
 
-        <div id="food" class="row tab-content" style="display:none">
-          <div class="column">
-            <a href="images/food/cheesecake.jpg">
-              <div class="photo">
-                <img src="/images/food/cheesecake.jpg" alt="Cheesecake"/>
-                <div class="overlay">
-                  <div class="text">Homemade cheesecake</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/food/nanjing_food.jpg">
-              <div class="photo">
-                <img src="/images/food/nanjing_food.jpg" alt="Nanjing"/>
-                <div class="overlay">
-                  <div class="text">Nanjing</div>
-                </div>
-              </div>
-            </a>                
-          </div>
+        <!-- main content -->
+        <div class="col-sm-10">
+          <!-- the top navigation bar -->
+          <nav class="top-nav navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container-fluid">
+              <ul class="nav navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">AboutMe</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="projects.html">Projects&Roles</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="gallery.html">Gallery</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
           
-          <div class="column">
-            <a href="images/food/curry.jpg">
-              <div class="photo">
-                <img src="/images/food/curry.jpg" alt="Curry"/>
-                <div class="overlay">
-                  <div class="text">Homemade Curry</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/food/ramen.JPG">
-              <div class="photo">
-                <img src="/images/food/ramen.JPG" alt="Ramen"/>
-                <div class="overlay">
-                  <div class="text">Ramen</div>
-                </div>
-              </div>
-            </a>
-          </div>
+          <p><h3>Hi!</h3>My name is Chenyu Zhang. I am an undergraduate student at the <span style="font-style:italic">Johns Hopkins University</span>. 
+          I was born in <span style="font-weight:700">Nanjing, China</span>, and I currently live in Baltimore, Maryland, USA.
+          This portfolio webpage is written during my internship at Google in summer 2020.
+          </p>
+          <p>At JHU, my majors are Applied Math, Computer Science, and Cognitive Science. 
+          I enjoy all three of my majors and I think they complement each other very well.
+          Aside from school, I am part of the Blue Orchid Dance Club, where we practice trational Chineses dances and give    performances at various events (which are, sadly, suspended due to COVID-19). 
+          I am also a research assistant at the Mind Brain Institute, and a software developer on the Otoglobal Health design team. 
+          </p>
 
-          <div class="column">
-            <a href="images/food/healthy.jpg">
-              <div class="photo">
-                <img src="/images/food/healthy.jpg" alt="Healthy salad"/>
-                <div class="overlay">
-                  <div class="text">Healthy salad</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/food/hotpot.jpg">
-              <div class="photo">
-                <img src="/images/food/hotpot.jpg" alt="Hotpot"/>
-                <div class="overlay">
-                  <div class="text">Hotpot</div>
-                </div>
-              </div>
-            </a>
-          </div>
+          <p>I believe that <span style="font-weight:600">the perfect timeline is where you know what is going to happen tomorrow, but not what is going to happen next year</span>, so that there is a balance between excitement and stableness. While I have not decided on exactly what to do with the rest of my life, I'm aiming toward somewhere in tech, a field that I enjoy the most. Like many, I adore the sunshine in California. And I believe that with my current or future skills, I will be able to make an impact. 
+          </p>
 
-          <div class="column">
-            <a href="images/food/tomato_beef.jpg">
-              <div class="photo">
-                <img src="/images/food/tomato_beef.jpg" alt="Tomato Beef Stew"/>
-                <div class="overlay">
-                  <div class="text">Homemade tomato-beef stew</div>
-                </div>
-              </div>
-            </a>
-          </div>
+          <h4 onclick="toggleDropDown('hidden-talents')">My Hidden Talents (click to unhide)</h4>
+          <ul id="hidden-talents" class="dropdown-content">
+            <li>I speak <span style="font-weight:700">four</span> languages--<span style="font-weight:700">English, Mandarin, French, and Japanese</span>, with the latter two at conversational level. Personally, I don't think I have very strong memory, but I somehow managed to do that.</li>
+            <li>In my spare time, I enjoy <span style="font-weight:700">video production</span>. Check out this <a href="https://www.youtube.com/watch?v=9bqGfhN8wlQ">video</a> that I made for my French project, an extension of the classic anime <span style="font-style:italic">Hetalia: Axis Power</span>.</li>
+            <li>I play all sorts of musical instruments a little bit (in short, nothing to be proud of). I've played the piano, the flute (both eastern and western), the ukulele, and the French horn.</li>
+          </ul>
+          
+          <h4>Now, let's have some fun!</h4>
 
-          <div class="column">
-            <a href="images/food/havana_food.jpg">
-              <div class="photo">
-                <img src="/images/food/havana_food.jpg" alt="Havana"/>
-                <div class="overlay">
-                  <div class="text">Cuban dishes</div>
-                </div>
-              </div>
-            </a>
+          <div id="fun-div">
+            <p>Click to get a random message:</p>
+
+            <button id="button-quote" onclick="addFavoriteQuote()">My Favorite Quote</button>
+            <p id="favorite-quote-container"></p>
+
+            <button id="button-fact" onclick="addFunFact()">Fun Fact About Me</button>
+            <p id="fun-fact-container"></p>
+
+            <!-- keep the html blocks in containers for use in JS -->
+            <script id="fun-fact-sister" type="text/html"> 
+              Do you want to meet my sister?  <a href="">Yes!</a>    
+            </script>
+            <script id="fun-fact-selfie" type="text/html">
+              I'd always like to think that I look like <a href="images/sleeping.JPG"><img class="img-fact" src="images/sleeping.JPG" alt="Me"></a>, but in fact, I usually look like <img class="img-fact" src="images/" alt="Also Me">.
+            </script>
           </div>
         </div>
-
-        <div id="selfies" class="row tab-content" style="display:none">
-          <div class="column">
-            <a href="images/selfies/rabbits.JPG">
-              <div class="photo">
-                <img src="/images/selfies/rabbits.JPG" alt="Rabbits"/>
-                <div class="overlay">
-                  <div class="text">Getting fat (average rabbit vs. me)</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/selfies/curly_selfie.jpg">
-              <div class="photo">
-                <img src="/images/selfies/curly_selfie.jpg" alt="Curly hair"/>
-                <div class="overlay">
-                  <div class="text">Just did my hair : )</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/selfies/cutie_selfie.JPG">
-              <div class="photo">
-                <img src="/images/selfies/cutie_selfie.JPG" alt="Cutie"/>
-                <div class="overlay">
-                  <div class="text">I'm so cute</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/selfies/cuba_selfie.jpg">
-              <div class="photo">
-                <img src="/images/selfies/cuba_selfie.jpg" alt="Cuba"/>
-                <div class="overlay">
-                  <div class="text">About to onboard</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/selfies/hair2_selfie.JPG">
-              <div class="photo">
-                <img src="/images/selfies/hair2_selfie.JPG" alt="Hair"/>
-                <div class="overlay">
-                  <div class="text">Ohh</div>
-                </div>
-              </div>
-            </a>
-            <a href="images/selfies/high_school.jpg">
-              <div class="photo">
-                <img src="/images/selfies/high_school.jpg" alt="High School"/>
-                <div class="overlay">
-                  <div class="text">Me in high school</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/selfies/hair_selfie.JPG">
-              <div class="photo">
-                <img src="/images/selfies/hair_selfie.JPG" alt="Hair"/>
-                <div class="overlay">
-                  <div class="text">Oh my hair</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/selfies/mountain_selfie.jpg">
-              <div class="photo">
-                <img src="/images/selfies/mountain_selfie.jpg" alt="Mountain"/>
-                <div class="overlay">
-                  <div class="text">Up on the mountains</div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div id="animals" class="row tab-content" style="display:none">
-          <div class="column">
-            <a href="images/animals/tangyuan.JPG">
-              <div class="photo">
-                <img src="/images/animals/tangyuan.JPG" alt="Tangyuan"/>
-                <div class="overlay">
-                  <div class="text">My bestie's cat</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/animals/tangyuan2.JPG">
-              <div class="photo">
-                <img src="/images/animals/tangyuan2.JPG" alt="Tangyuan"/>
-                <div class="overlay">
-                  <div class="text">Still my bestie's cat</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/animals/pikachu.JPG">
-              <div class="photo">
-                <img src="/images/animals/pikachu.JPG" alt="Pikachu"/>
-                <div class="overlay">
-                  <div class="text">I love Pikachu</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="column">
-            <a href="images/animals/dog.JPG">
-              <div class="photo">
-                <img src="/images/animals/dog.JPG" alt="Doggie"/>
-                <div class="overlay">
-                  <div class="text">My favorite dog</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <p>I've always wanted to keep a pet but has never been able to have anything more than a goldfish or a turtle. Next semester my roommate and I are planning to have a hedgehog. I'm super excited!</p>
-
-        </div>
-
       </div>
-
-      <p>Click here to get a random message:</p>
-
-      <button onclick="addFavoriteQuote()">My Favorite Quote</button>
-      <p id="favorite-quote-container"></p>
-
-      <button onclick="addFunFact()">Fun Fact</button>
-      <p id="fun-fact-container"></p>
+      
     </div>
+
+    <!-- JS required for Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
