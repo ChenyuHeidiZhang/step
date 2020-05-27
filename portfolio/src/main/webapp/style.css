@@ -50,6 +50,10 @@
 
 /* index.html */
 
+#talents-title {
+  cursor: pointer;
+}
+
 #fun-div {
   text-align: center;
 }
@@ -86,10 +90,13 @@
 
 /* projects.html */
 
+#projects-div {
+  margin-bottom: 30px;
+}
+
 .subtitle {
   margin: 20px;
   text-align: center;
-  font-family: "Times New Roman", Times, serif;
 }
 
 /* dropdown button in the projects page */

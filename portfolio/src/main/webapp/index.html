@@ -12,7 +12,6 @@
 
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-
   </head>
   <body>
     <div class="content container-fluid">
@@ -54,7 +53,6 @@
             </div>
           </nav>
 
-          
           <p><h3>Hi!</h3>My name is Chenyu Zhang. I am an undergraduate student at the <span style="font-style:italic">Johns Hopkins University</span>. 
           I was born in <span style="font-weight:700">Nanjing, China</span>, and I currently live in Baltimore, Maryland, USA.
           This portfolio webpage is written during my internship at Google in summer 2020.
@@ -65,10 +63,12 @@
           I am also a research assistant at the Mind Brain Institute, and a software developer on the Otoglobal Health design team. 
           </p>
 
-          <p>I believe that <span style="font-weight:600">the perfect timeline is where you know what is going to happen tomorrow, but not what is going to happen next year</span>, so that there is a balance between excitement and stableness. While I have not decided on exactly what to do with the rest of my life, I'm aiming toward somewhere in tech, a field that I enjoy the most. Like many, I adore the sunshine in California. And I believe that with my current or future skills, I will be able to make an impact. 
+          <p>I believe that <span style="font-weight:600">the perfect timeline is where you know what is going to happen tomorrow, but not what is going to happen next year</span>, 
+          so that there is a balance between excitement and stableness. While I have not decided on exactly what to do with the rest of my life, I'm aiming toward somewhere in tech, a field that I enjoy the most. 
+          Like many, I adore the sunshine in California. And I believe that with my current or future skills, I will be able to make an impact. 
           </p>
 
-          <h4 onclick="toggleDropDown('hidden-talents')">My Hidden Talents (click to unhide)</h4>
+          <h4 id="talents-title" onclick="toggleDropDown('hidden-talents')">My Hidden Talents (click to unhide)</h4>
           <ul id="hidden-talents" class="dropdown-content">
             <li>I speak <span style="font-weight:700">four</span> languages--<span style="font-weight:700">English, Mandarin, French, and Japanese</span>, with the latter two at conversational level. Personally, I don't think I have very strong memory, but I somehow managed to do that.</li>
             <li>In my spare time, I enjoy <span style="font-weight:700">video production</span>. Check out this <a href="https://www.youtube.com/watch?v=9bqGfhN8wlQ">video</a> that I made for my French project, an extension of the classic anime <span style="font-style:italic">Hetalia: Axis Power</span>.</li>
@@ -76,7 +76,6 @@
           </ul>
           
           <h4>Now, let's have some fun!</h4>
-
           <div id="fun-div">
             <p>Click to get a random message:</p>
 
@@ -88,10 +87,11 @@
 
             <!-- keep the html blocks in containers for use in JS -->
             <script id="fun-fact-sister" type="text/html"> 
-              Do you want to meet my sister?  <a href="">Yes!</a>    
+              Do you want to meet my sister?  <a href="images/sister.JPG">Yes!</a>    
             </script>
             <script id="fun-fact-selfie" type="text/html">
-              I'd always like to think that I look like <a href="images/sleeping.JPG"><img class="img-fact" src="images/sleeping.JPG" alt="Me"></a>, but in fact, I usually look like <img class="img-fact" src="images/" alt="Also Me">.
+              I'd always like to think that I look like <a href="images/sleeping.JPG"><img class="img-fact" src="images/sleeping.JPG" alt="Me"></a>, 
+              but in fact, I usually look like <img class="img-fact" src="images/me.jpg" alt="Also Me">.
             </script>
           </div>
         </div>
