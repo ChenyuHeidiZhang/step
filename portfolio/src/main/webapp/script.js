@@ -13,7 +13,9 @@
 // limitations under the License.
 
 
-/* toggles the drop down text */
+/** 
+ * Toggles the drop down text.
+ */
 function toggleDropDown(id) {
   document.getElementById(id).classList.toggle("show");
 }
@@ -27,10 +29,10 @@ function addRandomFavoriteQuote() {
       "Hope is a dangerous thing. Hope can drive a man insane. \n - The Shawshank Redemption",
       "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. \n ― George R.R. Martin, A Game of Thrones"];
 
-  // Pick a random quote.
+  // Picks a random quote.
   const favoriteQuote = favoriteQuotes[Math.floor(Math.random() * favoriteQuotes.length)];
 
-  // Add the favorite quote to the page.
+  // Adds the favorite quote to the page.
   const favoriteQuoteContainer = document.getElementById('favorite-quote-container');
   favoriteQuoteContainer.innerText = favoriteQuote;
 }
@@ -46,10 +48,10 @@ function addRandomFunFact() {
       "My English name is Heidi. Many people can't pronounce that.",
       "Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name."];
 
-  // Pick a random index for the fun fact.
+  // Picks a random index for the fun fact.
   const index = Math.floor(Math.random() * funFacts.length);
 
-  // Add the fun fact to the page.
+  // Adds the fun fact to the page.
   const funFactContainer = document.getElementById('fun-fact-container');
   if (index == 0 || index == 1) {
   	funFactContainer.innerHTML = document.getElementById('fun-fact-' + funFacts[index]).innerText;
