@@ -19,27 +19,27 @@ function toggleDropDown(id) {
 }
 
 /**
- * Adds a favorite quote to the page.
+ * Adds a random favorite quote to the page.
  */
-function addFavoriteQuote() {
-  const quotes =
+function addRandomFavoriteQuote() {
+  const favoriteQuotes =
       ["Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice. \n —Gabriel García Márquez, One Hundred Years of Solitude",
       "Hope is a dangerous thing. Hope can drive a man insane. \n - The Shawshank Redemption",
       "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. \n ― George R.R. Martin, A Game of Thrones"];
 
   // Pick a random quote.
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  const favoriteQuote = favoriteQuotes[Math.floor(Math.random() * favoriteQuotes.length)];
 
-  // Add it to the page.
-  const quoteContainer = document.getElementById('favorite-quote-container');
-  quoteContainer.innerText = quote;
+  // Add the favorite quote to the page.
+  const favoriteQuoteContainer = document.getElementById('favorite-quote-container');
+  favoriteQuoteContainer.innerText = favoriteQuote;
 }
 
 /**
- * Adds a fun fact to the page.
+ * Adds a random fun fact to the page.
  */
-function addFunFact() {
-  const facts =
+function addRandomFunFact() {
+  const funFacts =
       ["sister", 
       "selfie",
       "I'm a fan of collections. I collect postcards, stickers, books, snacks, etc.",
@@ -47,14 +47,14 @@ function addFunFact() {
       "Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name."];
 
   // Pick a random index for the fun fact.
-  const index = Math.floor(Math.random() * facts.length);
+  const index = Math.floor(Math.random() * funFacts.length);
 
-  // Add it to the page.
-  const factContainer = document.getElementById('fun-fact-container');
+  // Add the fun fact to the page.
+  const funFactContainer = document.getElementById('fun-fact-container');
   if (index == 0 || index == 1) {
-  	factContainer.innerHTML = document.getElementById('fun-fact-' + facts[index]).innerText;
+  	funFactContainer.innerHTML = document.getElementById('fun-fact-' + funFacts[index]).innerText;
   } else {
-  	factContainer.innerText = facts[index];
+  	funFactContainer.innerText = funFacts[index];
   }
 
 }
