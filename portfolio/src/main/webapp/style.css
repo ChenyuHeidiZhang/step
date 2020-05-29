@@ -9,6 +9,7 @@ body {
   padding: 20px;
   max-width: 1000px;
   background-color: white;
+  font-size: 20px;
 }
 
 .info-bar {
@@ -17,14 +18,28 @@ body {
 
 #name {
   font-weight: bold;
+  margin: 15px 0px;
+}
+
+#location i {
+  font-size: 24px;
+}
+#location span {
+  font-size: 18px;
+  margin: 20px 0px;
 }
 
 #links {
   margin-top: 20px;
 }
-
 #links a {
   display: block;
+  text-align: center;
+  margin-top:10px;
+  color: #7c7b8a;
+}
+#links a i {
+  font-size: 30px;
 }
 
 .fa-linkedin-square {
@@ -40,7 +55,7 @@ body {
   display: none;
 }
 #avatar img {
-  max-height: 100px;
+  max-height: 120px;
 }
 /* On hover, only displays top image. */
 #avatar:hover img {
@@ -56,6 +71,31 @@ body {
 
 /* index.html */
 
+#my-name {
+  font-weight: 800;
+  font-size: 30px;
+  color: #3aa7d6;
+}
+#my-name:hover {
+    color: #a7c1fa;
+}
+
+.text-bold {
+  font-weight: 700;
+  font-size: 22px;
+  color: #2d4987;
+}
+.text-bold:hover {
+  color: #6a86c4;
+}
+
+.text-red {
+  color: #6e0808;
+}
+.text-red:hover {
+  color: #b34949;
+}
+
 #talents-title {
   cursor: pointer;
 }
@@ -68,7 +108,8 @@ body {
   border-radius: 10px;
   border: 2px solid;
   color: white;
-  padding: 5px 20px;
+  width: 95%;
+  padding: 5px;
   margin-bottom: 10px;
 }
 #fun-div button:hover {
@@ -77,17 +118,17 @@ body {
 }
 
 #button-quote {
-  background-color: #35bd59;  /* green */
+  background-color: #ed9a9a;  /* pink */
 }
 #button-quote:hover {
-  border: 2px solid #35bd59;
+  border: 2px solid #ed9a9a;
 }
 
 #button-fact {
-  background-color: #3aa7d6;  /* blue */
+  background-color: #ed7979;  /* orange */
 }
 #button-fact:hover {
-  border: 2px solid #3aa7d6;
+  border: 2px solid #ed7979;
 }
 
 .img-fact {
@@ -109,7 +150,8 @@ body {
 .dropdown-click {
   background-color: rgb(159, 204, 234);
   color: rgb(54, 53, 53);
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 600;
   font-family: "Times New Roman", Times, serif;
   padding: 8px;
   cursor: pointer;
