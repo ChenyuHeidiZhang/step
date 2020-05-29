@@ -118,21 +118,13 @@ h3 {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
+  background-color: #ed7979;
+  border: 2px solid #ed7979;
   box-shadow: 5px 5px 8px #ab9da8;
 }
 #fun-div button:hover {
   background-color: white;
   color: black;
-}
-
-#button-quote {
-  background-color: #ed9a9a;  /* pink */
-  border: 2px solid #ed9a9a;
-}
-
-#button-fact {
-  background-color: #ed7979;  /* orange */
-  border: 2px solid #ed7979;
 }
 
 .img-fact {
