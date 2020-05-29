@@ -25,11 +25,12 @@
 .fa-linkedin-square {
   color: #308ECA;
 }
+
 .fa-github {
   color: black;
 }
 
-/* Avatar top image hidden by default. */
+/* Avatar top image, hidden by default. */
 .img-top {
   display: none;
 }
@@ -111,7 +112,8 @@
 .dropdown-click:hover, .dropdown-click:focus {
   background-color: #6db4e2;
 }
-/* Dropdown content hidden by default. */
+
+/* Dropdown content, hidden by default. */
 .dropdown-content {
   display: none;
   position: relative;
@@ -123,7 +125,7 @@
 
 /* gallery.html */
 
-/* Gallery side nav bar. */
+/* Side nav bar, contained in the gallery. */
 .side-nav {
   position: fixed;
   padding: 20px;
@@ -148,11 +150,19 @@
   max-width: 100%;
 }
 
-/* The div container for a photo. */
+/* Container for every single photo in the gallery. */
 .photo {
   position: relative;
 }
-/* Div overlay with text, has absolute position wrt its parent. */
+/* Sets opacaity when hovered. */
+.photo:hover img {
+  opacity: 0.3;
+}
+.photo:hover .overlay {
+  opacity: 1;
+}
+
+/* Overlays a div with text, having absolute position with respect to its parent. */
 .overlay {
   position:absolute;
   top: 50%;
@@ -161,13 +171,6 @@
   -ms-transform: translate(-50%, -50%);
   opacity: 0;
   transition: .5s ease-in-out;
-}
-/* Sets opacaity when hovered. */
-.photo:hover img {
-  opacity: 0.3;
-}
-.photo:hover .overlay {
-  opacity: 1;
 }
 .text {
   color: black;
