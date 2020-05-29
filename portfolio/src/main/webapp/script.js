@@ -30,11 +30,11 @@ function addRandomFavoriteQuote() {
       "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. \n ― George R.R. Martin, A Game of Thrones"];
 
   // Picks a random quote.
-  const favoriteQuote = favoriteQuotes[Math.floor(Math.random() * favoriteQuotes.length)];
+  const randomFavoriteQuote = favoriteQuotes[Math.floor(Math.random() * favoriteQuotes.length)];
 
   // Adds the favorite quote to the page.
   const favoriteQuoteContainer = document.getElementById('favorite-quote-container');
-  favoriteQuoteContainer.innerText = favoriteQuote;
+  favoriteQuoteContainer.innerText = randomFavoriteQuote;
 }
 
 /**
