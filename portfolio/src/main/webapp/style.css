@@ -71,13 +71,17 @@ body {
 
 /* index.html */
 
+.fa-hand-o-right {
+  margin-left: 10px;
+}
+
 #my-name {
   font-weight: 800;
   font-size: 30px;
   color: #3aa7d6;
 }
 #my-name:hover {
-    color: #a7c1fa;
+  color: #a7c1fa;
 }
 
 .text-bold {
@@ -187,7 +191,7 @@ body {
 }
 .column {
   flex: 10%;
-  max-width: 20%;
+  max-width: 25%;
   padding: 0 4px;
 }
 .column img {
