@@ -1,9 +1,14 @@
+body {
+  background-image: url('images/floral_bg.jpg');
+}
+
 .content {
   margin-top: auto;
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
   max-width: 1000px;
+  background-color: white;
 }
 
 .info-bar {
