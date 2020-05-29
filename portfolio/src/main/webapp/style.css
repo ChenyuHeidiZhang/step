@@ -12,6 +12,10 @@ body {
   font-size: 20px;
 }
 
+h3 {
+  text-shadow: 1px 1px 3px #ccc;
+}
+
 .info-bar {
   border-right: 1px solid #ccc;
 }
@@ -34,8 +38,8 @@ body {
 }
 #links a {
   display: block;
-  text-align: center;
-  margin-top:10px;
+  text-align: left;
+  margin-top: 10px;
   color: #7c7b8a;
 }
 #links a i {
@@ -79,6 +83,7 @@ body {
   font-weight: 800;
   font-size: 30px;
   color: #3aa7d6;
+  text-shadow: 1px 2px 4px #ccc;
 }
 #my-name:hover {
   color: #a7c1fa;
@@ -87,21 +92,20 @@ body {
 .text-bold {
   font-weight: 700;
   font-size: 22px;
-  color: #2d4987;
-}
-.text-bold:hover {
-  color: #6a86c4;
+  color: #607bd1;
 }
 
 .text-red {
-  color: #6e0808;
-}
-.text-red:hover {
   color: #b34949;
 }
 
-#talents-title {
+#talents-title:hover {
   cursor: pointer;
+  color: #7c7b8a;
+}
+
+#fun-title {
+  margin-top: 50px;
 }
 
 #fun-div {
@@ -110,11 +114,11 @@ body {
 
 #fun-div button {
   border-radius: 10px;
-  border: 2px solid;
   color: white;
-  width: 95%;
-  padding: 5px;
+  width: 100%;
+  padding: 8px;
   margin-bottom: 10px;
+  box-shadow: 5px 5px 8px #ab9da8;
 }
 #fun-div button:hover {
   background-color: white;
@@ -123,15 +127,11 @@ body {
 
 #button-quote {
   background-color: #ed9a9a;  /* pink */
-}
-#button-quote:hover {
   border: 2px solid #ed9a9a;
 }
 
 #button-fact {
   background-color: #ed7979;  /* orange */
-}
-#button-fact:hover {
   border: 2px solid #ed7979;
 }
 
@@ -183,7 +183,7 @@ body {
 }
 
 /* Gallery contents, displayed in grid layout. */
-.row, .tab-content {
+.tab-content {
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;

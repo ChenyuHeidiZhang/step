@@ -41,10 +41,10 @@
             <div class="container-fluid">
               <ul class="nav navbar-nav">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.html">AboutMe</a>
+                  <a class="nav-link" href="index.html">About Me</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="projects.html">Projects&Roles</a>
+                  <a class="nav-link" href="projects.html">Projects & Roles</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="gallery.html">Gallery</a>
@@ -84,15 +84,19 @@
             <li>I play all sorts of musical instruments a little bit (in short, nothing to be proud of). I've played the piano, the flute (both eastern and western), the ukulele, and the French horn.</li>
           </ul>
           
-          <h3>Now, let's have some fun!</h3>
+          <h3 id="fun-title">Now, let's have some fun!</h3>
           <div id="fun-div">
             <p>Click to get a random message:</p>
-
-            <button id="button-quote" onclick="addRandomFavoriteQuote()">One of My Favorite Quotes</button>
-            <p id="favorite-quote-container"></p>
-
-            <button id="button-fact" onclick="addRandomFunFact()">Fun Fact About Me</button>
-            <p id="fun-fact-container"></p>
+            <div class="row">
+              <div class="col-sm-6">
+                <button id="button-quote" onclick="addRandomFavoriteQuote()">One of My Favorite Quotes</button>
+                <p id="favorite-quote-container"></p>
+              </div>
+              <div class="col-sm-6">
+                <button id="button-fact" onclick="addRandomFunFact()">Fun Fact About Me</button>
+                <p id="fun-fact-container"></p>
+              </div>
+            </div>
 
             <!-- Keep the html blocks in containers for use in JS. -->
             <script id="fun-fact-sister" type="text/html"> 
