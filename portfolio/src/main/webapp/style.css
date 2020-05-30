@@ -38,7 +38,6 @@ h3 {
 }
 #links a {
   display: block;
-  text-align: left;
   margin-top: 10px;
   color: #7c7b8a;
 }
@@ -52,6 +51,11 @@ h3 {
 
 .fa-github {
   color: black;
+}
+
+.fa-envelope-o {
+  margin-top: 20px;
+  color: #c44a41;
 }
 
 /* Avatar top image, hidden by default. */
