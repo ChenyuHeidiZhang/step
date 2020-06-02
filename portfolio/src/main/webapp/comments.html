@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chenyu's portfolio</title>
+
+    <!-- Font awesome icons. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS. -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body onload="fetchComments()">
+    <div class="content container-fluid">
+      <div class="row">
+        <!-- The left info bar. -->
+        <div class="col-sm-2 info-bar">
+          <div id="avatar">
+            <img src="images/avatar.JPG" alt="Me"/>
+            <img src="images/avatar2.JPG" alt="Me2" class="img-top"/>
+          </div>
+          <p id="name">Chenyu Zhang</p>
+          <div id="location">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <span>Baltimore, MD</span>
+          </div>
+          <div id="links">
+            <span>Relevant links:</span>
+            <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/"><i class="fa fa-linkedin-square"></i> LinkedIn</a>
+            <a href="https://github.com/ChenyuHeidiZhang"><i class="fa fa-github" aria-hidden="true"></i> Github</a>
+            <a href="mailto:chenyu.heidi.z@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> Email Me</a>
+          </div>
+        </div>
+
+        <!-- Main content. -->
+        <div class="col-sm-10">
+          <!-- The top navigation bar. -->
+          <nav class="top-nav navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container-fluid">
+              <ul class="nav navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">About Me</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="projects.html">Projects & Roles</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="gallery.html">Gallery</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="comments.html">Comments</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div>
+            <ul id="comments-list"></ul>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
