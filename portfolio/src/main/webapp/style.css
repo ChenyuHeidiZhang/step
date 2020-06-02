@@ -28,6 +28,7 @@ h3 {
 #location i {
   font-size: 24px;
 }
+
 #location span {
   font-size: 18px;
   margin: 20px 0px;
@@ -36,11 +37,13 @@ h3 {
 #links {
   margin-top: 20px;
 }
+
 #links a {
   display: block;
   margin-top: 10px;
   color: #7c7b8a;
 }
+
 #links a i {
   font-size: 30px;
 }
@@ -62,13 +65,16 @@ h3 {
 .img-top {
   display: none;
 }
+
 #avatar img {
   max-height: 120px;
 }
+
 /* On hover, only displays top image. */
 #avatar:hover img {
   display: none;
 }
+
 #avatar:hover .img-top {
   display: inline;
 }
@@ -89,6 +95,7 @@ h3 {
   color: #3aa7d6;
   text-shadow: 1px 2px 4px #ccc;
 }
+
 #my-name:hover {
   color: #a7c1fa;
 }
@@ -126,6 +133,7 @@ h3 {
   border: 2px solid #ed7979;
   box-shadow: 5px 5px 8px #ab9da8;
 }
+
 #fun-div button:hover {
   background-color: white;
   color: black;
@@ -156,6 +164,7 @@ h3 {
   padding: 8px;
   cursor: pointer;
 }
+
 .dropdown-click:hover, .dropdown-click:focus {
   background-color: #6db4e2;
 }
@@ -165,6 +174,7 @@ h3 {
   display: none;
   position: relative;
 }
+
 /* Shows previously hidden content. */
 .show {
   display:block;
@@ -185,11 +195,13 @@ h3 {
   padding: 0 4px;
   border: none;
 }
+
 .column {
   flex: 10%;
   max-width: 25%;
   padding: 0 4px;
 }
+
 .column img {
   margin-top: 8px;
   margin-bottom: 8px;
@@ -201,10 +213,12 @@ h3 {
 .photo {
   position: relative;
 }
+
 /* Sets opacaity when hovered. */
 .photo:hover img {
   opacity: 0.3;
 }
+
 .photo:hover .overlay {
   opacity: 1;
 }
@@ -219,6 +233,7 @@ h3 {
   opacity: 0;
   transition: .5s ease-in-out;
 }
+
 .text {
   color: black;
   font-size: 15px;
