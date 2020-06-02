@@ -25,21 +25,30 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  
+  private ArrayList<String> messages = new ArrayList<>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> messages = new ArrayList<>();
-    messages.add("{\"comment\": \"This website looks awesome!\"}");
-    messages.add("{\"comment\": \"Nice to meet you!\"}");
-    messages.add("{\"comment\": \"This is a comment.\"}");
-    
-    // Converts the ArrayList into a JSON string using the Gson library
+    // Converts the ArrayList into a JSON string using the Gson library.
     Gson gson = new Gson();
     String json = gson.toJson(messages);
 
-    // Sends the JSON as the response
+    // Sends the JSON as the response.
     response.setContentType("application/json;");
     response.getWriter().println(messages);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      // Gets the comment input from the form.
+      String comment = request.getParameter("comment-input");
+
+      // Adds the comment to the ArrayList.
+      messages.add("{\"comment\": \"" + comment + "\"}");
+
+      // Redirects back to the HTML page.
+      response.sendRedirect("/comments.html");
   }
 }
 
