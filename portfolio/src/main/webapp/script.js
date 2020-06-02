@@ -61,3 +61,11 @@ function addRandomFunFact() {
 
 }
 
+/** 
+ * Fetches the data from the server and alerts it.
+ */
+function fetchData() {
+    fetch("/data").then(response => response.text()).then(data => {
+        alert(data);
+    })
+}
