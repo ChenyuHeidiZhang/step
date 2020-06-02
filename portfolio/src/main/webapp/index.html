@@ -2,17 +2,114 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Chenyu's portfolio</title>
+
+    <!-- Font awesome icons. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS. -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+    <div class="content container-fluid">
+      <div class="row">
+        <!-- The left info bar. -->
+        <div class="col-sm-2 info-bar">
+          <div id="avatar">
+            <img src="images/avatar.JPG" alt="Me"/>
+            <img src="images/avatar2.JPG" alt="Me2" class="img-top"/>
+          </div>
+          <p id="name">Chenyu Zhang</p>
+          <div id="location">
+            <i class="fa fa-map-marker" aria-hidden="true" style="font-size:24px"></i>
+            <span>Baltimore, MD</span>
+          </div>
+          <div id="links">
+            <span>Relevant links:</span>
+            <a href="https://www.linkedin.com/in/chenyu-heidi-zhang-jhu/"><i class="fa fa-linkedin-square" style="font-size:24px"></i> link</a>
+            <a href="https://github.com/ChenyuHeidiZhang"><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i> link</a>
+          </div>
+        </div>
+
+        <!-- Main content. -->
+        <div class="col-sm-10">
+          <!-- The top navigation bar. -->
+          <nav class="top-nav navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container-fluid">
+              <ul class="nav navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">AboutMe</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="projects.html">Projects&Roles</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="gallery.html">Gallery</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <p><h3>Hi!</h3>My name is Chenyu Zhang. I am an undergraduate student at the <span style="font-style:italic">Johns Hopkins University</span>. 
+          I was born in <span style="font-weight:700">Nanjing, China</span>, and I currently live in Baltimore, Maryland, USA.
+          This portfolio website is written during my internship at Google in summer 2020.
+          </p>
+          <p>At JHU, my majors are <span style="font-weight:700">Applied Math, Computer Science, and Cognitive Science</span>. 
+          I enjoy all three of my majors and I think they complement each other very well.
+          Applied Math gives me the mathematical modeling skills needed for almost any subject. Cognitive Science is where I get to think about the human mind and develop interesting ideas. 
+          Then Computer Science allows me to build ideas into reality. 
+          If you are familiar, you probably have noticed that those three majors combined points to the field of <span style="font-weight:700">artificial intelligence</span>. 
+          I am interested in <span style="font-weight:700">natural language processing</span> in particular, a field that builds up on statistical knowledge, programming skills, and cognitive linguistics. 
+          Some of the NLP projects that I have done include language modeling, part-of-speech tagging, statistical parsing, etc.
+          </p>
+          <p>Aside from school, I am part of the Blue Orchid Dance Club, where we practice traditional Chineses dances and give performances at various events (which are, sadly, suspended due to COVID-19). 
+          I am also a research assistant at the Mind Brain Institute, and a software developer on the Otoglobal Health design team. 
+          </p>
+          
+          <h4>Life Philosophy</h4>
+          <p>I believe that <span style="font-weight:600">the best future is where you know what is going to happen tomorrow, but not what is going to happen next year</span>. 
+          When people talk to me about not knowing what to do with their lives, that is what I say. 
+          While I do not make specific long-term plans (and they are not likely going to come true anyway), I like to think about life goals. Those give me the motivation to do what I should. 
+          For instance, one of my life goals is to make an impact in the tech industry. And I believe that as long as I live my best life everyday, I will eventually be able to make an impact. 
+          </p>
+
+          <h4 id="talents-title" onclick="toggleDropDown('hidden-talents')">My Hidden Talents (click to unhide)</h4>
+          <ul id="hidden-talents" class="dropdown-content">
+            <li>I speak <span style="font-weight:700">four</span> languages--<span style="font-weight:700">English, Mandarin, French, and Japanese</span>, with the latter two at conversational level. Personally, I don't think I have very strong memory, but I somehow managed to do that.</li>
+            <li>In my spare time, I enjoy <span style="font-weight:700">video production</span>. Check out this <a href="https://www.youtube.com/watch?v=9bqGfhN8wlQ">video</a> that I made for my French project, an extension of the classic anime <span style="font-style:italic">Hetalia: Axis Power</span>.</li>
+            <li>I play all sorts of musical instruments a little bit (in short, nothing to be proud of). I've played the piano, the flute (both eastern and western), the ukulele, and the French horn.</li>
+          </ul>
+          
+          <h4>Now, let's have some fun!</h4>
+          <div id="fun-div">
+            <p>Click to get a random message:</p>
+
+            <button id="button-quote" onclick="addRandomFavoriteQuote()">One of My Favorite Quotes</button>
+            <p id="favorite-quote-container"></p>
+
+            <button id="button-fact" onclick="addRandomFunFact()">Fun Fact About Me</button>
+            <p id="fun-fact-container"></p>
+
+            <!-- Keep the html blocks in containers for use in JS. -->
+            <script id="fun-fact-sister" type="text/html"> 
+              Do you want to meet my sister?  <a href="images/sister.JPG">Yes!</a>    
+            </script>
+            <script id="fun-fact-selfie" type="text/html">
+              I'd always like to think that I look like <a href="images/sleeping.JPG"><img class="img-fact" src="images/sleeping.JPG" alt="Me"></a>, 
+              but in fact, I usually look like <img class="img-fact" src="images/me.jpg" alt="Also Me">.
+            </script>
+          </div>
+        </div>
+      </div>
+      
     </div>
+
+    <!-- JS required for Bootstrap. -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
