@@ -66,7 +66,6 @@ function addRandomFunFact() {
  */
 function fetchComments() {
     fetch("/data").then(response => response.json()).then(comments => {
-        console.log(comments);
         // Adds the comments (parsed from JSON into an object) to the list.
         const commentsListElement = document.getElementById("comments-list");
         commentsListElement.innerHTML = "";
