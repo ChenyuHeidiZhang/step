@@ -61,22 +61,22 @@ function addRandomFunFact() {
 
 }
 
-/** 
+/* 
  * Fetches the comments data from the server and displays them.
  */
 function fetchComments() {
-    fetch("/data").then(response => response.json()).then(comments => {
-        // Adds the comments (parsed from JSON into an object) to the list.
-        const commentsListElement = document.getElementById("comments-list");
-        commentsListElement.innerHTML = "";
-        for (var i = 0; i < comments.length; i++) {
-            commentsListElement.appendChild(
-                createListElement(comments[i].comment));
-        }
-    })
+  fetch("/data").then(response => response.json()).then(comments => {
+    // Adds the comments (parsed from JSON into an object) to the list.
+    const commentsListElement = document.getElementById("comments-list");
+    commentsListElement.innerHTML = "";
+    for (var i = 0; i < comments.length; i++) {
+      commentsListElement.appendChild(
+      createListElement(comments[i].comment));
+    }
+  })
 }
 
-/**
+/* 
  * Creates an <li> element containing a comment.
  */
 function createListElement(comment) {
