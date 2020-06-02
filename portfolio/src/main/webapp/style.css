@@ -3,13 +3,11 @@ body {
 }
 
 .content {
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  max-width: 1000px;
   background-color: white;
   font-size: 20px;
+  margin: auto;
+  max-width: 1000px;
+  padding: 20px;
 }
 
 h3 {
@@ -39,9 +37,9 @@ h3 {
 }
 
 #links a {
+  color: #7c7b8a;
   display: block;
   margin-top: 10px;
-  color: #7c7b8a;
 }
 
 #links a i {
@@ -57,8 +55,8 @@ h3 {
 }
 
 .fa-envelope-o {
-  margin-top: 20px;
   color: #c44a41;
+  margin-top: 20px;
 }
 
 /* Avatar top image, hidden by default. */
@@ -90,9 +88,9 @@ h3 {
 }
 
 #my-name {
-  font-weight: 800;
-  font-size: 30px;
   color: #3aa7d6;
+  font-size: 30px;
+  font-weight: 800;
   text-shadow: 1px 2px 4px #ccc;
 }
 
@@ -102,7 +100,6 @@ h3 {
 
 .text-bold {
   font-weight: 700;
-  font-size: 22px;
   color: #607bd1;
 }
 
@@ -124,14 +121,14 @@ h3 {
 }
 
 #fun-div button {
-  border-radius: 10px;
-  color: white;
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
   background-color: #ed7979;
   border: 2px solid #ed7979;
+  border-radius: 10px;
   box-shadow: 5px 5px 8px #ab9da8;
+  color: white;
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
 }
 
 #fun-div button:hover {
@@ -158,11 +155,9 @@ h3 {
 .dropdown-click {
   background-color: rgb(159, 204, 234);
   color: rgb(54, 53, 53);
-  font-size: 22px;
-  font-weight: 600;
-  font-family: "Times New Roman", Times, serif;
-  padding: 8px;
   cursor: pointer;
+  font: 800, 22px, "Times New Roman", Times, serif;
+  padding: 8px;
 }
 
 .dropdown-click:hover, .dropdown-click:focus {
@@ -184,16 +179,16 @@ h3 {
 
 /* Side nav bar, contained in the gallery. */
 .side-nav {
-  position: fixed;
   padding: 20px;
+  position: fixed;
 }
 
 /* Gallery contents, displayed in grid layout. */
 .tab-content {
+  border: none;
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
-  border: none;
 }
 
 .column {
@@ -214,8 +209,8 @@ h3 {
   position: relative;
 }
 
-/* Sets opacaity when hovered. */
 .photo:hover img {
+  /* Sets opacaity when hovered. */
   opacity: 0.3;
 }
 
@@ -225,12 +220,12 @@ h3 {
 
 /* Overlays a div with text, having absolute position with respect to its parent. */
 .overlay {
+  opacity: 0;
   position:absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  opacity: 0;
   transition: .5s ease-in-out;
 }
 
