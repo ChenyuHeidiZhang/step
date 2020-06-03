@@ -104,3 +104,11 @@ function createListElement(comment) {
   commentElement.appendChild(contentElement);
   return commentElement;
 }
+
+/*
+ * Deletes all comments data from the server.
+ */
+function deleteData() {
+  const responsePromise = fetch('/delete-data', {method: 'POST'})
+  responsePromise.then(fetchComments);
+}
