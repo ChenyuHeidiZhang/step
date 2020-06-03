@@ -105,6 +105,10 @@ function createListElement(comment) {
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(comment);
+    commentElement.remove();    // Removes the comment from the DOM.
+  });
 
   commentElement.appendChild(contentElement);
   commentElement.appendChild(deleteButtonElement);
@@ -112,9 +116,18 @@ function createListElement(comment) {
 }
 
 /*
- * Deletes all comments data from the server.
+ * Tells the server to delete all comments data in the Datastore.
  */
 function deleteData() {
   const responsePromise = fetch('/delete-data', {method: 'POST'})
   responsePromise.then(fetchComments);
+}
+
+/* 
+ * Tells the server to delete one comment.
+ */
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
 }
