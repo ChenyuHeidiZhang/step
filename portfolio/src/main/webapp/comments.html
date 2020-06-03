@@ -57,20 +57,24 @@
             </div>
           </nav>
         
-          <form action="/data" method="POST">
-            <textarea name="comment-input">Leave a comment...</textarea>
+          <form id="input-form" action="/data" method="POST">
+            <textarea name="comment-input" placeholder="Leave a comment..." rows="3"></textarea>
             <br>
-            <input type="submit" />
+            <input type="submit" class="btn btn-info pull-right" value="Post"/>
           </form>
+          <div class="clearfix"></div>
+          <hr>
 
-          <div>
-            <ul id="comments-list"></ul>
+          <ul id="comments-list">
+            <li>Loading Comments ...</li>
+          </ul>
 
-            <label for="num-comments">Number of comments displayed:</label>
-            <input type="number" id="num-comments" name="num-comments" value="5" max="20" min="1" onchange="checkNumberComments()">
-            <input type="submit" value="go" onclick="fetchComments()">
-          </div>
-          <button id="delete-all-button" onclick="deleteData()">Delete All Comments</button>
+          <form class="text-center">
+            <label for="num-comments">Number of comments displayed: </label>
+            <input type="number" id="num-comments" name="num-comments" value="5" max="20" min="1" onchange="fetchComments()">
+            <br>
+            <button id="delete-all-button" class="btn btn-danger" onclick="deleteData()">Delete All Comments</button>
+          </form>
         </div>
       </div>
     </div>

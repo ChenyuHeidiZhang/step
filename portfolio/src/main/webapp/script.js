@@ -81,6 +81,8 @@ function checkNumberComments() {
  * Fetches the comments data from the server and displays them.
  */
 function fetchComments() {
+  checkNumberComments();
+  
   const numComments = document.getElementById('num-comments').value;
   fetch('data?num-comments=' + numComments).then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById("comments-list");
@@ -98,10 +100,14 @@ function createListElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
 
-  const contentElement = document.createElement('span');
+  const contentElement = document.createElement('div');
   contentElement.innerText = comment.content;
 
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+
   commentElement.appendChild(contentElement);
+  commentElement.appendChild(deleteButtonElement);
   return commentElement;
 }
 
