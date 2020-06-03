@@ -61,12 +61,30 @@ function addRandomFunFact() {
 
 }
 
+/*
+ * Makes sure that the input number of comments is an integer between 1 and 20.
+ */
+function checkNumberComments() {
+  const numCommentsElement = document.getElementById('num-comments');
+  const numComments = parseInt(numCommentsElement.value, 10);
+  if (numCommentsElement.value != numComments) {
+    numCommentsElement.value = numComments;
+  }
+  if (numComments > 20) {
+    numCommentsElement.value = 20;
+  } else if (numComments < 1) {
+    numCommentsElement.value = 1;
+  }
+}
+
 /* 
  * Fetches the comments data from the server and displays them.
  */
 function fetchComments() {
-  fetch("/data").then(response => response.json()).then(comments => {
+  const numComments = document.getElementById('num-comments').value;
+  fetch('data?num-comments=' + numComments).then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById("comments-list");
+    commentsListElement.innerHTML = "";
     comments.forEach((comment) => {
       commentsListElement.appendChild(createListElement(comment));
     });

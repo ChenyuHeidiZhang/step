@@ -35,6 +35,8 @@ public class DataServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    int numComments = Integer.parseInt(request.getParameter("num-comments"));
+
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -48,6 +50,8 @@ public class DataServlet extends HttpServlet {
 
         Comment comment = new Comment(id, content, timestamp);
         comments.add(comment);
+
+        if (comments.size() == numComments) { break; }
     }
 
     // Converts the ArrayList into a JSON string using the Gson library.
