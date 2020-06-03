@@ -231,7 +231,12 @@ h3 {
 }
 
 textarea {
-  width: 100%;
+  margin-bottom: 5px;
+}
+
+/* Overrides the Bootstrap form-control class. */
+.form-control {
+  font-size: 20px;
 }
 
 #comments-list {
@@ -242,12 +247,17 @@ textarea {
 .comment {
   border-bottom: 1px dashed #efefef;
   overflow: auto;
-  padding: 25px 20px;
+  padding: 0 0 25px 10px;
+  margin-bottom: 10px;
 }
 
 .comment div {
   max-height: 150px;
   overflow: scroll;
+}
+
+.comment div span {
+  font-size: 15px;
 }
 
 .comment button {

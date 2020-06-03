@@ -44,14 +44,15 @@ public class DataServlet extends HttpServlet {
 
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
-        long id = commentEntity.getKey().getId();
-        String content = (String) commentEntity.getProperty("content");
-        long timestamp = (long) commentEntity.getProperty("timestamp");
+      long id = commentEntity.getKey().getId();
+      String name = (String) commentEntity.getProperty("name");
+      String content = (String) commentEntity.getProperty("content");
+      long timestamp = (long) commentEntity.getProperty("timestamp");
 
-        Comment comment = new Comment(id, content, timestamp);
-        comments.add(comment);
+      Comment comment = new Comment(id, name, content, timestamp);
+      comments.add(comment);
 
-        if (comments.size() == numComments) { break; }
+      if (comments.size() == numComments) { break; }
     }
 
     // Converts the ArrayList into a JSON string using the Gson library.
@@ -65,14 +66,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Gets the comment input from the form.
-    String content = request.getParameter("comment-input");
+    // Gets the input parameters from the form.
+    String name = request.getParameter("user-name");
+    String content = request.getParameter("comment-content");
 
     long timestamp = System.currentTimeMillis();
 
     // Creates a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("content", content);
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("content", addslashes(content));
     commentEntity.setProperty("timestamp", timestamp);
 
     // Stores the comment entity to datastore.
@@ -81,6 +84,13 @@ public class DataServlet extends HttpServlet {
 
     // Redirects back to the HTML page.
     response.sendRedirect("/comments.html");
+  }
+
+  /*
+  * Adds slashes to input when necessary.
+  */
+  private String addslashes(String string) {
+    return string.replaceAll("'", "\'");
   }
 }
 

@@ -100,8 +100,20 @@ function createListElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
 
-  const contentElement = document.createElement('div');
-  contentElement.innerText = comment.content;
+  const divElement = document.createElement('div');
+
+  const nameElement = document.createElement('strong');
+  nameElement.className = 'text-success';
+  nameElement.innerText = '@' + addslashes(comment.name);
+  const timeElement = document.createElement('span');
+  timeElement.className = 'pull-right text-muted';
+  timeElement.innerText = convertToDateTime(comment.timestamp);
+  const contentElement = document.createElement('p');
+  contentElement.innerText = addslashes(comment.content);
+  
+  divElement.appendChild(timeElement);
+  divElement.appendChild(nameElement);
+  divElement.appendChild(contentElement);
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -110,9 +122,36 @@ function createListElement(comment) {
     commentElement.remove();    // Removes the comment from the DOM.
   });
 
-  commentElement.appendChild(contentElement);
+  commentElement.appendChild(divElement);
   commentElement.appendChild(deleteButtonElement);
   return commentElement;
+}
+
+/*
+ * Adds slashes to input when necessary.
+ */
+function addslashes(string) {
+  return string.replace(/'/g, '\'').
+    replace(/"/g, '\"');
+}
+
+/* 
+ * Converts a timestamp in milliseconds to a formatted date/time string.
+ * Returns dd/mm/yyyy if not on same day; otherwise, returns number of hours ago. 
+ */
+function convertToDateTime(timestamp) {
+  var date = new Date(timestamp);
+  var dateFormatted = date.toLocaleDateString(); 
+  var today = new Date();
+  if (dateFormatted == today.toLocaleDateString()) {
+    var hourDiff = today.getHours() - date.getHours();
+    if (hourDiff <= 1) {
+      return hourDiff + ' hour ago';
+    } else {
+      return hourDiff + ' hours ago';
+    }
+  }
+  return dateFormatted;
 }
 
 /*
