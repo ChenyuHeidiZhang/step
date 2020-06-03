@@ -75,7 +75,7 @@ public class DataServlet extends HttpServlet {
     // Creates a new comment entity.
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
-    commentEntity.setProperty("content", addslashes(content));
+    commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", timestamp);
 
     // Stores the comment entity to datastore.
@@ -84,13 +84,6 @@ public class DataServlet extends HttpServlet {
 
     // Redirects back to the HTML page.
     response.sendRedirect("/comments.html");
-  }
-
-  /*
-  * Adds slashes to input when necessary.
-  */
-  private String addslashes(String string) {
-    return string.replaceAll("'", "\'");
   }
 }
 

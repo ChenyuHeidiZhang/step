@@ -104,12 +104,12 @@ function createListElement(comment) {
 
   const nameElement = document.createElement('strong');
   nameElement.className = 'text-success';
-  nameElement.innerText = '@' + addslashes(comment.name);
+  nameElement.innerText = '@' + comment.name;
   const timeElement = document.createElement('span');
-  timeElement.className = 'pull-right text-muted';
+  timeElement.className = 'pull-right text-muted';  // Adds Bootstrap classes to style the timeElement.
   timeElement.innerText = convertToDateTime(comment.timestamp);
   const contentElement = document.createElement('p');
-  contentElement.innerText = addslashes(comment.content);
+  contentElement.innerText = comment.content;
   
   divElement.appendChild(timeElement);
   divElement.appendChild(nameElement);
@@ -125,14 +125,6 @@ function createListElement(comment) {
   commentElement.appendChild(divElement);
   commentElement.appendChild(deleteButtonElement);
   return commentElement;
-}
-
-/*
- * Adds slashes to input when necessary.
- */
-function addslashes(string) {
-  return string.replace(/'/g, '\'').
-    replace(/"/g, '\"');
 }
 
 /* 

@@ -253,7 +253,7 @@ textarea {
 
 .comment div {
   max-height: 150px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .comment div span {
