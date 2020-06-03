@@ -66,21 +66,23 @@ function addRandomFunFact() {
  */
 function fetchComments() {
   fetch("/data").then(response => response.json()).then(comments => {
-    // Adds the comments (parsed from JSON into an object) to the list.
     const commentsListElement = document.getElementById("comments-list");
-    commentsListElement.innerHTML = "";
-    for (var i = 0; i < comments.length; i++) {
-      commentsListElement.appendChild(
-      createListElement(comments[i].comment));
-    }
-  })
+    comments.forEach((comment) => {
+      commentsListElement.appendChild(createListElement(comment));
+    });
+  });
 }
 
 /* 
  * Creates an <li> element containing a comment.
  */
 function createListElement(comment) {
-  const liElement = document.createElement('li');
-  liElement.innerText = comment;
-  return liElement;
+  const commentElement = document.createElement('li');
+  commentElement.className = 'comment';
+
+  const contentElement = document.createElement('span');
+  contentElement.innerText = comment.content;
+
+  commentElement.appendChild(contentElement);
+  return commentElement;
 }

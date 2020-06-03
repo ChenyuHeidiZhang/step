@@ -14,10 +14,14 @@
 
 package com.google.sps.servlets;
 
-import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.util.ArrayList;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -25,21 +29,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that creates and lists comments data. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   
-  private ArrayList<String> messages = new ArrayList<>();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    ArrayList<Comment> comments = new ArrayList<>();
+    for (Entity commentEntity : results.asIterable()) {
+        long id = commentEntity.getKey().getId();
+        String content = (String) commentEntity.getProperty("content");
+        long timestamp = (long) commentEntity.getProperty("timestamp");
+
+        Comment comment = new Comment(id, content, timestamp);
+        comments.add(comment);
+    }
+
     // Converts the ArrayList into a JSON string using the Gson library.
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(comments);
 
     // Sends the JSON as the response.
     response.setContentType("application/json;");
-    response.getWriter().println(messages);
+    response.getWriter().println(json);
   }
 
   @Override
@@ -57,9 +74,6 @@ public class DataServlet extends HttpServlet {
     // Stores the comment entity to datastore.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-
-    // Adds the comment to the ArrayList.
-    // messages.add("{\"comment\": \"" + comment + "\"}");
 
     // Redirects back to the HTML page.
     response.sendRedirect("/comments.html");
