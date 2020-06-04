@@ -29,10 +29,10 @@ function addRandomFavoriteQuote() {
       "Hope is a dangerous thing. Hope can drive a man insane. \n - The Shawshank Redemption",
       "Bran thought about it. 'Can a man still be brave if he's afraid?' 'That is the only time a man can be brave,' his father told him. \n ― George R.R. Martin, A Game of Thrones"];
 
-  // Picks a random quote.
+  // Pick a random quote.
   const randomFavoriteQuote = favoriteQuotes[Math.floor(Math.random() * favoriteQuotes.length)];
 
-  // Adds the favorite quote to the page.
+  // Add the favorite quote to the page.
   const favoriteQuoteContainer = document.getElementById('favorite-quote-container');
   favoriteQuoteContainer.innerText = randomFavoriteQuote;
 }
@@ -48,10 +48,10 @@ function addRandomFunFact() {
       "My English name is Heidi. Many people can't pronounce that.",
       "Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name."];
 
-  // Picks a random index for the fun fact.
+  // Pick a random index for the fun fact.
   const index = Math.floor(Math.random() * funFacts.length);
 
-  // Adds the fun fact to the page.
+  // Add the fun fact to the page.
   const funFactContainer = document.getElementById('fun-fact-container');
   if (index == 0 || index == 1) {
   	funFactContainer.innerHTML = document.getElementById('fun-fact-' + funFacts[index]).innerText;
@@ -130,7 +130,7 @@ function changePage(event) {
 
   currentPage.classList.remove('active');
 
-  // Fetches comments on that page without recreating pagination.
+  // Fetch comments on that page without recreating pagination.
   fetchComments(false);
 }
 
@@ -173,7 +173,7 @@ function createCommentElement(comment) {
   nameElement.className = 'text-success';
   nameElement.innerText = '@' + comment.name + ' - ' + comment.mood;
   const timeElement = document.createElement('span');
-  timeElement.className = 'pull-right text-muted';  // Adds Bootstrap classes to style the timeElement.
+  timeElement.className = 'pull-right text-muted';  // Add Bootstrap classes to style the timeElement.
   timeElement.innerText = convertToDateTime(comment.timestamp);
   const contentElement = document.createElement('p');
   contentElement.innerText = comment.content;
@@ -186,7 +186,7 @@ function createCommentElement(comment) {
   deleteButtonElement.innerText = 'Delete';
   deleteButtonElement.addEventListener('click', () => {
     deleteComment(comment);
-    commentElement.remove();    // Removes the comment from the DOM.
+    commentElement.remove();    // Remove the comment from the DOM.
   });
 
   commentElement.appendChild(divElement);
