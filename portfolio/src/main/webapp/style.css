@@ -3,12 +3,15 @@ body {
 }
 
 .content {
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  max-width: 1000px;
   background-color: white;
+  font-size: 20px;
+  margin: auto;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+h3 {
+  text-shadow: 1px 1px 3px #ccc;
 }
 
 .info-bar {
@@ -17,6 +20,16 @@ body {
 
 #name {
   font-weight: bold;
+  margin: 15px 0px;
+}
+
+#location i {
+  font-size: 24px;
+}
+
+#location span {
+  font-size: 18px;
+  margin: 20px 0px;
 }
 
 #links {
@@ -24,7 +37,13 @@ body {
 }
 
 #links a {
+  color: #7c7b8a;
   display: block;
+  margin-top: 10px;
+}
+
+#links a i {
+  font-size: 30px;
 }
 
 .fa-linkedin-square {
@@ -35,17 +54,25 @@ body {
   color: black;
 }
 
+.fa-envelope-o {
+  color: #c44a41;
+  margin-top: 20px;
+}
+
 /* Avatar top image, hidden by default. */
 .img-top {
   display: none;
 }
+
 #avatar img {
-  max-height: 100px;
+  max-height: 120px;
 }
+
 /* On hover, only displays top image. */
 #avatar:hover img {
   display: none;
 }
+
 #avatar:hover .img-top {
   display: inline;
 }
@@ -56,8 +83,37 @@ body {
 
 /* index.html */
 
-#talents-title {
+.fa-hand-o-right {
+  margin-left: 10px;
+}
+
+#my-name {
+  color: #3aa7d6;
+  font-size: 30px;
+  font-weight: 800;
+  text-shadow: 1px 2px 4px #ccc;
+}
+
+#my-name:hover {
+  color: #a7c1fa;
+}
+
+.text-bold {
+  font-weight: 700;
+  color: #607bd1;
+}
+
+.text-red {
+  color: #b34949;
+}
+
+#talents-title:hover {
   cursor: pointer;
+  color: #7c7b8a;
+}
+
+#fun-title {
+  margin-top: 50px;
 }
 
 #fun-div {
@@ -65,29 +121,19 @@ body {
 }
 
 #fun-div button {
+  background-color: #ed7979;
+  border: 2px solid #ed7979;
   border-radius: 10px;
-  border: 2px solid;
+  box-shadow: 5px 5px 8px #ab9da8;
   color: white;
-  padding: 5px 20px;
   margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
 }
+
 #fun-div button:hover {
   background-color: white;
   color: black;
-}
-
-#button-quote {
-  background-color: #35bd59;  /* green */
-}
-#button-quote:hover {
-  border: 2px solid #35bd59;
-}
-
-#button-fact {
-  background-color: #3aa7d6;  /* blue */
-}
-#button-fact:hover {
-  border: 2px solid #3aa7d6;
 }
 
 .img-fact {
@@ -109,11 +155,11 @@ body {
 .dropdown-click {
   background-color: rgb(159, 204, 234);
   color: rgb(54, 53, 53);
-  font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
-  padding: 8px;
   cursor: pointer;
+  font: 800, 22px, "Times New Roman", Times, serif;
+  padding: 8px;
 }
+
 .dropdown-click:hover, .dropdown-click:focus {
   background-color: #6db4e2;
 }
@@ -123,6 +169,7 @@ body {
   display: none;
   position: relative;
 }
+
 /* Shows previously hidden content. */
 .show {
   display:block;
@@ -132,22 +179,24 @@ body {
 
 /* Side nav bar, contained in the gallery. */
 .side-nav {
-  position: fixed;
   padding: 20px;
+  position: fixed;
 }
 
 /* Gallery contents, displayed in grid layout. */
-.row, .tab-content {
+.tab-content {
+  border: none;
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
-  border: none;
 }
+
 .column {
   flex: 10%;
-  max-width: 20%;
+  max-width: 25%;
   padding: 0 4px;
 }
+
 .column img {
   margin-top: 8px;
   margin-bottom: 8px;
@@ -159,24 +208,26 @@ body {
 .photo {
   position: relative;
 }
-/* Sets opacaity when hovered. */
+
 .photo:hover img {
+  /* Sets opacaity when hovered. */
   opacity: 0.3;
 }
+
 .photo:hover .overlay {
   opacity: 1;
 }
 
 /* Overlays a div with text, having absolute position with respect to its parent. */
 .overlay {
+  left: 50%;
+  opacity: 0;
   position:absolute;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  opacity: 0;
   transition: .5s ease-in-out;
 }
+
 .text {
   color: black;
   font-size: 15px;
