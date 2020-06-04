@@ -39,6 +39,7 @@ h3 {
 #links a {
   color: #7c7b8a;
   display: block;
+  font-size: 18px;
   margin-top: 10px;
 }
 
@@ -151,12 +152,26 @@ h3 {
   text-align: center;
 }
 
+.arrow {
+  border: solid black;
+  border-width: 0 4px 4px 0;
+  float: right;
+  margin-top: 4px;
+  padding: 5px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
 /* Dropdown button. */
 .dropdown-click {
   background-color: rgb(159, 204, 234);
   color: rgb(54, 53, 53);
   cursor: pointer;
   font: 800, 22px, "Times New Roman", Times, serif;
+  margin: 15px 0; 
   padding: 8px;
 }
 
@@ -188,6 +203,7 @@ h3 {
   border: none;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 30px;
   padding: 0 4px;
 }
 
