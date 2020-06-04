@@ -61,42 +61,109 @@ function addRandomFunFact() {
 
 }
 
-/*
- * Makes sure that the input number of comments is an integer between 1 and 20.
+/* 
+ * Creates the pagination bar given the number of pages and the previous active page number.
+ * Returns the current active page number.
  */
-function checkNumberComments() {
-  const numCommentsElement = document.getElementById('num-comments');
-  const numComments = parseInt(numCommentsElement.value, 10);
-  if (numCommentsElement.value != numComments) {
-    numCommentsElement.value = numComments;
+function createPagination(numPages, activePageNumber) {
+  // If the previous active page number is greater than the current number of pages, then set it to 1;
+  // Otherwise, use the previous as current active page number.
+  if (activePageNumber > numPages) {
+    activePageNumber = 1;
   }
-  if (numComments > 20) {
-    numCommentsElement.value = 20;
-  } else if (numComments < 1) {
-    numCommentsElement.value = 1;
+  
+  pageListElement = document.getElementById('page-list');
+  pageListElement.innerHTML = '';
+
+  pageListElement.appendChild(createPageElement('Previous'));
+  for (var i = 1; i <= numPages; i++) {
+    if (i == activePageNumber) {
+      pageListElement.appendChild(createPageElement(i, true));
+    } else {
+      pageListElement.appendChild(createPageElement(i, false));
+    }
   }
+  pageListElement.appendChild(createPageElement('Next'));
+
+  return activePageNumber;
+}
+
+/*
+ * Creates an <li> element for a pagination item whose a.innerText is 'text'.
+ * If 'active' is true, then add 'active' to its className.
+ */
+function createPageElement(text, active) {
+  const pageElement = document.createElement('li');
+  pageElement.className = 'page-item';
+  if (active) { pageElement.classList.add('active'); }
+  
+  const linkElement = document.createElement('a');
+  linkElement.className = 'page-link';
+  linkElement.innerText = text;
+  pageElement.appendChild(linkElement);
+
+  pageElement.addEventListener('click', event => changePage(event));
+  return pageElement;
 }
 
 /* 
- * Fetches the comments data from the server and displays them.
+ * When a page item is clicked, changes the active page element and displays the comments on that page.
  */
-function fetchComments() {
-  checkNumberComments();
+function changePage(event) {
+  const currentPage = document.querySelector('.page-item.active');
+  const pageText = event.currentTarget.firstElementChild.innerText;
   
-  const numComments = document.getElementById('num-comments').value;
-  fetch('data?num-comments=' + numComments).then(response => response.json()).then(comments => {
-    const commentsListElement = document.getElementById("comments-list");
-    commentsListElement.innerHTML = "";
-    comments.forEach((comment) => {
-      commentsListElement.appendChild(createListElement(comment));
-    });
+  if (pageText == 'Previous') {
+    // If the currentPage is the first page, then return without change.
+    if (currentPage.firstElementChild.innerText == 1) { return; }
+
+    currentPage.previousSibling.classList.add('active');
+  } else if (pageText == 'Next') {
+    // If the currentPage is the last page, then return without change.
+    const numPages = document.querySelectorAll('#page-list li').length;
+    if (currentPage.firstElementChild.innerText == numPages - 2) { return; }
+
+    currentPage.nextSibling.classList.add('active');
+  } else {
+    event.currentTarget.classList.add('active');
+  }
+
+  currentPage.classList.remove('active');
+
+  // Fetches comments on that page without recreating pagination.
+  fetchComments(false);
+}
+
+/* 
+ * Fetches the comments data on the current page from the server and displays them.
+ */
+function fetchComments(createNewPagination = false) {
+  const currentPage = document.querySelector('.page-item.active');
+  var currentPageNumber = currentPage.firstElementChild.innerText;
+
+  const selectElement = document.getElementById('num-comments-per-page');
+  const commentsPerPage = selectElement.options[selectElement.selectedIndex].value;
+
+  fetch('/data').then(response => response.json()).then(comments => {
+    const commentsListElement = document.getElementById('comments-list');
+    commentsListElement.innerHTML = '';
+
+    if (createNewPagination) {
+      currentPageNumber = createPagination(Math.ceil(comments.length / commentsPerPage), currentPageNumber);
+    }
+
+    const startIndex = (currentPageNumber - 1) * commentsPerPage;
+    const endIndex = Math.min(Number(commentsPerPage) + Number(startIndex), comments.length);
+    for (var i = startIndex; i < endIndex; i++) {
+      commentsListElement.appendChild(createCommentElement(comments[i]));
+    }
   });
 }
 
 /* 
  * Creates an <li> element containing a comment.
  */
-function createListElement(comment) {
+function createCommentElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
 
@@ -150,7 +217,7 @@ function convertToDateTime(timestamp) {
  * Tells the server to delete all comments data in the Datastore.
  */
 function deleteData() {
-  const responsePromise = fetch('/delete-data', {method: 'POST'})
+  const responsePromise = fetch('/delete-data', {method: 'POST'});
   responsePromise.then(fetchComments);
 }
 

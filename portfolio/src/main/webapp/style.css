@@ -269,7 +269,11 @@ textarea {
   right: 15px;
 }
 
-#num-comments {
-  width: 40px;
+#pagination-div .form-control {
+  font-size: 15px;
+  width: 60px;
 }
 
+#delete-all-button {
+  float: right;
+}
