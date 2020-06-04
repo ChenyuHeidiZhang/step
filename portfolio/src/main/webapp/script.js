@@ -42,23 +42,26 @@ function addRandomFavoriteQuote() {
  * Adds a random fun fact to the page.
  */
 function addRandomFunFact() {
-  const funFacts = [
-    'sister', 
-    'selfie',
+  const funFactsJsIds = [
+    'fun-fact-sister',
+    'fun-fact-selfie',
+  ];
+
+  const funFactsStrings = [
     'I\'m a fan of collections. I collect postcards, stickers, books, snacks, etc.',
     'My English name is Heidi. Many people can\'t pronounce that.',
     'Funny enough that most of my Chinese friends call me by my English name while my American friends call me by my Chinese name.',
   ];
 
   // Picks a random index for the fun fact.
-  const index = Math.floor(Math.random() * funFacts.length);
+  const index = Math.floor(Math.random() * (funFactsJsIds.length + funFactsStrings.length));
 
   // Adds the fun fact to the page.
   const funFactContainer = document.getElementById('fun-fact-container');
-  if (index == 0 || index == 1) {
-    funFactContainer.innerHTML = document.getElementById('fun-fact-' + funFacts[index]).innerText;
+  if (index < funFactsJsIds.length) {
+    funFactContainer.innerHTML = document.getElementById(funFactsJsIds[index]).innerText;
   } else {
-    funFactContainer.innerText = funFacts[index];
+    funFactContainer.innerText = funFactsStrings[index - funFactsJsIds.length];
   }
 }
 
