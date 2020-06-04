@@ -171,7 +171,7 @@ function createCommentElement(comment) {
 
   const nameElement = document.createElement('strong');
   nameElement.className = 'text-success';
-  nameElement.innerText = '@' + comment.name;
+  nameElement.innerText = '@' + comment.name + ' - ' + comment.mood;
   const timeElement = document.createElement('span');
   timeElement.className = 'pull-right text-muted';  // Adds Bootstrap classes to style the timeElement.
   timeElement.innerText = convertToDateTime(comment.timestamp);

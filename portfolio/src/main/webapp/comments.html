@@ -58,7 +58,20 @@
           </nav>
         
           <form id="input-form" action="/data" method="POST">
-            <input type="text" name="user-name" class="form-control" placeholder="Your name"></input>
+            <div class="form-row">
+              <div class="col-sm-8">
+                <input type="text" name="user-name" class="form-control" placeholder="Your name"></input>
+              </div>
+              <div class="col-sm-4">
+                <select id="mood" name="mood" class="form-control">
+                  <option selected>Your mood...</option>
+                  <option>Happy</option>
+                  <option>Excited</option>
+                  <option>Sad</option>
+                  <option>Disappointed</option>
+                </select>
+              </div>
+            </div>
             <textarea name="comment-content" class="form-control" placeholder="Leave a comment..." rows="3"></textarea>
             <input type="submit" class="btn btn-info pull-right" value="Post"/>
           </form>
