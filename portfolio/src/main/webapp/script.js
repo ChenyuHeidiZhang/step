@@ -154,8 +154,8 @@ function fetchComments(createNewPagination = false) {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
 
-    const selectElement = document.getElementById('num-comments-per-page');
-    const commentsPerPage = selectElement.options[selectElement.selectedIndex].value;
+    const commentsPerPageElement = document.getElementById('num-comments-per-page');
+    const commentsPerPage = commentsPerPageElement.options[commentsPerPageElement.selectedIndex].value;
 
     const currentPage = document.querySelector('.page-item.active');
     var currentPageNumber = currentPage.firstElementChild.innerText;
@@ -180,7 +180,7 @@ function createCommentElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
 
-  const divElement = document.createElement('div');
+  const commentContainer = document.createElement('div');
 
   const nameElement = document.createElement('strong');
   nameElement.className = 'text-success';
@@ -191,19 +191,19 @@ function createCommentElement(comment) {
   const contentElement = document.createElement('p');
   contentElement.innerText = comment.content;
   
-  divElement.appendChild(timeElement);
-  divElement.appendChild(nameElement);
-  divElement.appendChild(contentElement);
+  commentContainer.appendChild(timeElement);
+  commentContainer.appendChild(nameElement);
+  commentContainer.appendChild(contentElement);
 
-  const deleteButtonElement = document.createElement('button');
-  deleteButtonElement.innerText = 'Delete';
-  deleteButtonElement.addEventListener('click', () => {
+  const deleteButton = document.createElement('button');
+  deleteButton.innerText = 'Delete';
+  deleteButton.addEventListener('click', () => {
     deleteComment(comment);
     commentElement.remove();  // Remove the comment from the DOM.
   });
 
-  commentElement.appendChild(divElement);
-  commentElement.appendChild(deleteButtonElement);
+  commentElement.appendChild(commentContainer);
+  commentElement.appendChild(deleteButton);
   return commentElement;
 }
 
