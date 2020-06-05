@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -42,12 +44,12 @@ public class DataServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       long id = commentEntity.getKey().getId();
-      String name = (String) commentEntity.getProperty("name");
+      String email = (String) commentEntity.getProperty("email");
       String mood = (String) commentEntity.getProperty("mood");
       String content = (String) commentEntity.getProperty("content");
       long timestamp = (long) commentEntity.getProperty("timestamp");
 
-      comments.add(new Comment(id, name, mood, content, timestamp));
+      comments.add(new Comment(id, email, mood, content, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -61,8 +63,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    UserService userService = UserServiceFactory.getUserService();
+
+    // Only logged-in users can post comments.
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/comments.html");
+      return;
+    }
+
     // Get the input parameters from the form.
-    String name = request.getParameter("user-name");
+    String email = userService.getCurrentUser().getEmail();
     String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
 
@@ -70,7 +80,7 @@ public class DataServlet extends HttpServlet {
 
     // Create a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("email", email);
     commentEntity.setProperty("mood", mood);
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", timestamp);

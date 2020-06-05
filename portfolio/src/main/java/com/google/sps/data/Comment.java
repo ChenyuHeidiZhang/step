@@ -17,14 +17,14 @@ package com.google.sps.data;
 /** A class that represents a comment. */
 public final class Comment {
   private final long id;
-  private final String name;
+  private final String email;
   private final String mood;
   private final String content;
   private final long timestamp;
 
-  public Comment(long id, String name, String mood, String content, long timestamp) {
+  public Comment(long id, String email, String mood, String content, long timestamp) {
     this.id = id;
-    this.name = name;
+    this.email = email;
     this.mood = mood;
     this.content = content;
     this.timestamp = timestamp;
