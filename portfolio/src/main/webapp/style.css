@@ -68,7 +68,7 @@ h3 {
   max-height: 120px;
 }
 
-/* On hover, only displays top image. */
+/* On hover, only display top image. */
 #avatar:hover img {
   display: none;
 }
@@ -170,7 +170,7 @@ h3 {
   position: relative;
 }
 
-/* Shows previously hidden content. */
+/* Show previously hidden content. */
 .show {
   display:block;
 }
@@ -210,7 +210,7 @@ h3 {
 }
 
 .photo:hover img {
-  /* Sets opacaity when hovered. */
+  /* Set opacaity when hovered. */
   opacity: 0.3;
 }
 
@@ -218,7 +218,7 @@ h3 {
   opacity: 1;
 }
 
-/* Overlays a div with text, having absolute position with respect to its parent. */
+/* Overlay a div with text, having absolute position with respect to its parent. */
 .overlay {
   left: 50%;
   opacity: 0;
@@ -243,7 +243,7 @@ textarea {
   margin-bottom: 5px;
 }
 
-/* Overrides the Bootstrap form-control class. */
+/* Override the Bootstrap form-control class. */
 .form-control {
   font-size: 20px;
 }
