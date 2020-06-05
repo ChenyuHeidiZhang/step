@@ -248,3 +248,8 @@ function deleteComment(comment) {
   params.append('id', comment.id);
   fetch('/delete-comment', {method: 'POST', body: params});
 }
+
+
+function checkLoginStatus() {
+  
+}
