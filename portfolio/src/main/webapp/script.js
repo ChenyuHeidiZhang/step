@@ -15,6 +15,7 @@
 
 /** 
  * Toggles the drop down text.
+ * @param {string} id The id of the dropdown content to be toggled.
  */
 function toggleDropDown(id) {
   document.getElementById(id).classList.toggle("show");
@@ -61,13 +62,14 @@ function addRandomFunFact() {
 
 }
 
-/* 
- * Creates the pagination bar given the number of pages and the previous active page number.
- * Returns the current active page number.
+/**
+ * Creates the pagination bar, where the active page number is the previously active one unless it no longer exists. 
+ * @param {number} numPages The total number of pages. 
+ * @param {number} activePageNumber The previously active page number.
+ * @return {number} The currently active page number.
  */
-function createPagination(numPages, activePageNumber) {
-  // If the previous active page number is greater than the current number of pages, then set it to 1;
-  // Otherwise, use the previous as current active page number.
+function createPaginationBar(numPages, activePageNumber) {
+  // Set the currently active page number to 1 if the previously active page number no longer exists.
   if (activePageNumber > numPages) {
     activePageNumber = 1;
   }
@@ -88,9 +90,11 @@ function createPagination(numPages, activePageNumber) {
   return activePageNumber;
 }
 
-/*
- * Creates an <li> element for a pagination item whose a.innerText is 'text'.
- * If 'active' is true, then add 'active' to its className.
+/**
+ * Creates an <li> element for a page item in the pagination bar. 
+ * @param {string} text The innerText of the <a> child element of the <li>.
+ * @param {boolean} active Whether the created page item is active.
+ * @return {!Element<li>} The page element created.
  */
 function createPageElement(text, active) {
   const pageElement = document.createElement('li');
@@ -106,8 +110,9 @@ function createPageElement(text, active) {
   return pageElement;
 }
 
-/* 
- * When a page item is clicked, changes the active page element and displays the comments on that page.
+/**
+ * Changes the active page element and displays the comments on that page when a page element is clicked.
+ * @param {!Event} event The click event that triggers the change of page.
  */
 function changePage(event) {
   const currentPage = document.querySelector('.page-item.active');
@@ -134,22 +139,22 @@ function changePage(event) {
   fetchComments(false);
 }
 
-/* 
- * Fetches the comments data on the current page from the server and displays them.
+/**
+ * Fetches the comments from the data server and displays the comments on the currently active page.
+ * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
  */
 function fetchComments(createNewPagination = false) {
-  const currentPage = document.querySelector('.page-item.active');
-  var currentPageNumber = currentPage.firstElementChild.innerText;
-
-  const selectElement = document.getElementById('num-comments-per-page');
-  const commentsPerPage = selectElement.options[selectElement.selectedIndex].value;
-
   fetch('/data').then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
 
+    const selectElement = document.getElementById('num-comments-per-page');
+    const commentsPerPage = selectElement.options[selectElement.selectedIndex].value;
+
+    const currentPage = document.querySelector('.page-item.active');
+    var currentPageNumber = currentPage.firstElementChild.innerText;
     if (createNewPagination) {
-      currentPageNumber = createPagination(Math.ceil(comments.length / commentsPerPage), currentPageNumber);
+      currentPageNumber = createPaginationBar(Math.ceil(comments.length / commentsPerPage), currentPageNumber);
     }
 
     const startIndex = (currentPageNumber - 1) * commentsPerPage;
@@ -160,8 +165,10 @@ function fetchComments(createNewPagination = false) {
   });
 }
 
-/* 
- * Creates an <li> element containing a comment.
+/**
+ * Creates an <li> element containing a comment, including the username, content, time, and delete button.
+ * @param {!Comment} comment The Comment object from which a <li> element is created.
+ * @return {!Element<li>} The comment element created.
  */
 function createCommentElement(comment) {
   const commentElement = document.createElement('li');
@@ -186,7 +193,7 @@ function createCommentElement(comment) {
   deleteButtonElement.innerText = 'Delete';
   deleteButtonElement.addEventListener('click', () => {
     deleteComment(comment);
-    commentElement.remove();    // Remove the comment from the DOM.
+    commentElement.remove();  // Remove the comment from the DOM.
   });
 
   commentElement.appendChild(divElement);
@@ -194,9 +201,11 @@ function createCommentElement(comment) {
   return commentElement;
 }
 
-/* 
+/**
  * Converts a timestamp in milliseconds to a formatted date/time string.
- * Returns dd/mm/yyyy if not on same day; otherwise, returns number of hours ago. 
+ * @param {string} timestamp The timestamp to be converted. 
+ * @return {string} Date with format dd/mm/yyyy if the given time is not today; 
+ *     otherwise, number of hours before the current time. 
  */
 function convertToDateTime(timestamp) {
   var date = new Date(timestamp);
@@ -213,7 +222,7 @@ function convertToDateTime(timestamp) {
   return dateFormatted;
 }
 
-/*
+/**
  * Tells the server to delete all comments data in the Datastore.
  */
 function deleteData() {
@@ -221,8 +230,9 @@ function deleteData() {
   responsePromise.then(fetchComments);
 }
 
-/* 
+/** 
  * Tells the server to delete one comment.
+ * @param {!Comment} comment The object that represents the comment to be deleted.
  */
 function deleteComment(comment) {
   const params = new URLSearchParams();
