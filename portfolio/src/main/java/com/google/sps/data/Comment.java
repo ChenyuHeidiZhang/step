@@ -16,7 +16,6 @@ package com.google.sps.data;
 
 /** A class that represents a comment. */
 public final class Comment {
-
   private final long id;
   private final String name;
   private final String mood;
