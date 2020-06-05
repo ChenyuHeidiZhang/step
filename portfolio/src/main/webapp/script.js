@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 /** 
  * Toggles the drop down text.
  * @param {string} id The id of the dropdown content to be toggled.
