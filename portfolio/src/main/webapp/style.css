@@ -156,15 +156,12 @@ h3 {
   text-align: center;
 }
 
-.arrow {
+.dropdown-arrow {
   border: solid black;
   border-width: 0 4px 4px 0;
   float: right;
   margin-top: 4px;
   padding: 5px;
-}
-
-.down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
