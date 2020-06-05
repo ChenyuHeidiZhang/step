@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="fetchComments(true)">
+  <body onload="commentsPageOnLoad()">
     <div class="content container-fluid">
       <div class="row">
         <!-- The left info bar. -->
@@ -56,11 +56,12 @@
               </ul>
             </div>
           </nav>
-          <button id="login" class="btn btn-secondary">Login</button>
+          
+          <a id="login-out" href="#" class="btn btn-secondary">Login</a>
           <button id="change-nickname" class="btn btn-light">Change Nickname</button>
 
           <form id="input-form" action="/data" method="POST">
-            <fieldset disabled="disabled">
+            <fieldset id="input-form-fieldset" disabled>
               <select id="mood" name="mood" class="form-control pull-right">
                 <option selected>Your mood...</option>
                 <option>Happy</option>

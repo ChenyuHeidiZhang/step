@@ -249,7 +249,30 @@ function deleteComment(comment) {
   fetch('/delete-comment', {method: 'POST', body: params});
 }
 
-
+/**
+ * Checks if the user is logged in and displays corresponding contents. 
+ */
 function checkLoginStatus() {
-  
+  fetch('/login').then(response => response.json()).then(loginStatus => {
+    const isLogin = loginStatus.isLogin;
+    const loginOutLink = document.getElementById('login-out');
+
+    if (isLogin) {
+      document.getElementById('input-form-fieldset').removeAttribute('disabled');
+      loginOutLink.href = loginStatus.logoutUrl;
+      loginOutLink.innerText = 'Logout';
+    } else {
+      document.getElementById('input-form-fieldset').setAttribute('disabled', 'true');
+      loginOutLink.href = loginStatus.loginUrl;
+      loginOutLink.innerText = 'Login';
+    }
+  });
+}
+
+/** 
+ * Checks log in status and fetches all the comments when comments.html is on load.
+ */
+function commentsPageOnLoad() {
+  checkLoginStatus();
+  fetchComments(true);
 }
