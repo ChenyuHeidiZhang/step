@@ -99,7 +99,9 @@ function createPaginationBar(numPages, activePageNumber) {
 function createPageElement(text, active) {
   const pageElement = document.createElement('li');
   pageElement.className = 'page-item';
-  if (active) { pageElement.classList.add('active'); }
+  if (active) { 
+    pageElement.classList.add('active'); 
+  }
   
   const linkElement = document.createElement('a');
   linkElement.className = 'page-link';
@@ -120,13 +122,17 @@ function changePage(event) {
   
   if (pageText == 'Previous') {
     // If the currentPage is the first page, then return without change.
-    if (currentPage.firstElementChild.innerText == 1) { return; }
+    if (currentPage.firstElementChild.innerText == 1) { 
+      return; 
+    }
 
     currentPage.previousSibling.classList.add('active');
   } else if (pageText == 'Next') {
     // If the currentPage is the last page, then return without change.
     const numPages = document.querySelectorAll('#page-list li').length;
-    if (currentPage.firstElementChild.innerText == numPages - 2) { return; }
+    if (currentPage.firstElementChild.innerText == numPages - 2) { 
+      return; 
+    }
 
     currentPage.nextSibling.classList.add('active');
   } else {
