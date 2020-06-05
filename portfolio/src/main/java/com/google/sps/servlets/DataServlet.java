@@ -44,12 +44,12 @@ public class DataServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       long id = commentEntity.getKey().getId();
-      String email = (String) commentEntity.getProperty("email");
+      String displayName = (String) commentEntity.getProperty("displayName");
       String mood = (String) commentEntity.getProperty("mood");
       String content = (String) commentEntity.getProperty("content");
       long timestamp = (long) commentEntity.getProperty("timestamp");
 
-      comments.add(new Comment(id, email, mood, content, timestamp));
+      comments.add(new Comment(id, displayName, mood, content, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -73,6 +73,13 @@ public class DataServlet extends HttpServlet {
 
     // Get the input parameters from the form.
     String email = userService.getCurrentUser().getEmail();
+    String nickname = getUserNickname(userService.getCurrentUser().getUserId());
+    String displayName;
+    if (nickname == "") {
+      displayName = email;
+    } else {
+      displayName = nickname;
+    }
     String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
 
@@ -80,7 +87,7 @@ public class DataServlet extends HttpServlet {
 
     // Create a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("email", email);
+    commentEntity.setProperty("displayName", displayName);
     commentEntity.setProperty("mood", mood);
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", timestamp);
@@ -91,6 +98,23 @@ public class DataServlet extends HttpServlet {
 
     // Redirect back to the HTML page.
     response.sendRedirect("/comments.html");
+  }
+
+  /**
+   * Returns the nickname of the user with id, or empty String if the user has not set a nickname.
+   */
+  private String getUserNickname(String id) {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query =
+        new Query("UserInfo")
+            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return "";
+    }
+    String nickname = (String) entity.getProperty("nickname");
+    return nickname;
   }
 }
 

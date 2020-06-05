@@ -187,7 +187,7 @@ function createCommentElement(comment) {
 
   const nameElement = document.createElement('strong');
   nameElement.className = 'text-success';
-  nameElement.innerText = comment.email + ' - ' + comment.mood;
+  nameElement.innerText = comment.displayName + ' - ' + comment.mood;
   const timeElement = document.createElement('span');
   timeElement.className = 'pull-right text-muted';  // Add Bootstrap classes to style the timeElement.
   timeElement.innerText = convertToDateTime(comment.timestamp);
@@ -259,10 +259,12 @@ function checkLoginStatus() {
 
     if (isLogin) {
       document.getElementById('input-form-fieldset').removeAttribute('disabled');
+      document.getElementById('set-nickname-button').style.display = 'block';
       loginOutLink.href = loginStatus.logoutUrl;
       loginOutLink.innerText = 'Logout';
     } else {
       document.getElementById('input-form-fieldset').setAttribute('disabled', 'true');
+      document.getElementById('set-nickname-button').style.display = 'none';
       loginOutLink.href = loginStatus.loginUrl;
       loginOutLink.innerText = 'Login';
     }

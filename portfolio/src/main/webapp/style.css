@@ -235,6 +235,14 @@ h3 {
 
 /* comments.html */
 
+#comments-header {
+  margin-top:20px;
+}
+
+#comments-header .col-sm-4 button, a {
+  float: right;
+}
+
 #input-form {
   margin: 20px 0px;
 }
