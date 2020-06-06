@@ -258,17 +258,32 @@ function checkLoginStatus() {
     const loginOutLink = document.getElementById('login-out');
 
     if (isLogin) {
+      fetch('/nickname').then(response => response.text()).then(displayName => {
+        setWelcomeMessage('Welcome, ' + displayName);
+      });
+
       document.getElementById('input-form-fieldset').removeAttribute('disabled');
       document.getElementById('set-nickname-button').style.display = 'block';
       loginOutLink.href = loginStatus.logoutUrl;
       loginOutLink.innerText = 'Logout';
     } else {
+      setWelcomeMessage('Welcome, please log in to post a comment.')
+      
       document.getElementById('input-form-fieldset').setAttribute('disabled', 'true');
       document.getElementById('set-nickname-button').style.display = 'none';
       loginOutLink.href = loginStatus.loginUrl;
       loginOutLink.innerText = 'Login';
     }
   });
+}
+
+/**
+ * Writes the welcome message to the DOM.
+ * @param {string} message The message to be displayed.
+ */
+function setWelcomeMessage(message) {
+  const welcomeElement = document.getElementById('welcome-message');
+  welcomeElement.innerText = message;
 }
 
 /** 

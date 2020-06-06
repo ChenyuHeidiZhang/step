@@ -239,8 +239,8 @@ h3 {
   margin-top:20px;
 }
 
-#comments-header .col-sm-4 button, a {
-  float: right;
+#login-out, #set-nickname-button {
+ float:right;
 }
 
 #input-form {

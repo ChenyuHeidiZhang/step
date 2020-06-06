@@ -72,11 +72,10 @@ public class DataServlet extends HttpServlet {
     }
 
     // Get the input parameters from the form.
-    String email = userService.getCurrentUser().getEmail();
     String nickname = getUserNickname(userService.getCurrentUser().getUserId());
     String displayName;
     if (nickname == "") {
-      displayName = email;
+      displayName = userService.getCurrentUser().getEmail();
     } else {
       displayName = nickname;
     }
@@ -108,6 +107,7 @@ public class DataServlet extends HttpServlet {
     Query query =
         new Query("UserInfo")
             .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+
     PreparedQuery results = datastore.prepare(query);
     Entity entity = results.asSingleEntity();
     if (entity == null) {

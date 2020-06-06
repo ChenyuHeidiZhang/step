@@ -17,6 +17,8 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
@@ -25,9 +27,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that stores the nickname input by a user alongside the user's id. */
-@WebServlet("/set-nickname")
-public class SetNicknameServlet extends HttpServlet {
+/** Servlet that stores the nickname input by a user alongside the user's id and returns a display name upon GET request. */
+@WebServlet("/nickname")
+public class NicknameServlet extends HttpServlet {
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    UserService userService = UserServiceFactory.getUserService();
+    
+    String nickname = getUserNickname(userService.getCurrentUser().getUserId());
+    String displayName;
+    // Display nickname if it is set; display email otherwise.
+    if (nickname == "") {
+      displayName = userService.getCurrentUser().getEmail();
+    } else {
+      displayName = nickname;
+    }
+
+    response.setContentType("text/html;");
+    response.getWriter().println(displayName);
+  }
+
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
@@ -47,5 +66,23 @@ public class SetNicknameServlet extends HttpServlet {
     datastore.put(entity);
 
     response.sendRedirect("/comments.html");
+  }
+
+  /**
+   * Returns the nickname of the user with id, or empty String if the user has not set a nickname.
+   */
+  private String getUserNickname(String id) {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query =
+        new Query("UserInfo")
+            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    if (entity == null) {
+      return "";
+    }
+    String nickname = (String) entity.getProperty("nickname");
+    return nickname;
   }
 }
