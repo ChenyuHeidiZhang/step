@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns user's login status and corresponding Urls for log in or out */
+/** Servlet that returns user's login status and corresponding Urls for log in or out. */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
   @Override
@@ -33,7 +33,9 @@ public class LoginServlet extends HttpServlet {
     if (userService.isUserLoggedIn()) {
       String urlToRedirectToAfterUserLogsOut = "/comments.html";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      response.getWriter().println("{\"isLogin\": true, \"logoutUrl\": \"" + logoutUrl + "\"}");
+      response.getWriter().println("{\"isLogin\": true, " + 
+          "\"logoutUrl\": \"" + logoutUrl + "\", " + 
+          "\"userId\": " + "\"" + userService.getCurrentUser().getUserId() + "\"}");
     } else {
       String urlToRedirectToAfterUserLogsIn = "/comments.html";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);

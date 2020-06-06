@@ -33,8 +33,9 @@ public class NicknameServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
-    
-    String nickname = getUserNickname(userService.getCurrentUser().getUserId());
+
+    String userId = request.getParameter("userId");    
+    String nickname = getUserNickname(userId);
     String displayName;
     // Display nickname if it is set; display email otherwise.
     if (nickname == "") {
@@ -56,13 +57,13 @@ public class NicknameServlet extends HttpServlet {
     }
 
     String nickname = request.getParameter("nickname-input");
-    String id = userService.getCurrentUser().getUserId();
+    String userId = userService.getCurrentUser().getUserId();
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Entity entity = new Entity("UserInfo", id);
-    entity.setProperty("id", id);
+    Entity entity = new Entity("UserInfo", userId);
+    entity.setProperty("userId", userId);
     entity.setProperty("nickname", nickname);
-    // The put() function automatically inserts new data or updates existing data based on IDs
+    // The put() function automatically inserts new data or updates existing data based on IDs.
     datastore.put(entity);
 
     response.sendRedirect("/comments.html");
@@ -71,11 +72,11 @@ public class NicknameServlet extends HttpServlet {
   /**
    * Returns the nickname of the user with id, or empty String if the user has not set a nickname.
    */
-  private String getUserNickname(String id) {
+  private String getUserNickname(String userId) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("UserInfo")
-            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+            .setFilter(new Query.FilterPredicate("userId", Query.FilterOperator.EQUAL, userId));
 
     PreparedQuery results = datastore.prepare(query);
     Entity entity = results.asSingleEntity();
