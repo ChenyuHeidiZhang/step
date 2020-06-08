@@ -221,6 +221,7 @@ function convertToDateTime(timestamp) {
   var date = new Date(timestamp);
   var dateFormatted = date.toLocaleDateString(); 
   var today = new Date();
+  // Check whether the date of the given timestamp is the same as today; if so, return number of hours ago.
   if (dateFormatted == today.toLocaleDateString()) {
     var hourDiff = today.getHours() - date.getHours();
     if (hourDiff <= 1) {
