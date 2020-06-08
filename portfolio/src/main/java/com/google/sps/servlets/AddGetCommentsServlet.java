@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that creates and lists comments data. */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {    
+@WebServlet("/add-get-comments")
+public class AddGetCommentsServlet extends HttpServlet {    
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);

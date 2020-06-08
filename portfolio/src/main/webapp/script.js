@@ -153,7 +153,7 @@ function changePage(event) {
  * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
  */
 function fetchComments(createNewPagination = false) {
-  fetch('/data').then(response => response.json()).then(comments => {
+  fetch('/add-get-comments').then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
 
