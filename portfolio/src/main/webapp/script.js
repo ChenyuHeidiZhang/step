@@ -117,23 +117,23 @@ function createPageElement(text, active) {
 
 /**
  * Changes the active page element and displays the comments on that page when a page element is clicked.
- * @param {!Event} event The click event that triggers the change of page.
+ * @param {!Event} event The click event that triggered the change in active page.
  */
 function changePage(event) {
   const currentPage = document.querySelector('.page-item.active');
   const pageText = event.currentTarget.firstElementChild.innerText;
   
   if (pageText == 'Previous') {
-    // If the currentPage is the first page, then return without change.
     if (currentPage.firstElementChild.innerText == 1) { 
+      // Current page is the first page, no previous page to open.
       return; 
     }
 
     currentPage.previousSibling.classList.add('active');
   } else if (pageText == 'Next') {
-    // If the currentPage is the last page, then return without change.
     const numPages = document.querySelectorAll('#page-list li').length;
     if (currentPage.firstElementChild.innerText == numPages - 2) { 
+      // Current page is the last page, no next page to open.
       return; 
     }
 
@@ -149,7 +149,7 @@ function changePage(event) {
 }
 
 /**
- * Fetches the comments from the data server and displays the comments on the currently active page.
+ * Fetches the comments from the data server and displays them on the currently active page.
  * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
  */
 function fetchComments(createNewPagination = false) {
@@ -175,7 +175,8 @@ function fetchComments(createNewPagination = false) {
 }
 
 /**
- * Creates an <li> element containing a comment, including the username, content, time, and delete button.
+ * Creates an <li> element containing an individual comment. The element includes the 
+       following attributes associated with the comment: username, content, time, and delete button.
  * @param {!Comment} comment The Comment object from which a <li> element is created.
  * @return {!Element<li>} The comment element created.
  */
@@ -202,7 +203,7 @@ function createCommentElement(comment) {
   deleteButton.innerText = 'Delete';
   deleteButton.addEventListener('click', () => {
     deleteComment(comment);
-    commentElement.remove();  // Remove the comment from the DOM.
+    deleteButton.parentElement.remove();  // Remove the comment from the DOM.
   });
 
   commentElement.appendChild(commentContainer);
