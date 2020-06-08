@@ -236,8 +236,8 @@ function convertToDateTime(timestamp) {
 /**
  * Tells the server to delete all comments data in the Datastore.
  */
-function deleteData() {
-  const responsePromise = fetch('/delete-data', {method: 'POST'});
+function deleteAllComments() {
+  const responsePromise = fetch('/delete-comments', {method: 'POST'});
   responsePromise.then(fetchComments);
 }
 
@@ -248,5 +248,5 @@ function deleteData() {
 function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
-  fetch('/delete-comment', {method: 'POST', body: params});
+  fetch('/delete-comments', {method: 'POST', body: params});
 }
