@@ -66,7 +66,7 @@ function addRandomFunFact() {
 }
 
 /**
- * Creates the pagination bar, where the active page number is the previously active one unless it no longer exists. 
+ * Creates the pagination bar such that the active page number is the previously active page number, unless it no longer exists. 
  * @param {number} numPages The total number of pages. 
  * @param {number} activePageNumber The previously active page number.
  * @return {number} The currently active page number.
