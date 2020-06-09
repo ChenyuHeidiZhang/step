@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="fetchComments(true)">
+  <body onload="fetchComments(true); fetchBlobstoreUrl();">
     <div class="content container-fluid">
       <div class="row">
         <!-- The left info bar. -->
@@ -57,7 +57,7 @@
             </div>
           </nav>
         
-          <form id="input-form" action="/add-get-comments" method="POST">
+          <form id="input-form" style="display: none;" method="POST" enctype="multipart/form-data">
             <div class="form-row">
               <div class="col-sm-8">
                 <input type="text" name="user-name" class="form-control" placeholder="Your name"></input>
@@ -72,7 +72,8 @@
                 </select>
               </div>
             </div>
-            <textarea name="comment-content" class="form-control" placeholder="Leave a comment..." rows="3"></textarea>
+            <textarea name="comment-content" class="form-control" placeholder="Leave a comment... (You can upload an image.)" rows="3"></textarea>
+            <input type="file" id="image-upload" name="image">
             <input type="submit" class="btn btn-info pull-right" value="Post"/>
           </form>
           <div class="clearfix"></div>
