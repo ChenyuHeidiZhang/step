@@ -27,9 +27,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that stores the nickname input by a user alongside the user's id and returns a display name upon GET request. */
+/** Servlet that stores the user's id and nickname entered, and returns a display name upon GET request. */
 @WebServlet("/nickname")
 public class NicknameServlet extends HttpServlet {
+  private final String USERID = "userId";
+  private final String NICKNAME = "nickname";
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
@@ -37,7 +40,7 @@ public class NicknameServlet extends HttpServlet {
     String userId = request.getParameter("userId");    
     String nickname = getUserNickname(userId);
     String displayName;
-    // Display nickname if it is set; display email otherwise.
+    // Display nickname if set, email otherwise.
     if (nickname == "") {
       displayName = userService.getCurrentUser().getEmail();
     } else {
@@ -61,9 +64,10 @@ public class NicknameServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity entity = new Entity("UserInfo", userId);
-    entity.setProperty("userId", userId);
-    entity.setProperty("nickname", nickname);
-    // The put() function automatically inserts new data or updates existing data based on IDs.
+    entity.setProperty(USERID, userId);
+    entity.setProperty(NICKNAME, nickname);
+    // Insert a new entry for the user in the datastore.
+    // Note: The "userId" is used as a key to identify each entry, so existing entries will be updated to use the new "nickname".
     datastore.put(entity);
 
     response.sendRedirect("/comments.html");
@@ -76,14 +80,14 @@ public class NicknameServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("UserInfo")
-            .setFilter(new Query.FilterPredicate("userId", Query.FilterOperator.EQUAL, userId));
+            .setFilter(new Query.FilterPredicate(USERID, Query.FilterOperator.EQUAL, userId));
 
     PreparedQuery results = datastore.prepare(query);
     Entity entity = results.asSingleEntity();
     if (entity == null) {
       return "";
     }
-    String nickname = (String) entity.getProperty("nickname");
+    String nickname = (String) entity.getProperty(NICKNAME);
     return nickname;
   }
 }

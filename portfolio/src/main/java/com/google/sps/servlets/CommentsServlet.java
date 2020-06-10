@@ -77,7 +77,8 @@ public class CommentsServlet extends HttpServlet {
     }
 
     String userId = userService.getCurrentUser().getUserId();
-    String mood = request.getParameter("mood");  // Get the input parameters from the form.
+    // Get the input parameters from the form.
+    String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
     long timestamp = System.currentTimeMillis();
 

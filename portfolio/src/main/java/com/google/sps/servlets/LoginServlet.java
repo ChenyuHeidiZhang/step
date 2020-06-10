@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns user's login status and corresponding Urls for log in or out. */
+/** Servlet that returns user's login status and corresponding URLs for logging in or out. */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
   @Override
@@ -31,14 +31,14 @@ public class LoginServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      String urlToRedirectToAfterUserLogsOut = "/comments.html";
-      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
+      String redirectUrlLogout = "/comments.html";  // The URL to redirect to after the user logs out.
+      String logoutUrl = userService.createLogoutURL(redirectUrlLogout);
       response.getWriter().println("{\"isLogin\": true, " + 
           "\"logoutUrl\": \"" + logoutUrl + "\", " + 
           "\"userId\": " + "\"" + userService.getCurrentUser().getUserId() + "\"}");
     } else {
-      String urlToRedirectToAfterUserLogsIn = "/comments.html";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      String redirectUrlLogin = "/comments.html";  // The URL to redirect to after the user logs in.
+      String loginUrl = userService.createLoginURL(redirectUrlLogin);
       response.getWriter().println("{\"isLogin\": false, \"loginUrl\": \"" + loginUrl + "\"}");
     }
   }
