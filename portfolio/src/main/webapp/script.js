@@ -253,15 +253,16 @@ function deleteComment(comment) {
 }
 
 /**
- * Checks if the user is logged in and displays corresponding contents. 
+ * Checks if the user is logged in and displays corresponding welcome messages and login/logout buttons.
+ * Also, if user is logged in, enables posting comments and displays set-nickname button.
  */
-function checkLoginStatus() {
+function setupPageByLoginStatus() {
   fetch('/login').then(response => response.json()).then(loginStatus => {
-    const isLogin = loginStatus.isLogin;
+    const isLoggedIn = loginStatus.isLoggedIn;
     const loginOutLink = document.getElementById('login-out');
     const welcomeElement = document.getElementById('welcome-message');
 
-    if (isLogin) {
+    if (isLoggedIn) {
       fetch('/nickname?userId=' + loginStatus.userId).then(response => response.text()).then(displayName => {
         welcomeElement.innerText = 'Welcome, ' + displayName;
       });
@@ -282,9 +283,9 @@ function checkLoginStatus() {
 }
 
 /** 
- * Checks log in status and fetches all the comments when comments.html is on load.
+ * Checks log in status and fetches all the comments to set up comments.html when the page is loading.
  */
-function commentsPageOnLoad() {
-  checkLoginStatus();
+function setupCommentsPage() {
+  setupPageByLoginStatus()
   fetchComments(true);
 }

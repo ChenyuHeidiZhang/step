@@ -256,7 +256,8 @@ h3 {
   margin-top:20px;
 }
 
-#login-out, #set-nickname-button {
+#login-out, 
+#set-nickname-button {
  float:right;
 }
 

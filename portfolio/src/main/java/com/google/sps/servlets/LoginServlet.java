@@ -33,13 +33,13 @@ public class LoginServlet extends HttpServlet {
     if (userService.isUserLoggedIn()) {
       String redirectUrlLogout = "/comments.html";  // The URL to redirect to after the user logs out.
       String logoutUrl = userService.createLogoutURL(redirectUrlLogout);
-      response.getWriter().println("{\"isLogin\": true, " + 
+      response.getWriter().println("{\"isLoggedIn\": true, " + 
           "\"logoutUrl\": \"" + logoutUrl + "\", " + 
           "\"userId\": " + "\"" + userService.getCurrentUser().getUserId() + "\"}");
     } else {
       String redirectUrlLogin = "/comments.html";  // The URL to redirect to after the user logs in.
       String loginUrl = userService.createLoginURL(redirectUrlLogin);
-      response.getWriter().println("{\"isLogin\": false, \"loginUrl\": \"" + loginUrl + "\"}");
+      response.getWriter().println("{\"isLoggedIn\": false, \"loginUrl\": \"" + loginUrl + "\"}");
     }
   }
 }
