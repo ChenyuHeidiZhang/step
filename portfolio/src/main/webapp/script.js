@@ -65,3 +65,54 @@ function addRandomFunFact() {
   }
 }
 
+/** Creates a map that shows landmarks around Google. */
+function createMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 39.329858, lng: -76.620540}, zoom: 5});
+  
+  // When the user clicks in the map, show a marker with a text box the user can
+  // edit.
+  map.addListener('click', (event) => {
+    createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+  });
+
+  addLandmark(
+      map, 39.329858, -76.620540, 'Johns Hopkins University',
+      'I go to Johns Hopkins University.')
+  addLandmark(
+      map, 32.003407, 118.734956, 'Nanjing',
+      'This is where I was born.')
+  addLandmark(
+      map, 37.423829, -122.092154, 'Google',
+      'This is where my internship was supposed to be, but now it\'s remote.');
+  addLandmark(
+      map, 23.117487, -82.373375, 'Havana',
+      'I went there with my friends. It was great fun.');
+  addLandmark(
+      map, 38.642805, -90.195679, 'St Louis',
+      'I worked here during summer, 2019.');
+
+  fetchMarkers();
+}
+
+/** Adds a marker that shows an info window when clicked. */
+function addLandmark(map, lat, lng, title, description) {
+  const marker = new google.maps.Marker(
+      {position: {lat: lat, lng: lng}, map: map, title: title});
+
+  const infoWindow = new google.maps.InfoWindow({content: description});
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+}
+
+/** Fetches markers from the backend and adds them to the map. */
+function fetchMarkers() {
+  fetch('/markers').then(response => response.json()).then((markers) => {
+    markers.forEach(
+        (marker) => {
+            createMarkerForDisplay(marker.lat, marker.lng, marker.content)});
+  });
+}
+

@@ -250,3 +250,8 @@ h3 {
   font-size: 15px;
 }
 
+/* map.html */
+
+#map {
+  height: 100vh;
+}
