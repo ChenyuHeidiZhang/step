@@ -69,7 +69,7 @@ h3 {
   max-height: 120px;
 }
 
-/* On hover, only displays top image. */
+/* On hover, only display top image. */
 #avatar:hover img {
   display: none;
 }
@@ -186,7 +186,7 @@ h3 {
   position: relative;
 }
 
-/* Shows previously hidden content. */
+/* Show previously hidden content. */
 .show {
   display:block;
 }
@@ -227,7 +227,7 @@ h3 {
 }
 
 .photo:hover img {
-  /* Sets opacaity when hovered. */
+  /* Set opacaity when hovered. */
   opacity: 0.3;
 }
 
@@ -235,7 +235,7 @@ h3 {
   opacity: 1;
 }
 
-/* Overlays a div with text, having absolute position with respect to its parent. */
+/* Overlay a div with text, having absolute position with respect to its parent. */
 .overlay {
   left: 50%;
   opacity: 0;
@@ -254,4 +254,58 @@ h3 {
 
 #map {
   height: 100vh;
+}
+
+/* comments.html */
+
+#input-form {
+  margin: 20px 0px;
+}
+
+textarea {
+  margin-bottom: 5px;
+}
+
+/* Override the Bootstrap form-control class. */
+.form-control {
+  font-size: 20px;
+}
+
+#comments-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.comment {
+  border-bottom: 1px dashed #efefef;
+  overflow: auto;
+  padding: 0 0 25px 10px;
+  margin-bottom: 10px;
+}
+
+.comment div {
+  max-height: 150px;
+  overflow: auto;
+}
+
+.comment div span {
+  font-size: 15px;
+}
+
+.comment button {
+  background-color: white;
+  border: none;
+  color: #7c7b8a;
+  font-size: 15px;
+  position: absolute;
+  right: 15px;
+}
+
+#pagination-div .form-control {
+  font-size: 15px;
+  width: 60px;
+}
+
+#delete-all-button {
+  float: right;
 }
