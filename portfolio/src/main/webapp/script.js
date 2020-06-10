@@ -199,7 +199,12 @@ function createCommentElement(comment) {
   commentContainer.appendChild(nameElement);
   commentContainer.appendChild(contentElement);
 
+  const sentimentScore = document.createElement('span');
+  sentimentScore.className = 'sentiment';
+  sentimentScore.innerText = 'sentiment score: ' + comment.sentiment;
+
   const deleteButton = document.createElement('button');
+  deleteButton.className = 'delete-btn';
   deleteButton.innerText = 'Delete';
   deleteButton.addEventListener('click', () => {
     deleteComment(comment);
@@ -207,6 +212,7 @@ function createCommentElement(comment) {
   });
 
   commentElement.appendChild(commentContainer);
+  commentElement.appendChild(sentimentScore);
   commentElement.appendChild(deleteButton);
   return commentElement;
 }

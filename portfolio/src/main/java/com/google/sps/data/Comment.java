@@ -20,13 +20,15 @@ public final class Comment {
   private final String name;
   private final String mood;
   private final String content;
+  private final float sentiment;
   private final long timestamp;
 
-  public Comment(long id, String name, String mood, String content, long timestamp) {
+  public Comment(long id, String name, String mood, String content, float sentiment, long timestamp) {
     this.id = id;
     this.name = name;
     this.mood = mood;
     this.content = content;
+    this.sentiment = sentiment;
     this.timestamp = timestamp;
   }
 }

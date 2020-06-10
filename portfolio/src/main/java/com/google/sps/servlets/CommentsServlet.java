@@ -20,6 +20,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -35,6 +38,7 @@ public class CommentsServlet extends HttpServlet {
   private final String NAME = "name";
   private final String MOOD = "mood";
   private final String CONTENT = "content";
+  private final String SENTIMENT = "sentiment";
   private final String TIMESTAMP = "timestamp";
 
   @Override
@@ -50,9 +54,10 @@ public class CommentsServlet extends HttpServlet {
       String name = (String) commentEntity.getProperty(NAME);
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(CONTENT);
+      double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
-      comments.add(new Comment(id, name, mood, content, timestamp));
+      comments.add(new Comment(id, name, mood, content, (float) sentiment, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -78,6 +83,7 @@ public class CommentsServlet extends HttpServlet {
     commentEntity.setProperty(NAME, name);
     commentEntity.setProperty(MOOD, mood);
     commentEntity.setProperty(CONTENT, content);
+    commentEntity.setProperty(SENTIMENT, getSentimentScore(content));
     commentEntity.setProperty(TIMESTAMP, timestamp);
 
     // Store the comment entity to datastore.
@@ -86,6 +92,21 @@ public class CommentsServlet extends HttpServlet {
 
     // Redirect back to the HTML page.
     response.sendRedirect("/comments.html");
+  }
+  
+  /** 
+   * Returns the score of the sentiment of the given message, 
+   * which is a float from -1 to 1 representing how negative or positive the text it.
+   */
+  private float getSentimentScore(String message) throws IOException {
+    Document doc =
+        Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
+    LanguageServiceClient languageService = LanguageServiceClient.create();
+    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+    float score = sentiment.getScore();
+    languageService.close();
+
+    return score;
   }
 }
 
