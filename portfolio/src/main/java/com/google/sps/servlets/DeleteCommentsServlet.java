@@ -48,6 +48,6 @@ public class DeleteCommentsServlet extends HttpServlet {
       long id = Long.parseLong(idString);
       Key commentEntityKey = KeyFactory.createKey("Comment", id);
       datastore.delete(commentEntityKey);
-    }  
+    }
   }
 }

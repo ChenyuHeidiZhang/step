@@ -153,7 +153,7 @@ function changePage(event) {
  * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
  */
 function fetchComments(createNewPagination = false) {
-  fetch('/add-get-comments').then(response => response.json()).then(comments => {
+  fetch('/comments').then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
 
@@ -176,7 +176,7 @@ function fetchComments(createNewPagination = false) {
 
 /**
  * Creates an <li> element containing an individual comment. The element includes the 
-       following attributes associated with the comment: username, content, time, and delete button.
+ * following attributes associated with the comment: username, content, time, and delete button.
  * @param {!Comment} comment The Comment object from which a <li> element is created.
  * @return {!Element<li>} The comment element created.
  */
@@ -232,7 +232,7 @@ function convertToDateTime(timestamp) {
   var date = new Date(timestamp);
   var dateFormatted = date.toLocaleDateString(); 
   var today = new Date();
-  // Check whether the date of the given timestamp is the same as today; if so, return number of hours ago.
+  // Use time in hours if timestamp is within today.
   if (dateFormatted == today.toLocaleDateString()) {
     var hourDiff = today.getHours() - date.getHours();
     if (hourDiff <= 1) {

@@ -42,8 +42,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that creates and lists comments data. */
-@WebServlet("/add-get-comments")
-public class AddGetCommentsServlet extends HttpServlet {
+@WebServlet("/comments")
+public class CommentsServlet extends HttpServlet {
   private final String NAME = "name";
   private final String MOOD = "mood";
   private final String CONTENT = "content";
