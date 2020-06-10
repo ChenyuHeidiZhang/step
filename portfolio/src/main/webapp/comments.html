@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <link rel="stylesheet" href="style.css">
-    <script src="script-comments.js"></script>
+    <script src="script.js"></script>
   </head>
   <body onload="commentsPageOnLoad()">
     <div class="content container-fluid">
@@ -90,7 +90,7 @@
             </div>
           </div>
 
-          <form id="input-form" action="/data" method="POST">
+          <form id="input-form" action="/comments" method="POST">
             <fieldset id="input-form-fieldset" disabled>
               <select id="mood" name="mood" class="form-control pull-right">
                 <option selected>Your mood...</option>
@@ -133,7 +133,7 @@
             </div>
           </div>
           <div>
-            <button id="delete-all-button" class="btn btn-danger" onclick="deleteData()">Delete All Comments</button>          
+            <button id="delete-all-button" class="btn btn-danger" onclick="deleteAllComments()">Delete All Comments</button>          
           </div>
         </div>
       </div>

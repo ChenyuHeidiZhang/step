@@ -32,11 +32,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that creates and lists comments data. */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {    
+@WebServlet("/comments")
+public class CommentsServlet extends HttpServlet {
+  private final String USERID = "userId";
+  private final String MOOD = "mood";
+  private final String CONTENT = "content";
+  private final String TIMESTAMP = "timestamp";
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Comment").addSort(TIMESTAMP, SortDirection.DESCENDING);
     
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -44,10 +49,10 @@ public class DataServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       long id = commentEntity.getKey().getId();
-      String userId = (String) commentEntity.getProperty("userId");
-      String mood = (String) commentEntity.getProperty("mood");
-      String content = (String) commentEntity.getProperty("content");
-      long timestamp = (long) commentEntity.getProperty("timestamp");
+      String userId = (String) commentEntity.getProperty(USERID);
+      String mood = (String) commentEntity.getProperty(MOOD);
+      String content = (String) commentEntity.getProperty(CONTENT);
+      long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
       comments.add(new Comment(id, userId, mood, content, timestamp));
     }
@@ -78,10 +83,10 @@ public class DataServlet extends HttpServlet {
 
     // Create a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("userId", userId);
-    commentEntity.setProperty("mood", mood);
-    commentEntity.setProperty("content", content);
-    commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty(USERID, userId);
+    commentEntity.setProperty(MOOD, mood);
+    commentEntity.setProperty(CONTENT, content);
+    commentEntity.setProperty(TIMESTAMP, timestamp);
 
     // Store the comment entity to datastore.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -91,4 +96,3 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/comments.html");
   }
 }
-
