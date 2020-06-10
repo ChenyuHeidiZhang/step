@@ -117,11 +117,10 @@ public class CommentsServlet extends HttpServlet {
       return null;
     }
 
-    // Our form only contains a single file input, so get the first index.
+    // Our form only contains a single file input, so get the key at the first index.
     BlobKey blobKey = blobKeys.get(0);
-
-    // User submitted form without selecting a file, so we can't get a URL. (live server)
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    // User submitted form without selecting a file, so we can't get a URL. (live server)
     if (blobInfo.getSize() == 0) {
       blobstoreService.delete(blobKey);
       return null;
