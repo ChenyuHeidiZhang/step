@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-google.charts.load("current", {packages:["timeline"]});
-google.charts.setOnLoadCallback(drawChart);
+google.charts.load('current', {packages:['timeline']});
+google.charts.setOnLoadCallback(drawTimelineChart);
 
 /** 
  * Draws the timeline chart onto the DOM.
  */
-function drawChart() {
+function drawTimelineChart() {
   var timelineContainer = document.getElementById('timeline-container');
   var chart = new google.visualization.Timeline(timelineContainer);
   var dataTable = new google.visualization.DataTable();
