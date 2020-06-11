@@ -58,7 +58,9 @@ public class CommentsServlet extends HttpServlet {
       String name = (String) commentEntity.getProperty(NAME);
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(CONTENT);
-      content = translateText(content, languageCode);
+      if (!languageCode.equals("original")) {
+        content = translateText(content, languageCode);
+      }
 
       double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
@@ -117,7 +119,7 @@ public class CommentsServlet extends HttpServlet {
   }
 
   /** 
-   * Translates "originalText" to the language represented by "languageCode" and return the translated text.
+   * Translates "originalText" to the language represented by "languageCode" and returns the translated text.
    */
   private String translateText(String originalText, String languageCode) {
     Translate translate = TranslateOptions.getDefaultInstance().getService();
@@ -126,4 +128,3 @@ public class CommentsServlet extends HttpServlet {
     return translation.getTranslatedText();
   }
 }
-

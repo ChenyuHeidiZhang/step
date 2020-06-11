@@ -153,7 +153,7 @@ function changePage(event) {
  * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
  * @param {string=} languageCode The language in which the comments will be shown.
  */
-function fetchComments(createNewPagination = false, languageCode = 'en') {
+function fetchComments(createNewPagination = false, languageCode = 'original') {
   fetch('/comments?languageCode=' + languageCode).then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
@@ -261,7 +261,7 @@ function deleteComment(comment) {
 /**
  * Fetches the comments again in the langauge specified. 
  */
-function changeLanguage() {
+function translateComments() {
   const languageCode = document.getElementById('language').value;
   fetchComments(false, languageCode);
 }
