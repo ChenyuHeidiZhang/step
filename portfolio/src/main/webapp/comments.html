@@ -53,6 +53,16 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="comments.html">Comments</a>
                 </li>
+                <li class="nav-item">
+                  <select id="language-select" name="language" class="form-control" onchange="changeLanguage()">
+                    <option value="zh">Chinese</option>
+                    <option value="en" selected>English</option>
+                    <option value="fr">French</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ja">Japanese</option>
+                    <option value="es">Spanish</option>
+                  </select>
+                </li>
               </ul>
             </div>
           </nav>
@@ -63,7 +73,7 @@
                 <input type="text" name="user-name" class="form-control" placeholder="Your name"></input>
               </div>
               <div class="col-sm-4">
-                <select id="mood" name="mood" class="form-control">
+                <select id="mood-select" name="mood" class="form-control">
                   <option selected>Your mood...</option>
                   <option>Happy</option>
                   <option>Excited</option>
