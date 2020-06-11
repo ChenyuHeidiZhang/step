@@ -27,19 +27,21 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html");
+    String loggedInJson = "{\"isLoggedIn\": true, \"logoutUrl\": \"%s\", \"userId\": \"%s\"}";
+    String loggedOutJson = "{\"isLoggedIn\": false, \"loginUrl\": \"%s\"}";
+
+    response.setContentType("application/json;");
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       String redirectUrlLogout = "/comments.html";  // The URL to redirect to after the user logs out.
       String logoutUrl = userService.createLogoutURL(redirectUrlLogout);
-      response.getWriter().println("{\"isLoggedIn\": true, " + 
-          "\"logoutUrl\": \"" + logoutUrl + "\", " + 
-          "\"userId\": " + "\"" + userService.getCurrentUser().getUserId() + "\"}");
+      response.getWriter().println(
+          String.format(loggedInJson, logoutUrl, userService.getCurrentUser().getUserId()));
     } else {
       String redirectUrlLogin = "/comments.html";  // The URL to redirect to after the user logs in.
       String loginUrl = userService.createLoginURL(redirectUrlLogin);
-      response.getWriter().println("{\"isLoggedIn\": false, \"loginUrl\": \"" + loginUrl + "\"}");
+      response.getWriter().println(String.format(loggedOutJson, loginUrl));
     }
   }
 }
