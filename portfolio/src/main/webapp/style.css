@@ -162,8 +162,17 @@ h3 {
   float: right;
   margin-top: 4px;
   padding: 5px;
+}
+
+.down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+.up {
+  margin-top: 8px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
 }
 
 /* Dropdown button. */
