@@ -15,9 +15,12 @@
 /**
  * Toggles the drop down text.
  * @param {string} id The id of the dropdown content to be toggled.
+ * @param {!Event} event The click event on a dropdown bar.
  */
-function toggleDropDown(id) {
-  document.getElementById(id).classList.toggle("show");
+function toggleDropDown(id, event) {
+  document.getElementById(id).classList.toggle('show');
+  const dropdownArrow = event.currentTarget.firstElementChild;
+  dropdownArrow.classList.toggle('up');
 }
 
 /**
@@ -249,34 +252,4 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-comments', {method: 'POST', body: params});
-}
-
-
-google.charts.load("current", {packages:["timeline"]});
-google.charts.setOnLoadCallback(drawChart);
-
-/** 
- * Draws the timeline chart onto the DOM.
- */
-function drawChart() {
-  var timelineContainer = document.getElementById('timeline-container');
-  var chart = new google.visualization.Timeline(timelineContainer);
-  var dataTable = new google.visualization.DataTable();
-
-  dataTable.addColumn({ type: 'string', id: 'InfoType' });
-  dataTable.addColumn({ type: 'string', id: 'Item' });
-  dataTable.addColumn({ type: 'date', id: 'Start' });
-  dataTable.addColumn({ type: 'date', id: 'End' });
-  // Note: months go from 0 to 11.
-  dataTable.addRows([
-    [ 'Location', 'Nanjing', new Date(2012, 8), new Date(2018, 7) ],
-    [ 'Location', 'Baltimore', new Date(2018, 7), new Date() ],
-    [ 'School', 'NFLS', new Date(2012, 8), new Date(2018, 7)],
-    [ 'School', 'JHU', new Date(2018, 7), new Date()],
-    [ 'Highlights', 'Cornell', new Date(2017, 5), new Date(2017, 7)],
-    [ 'Highlights', 'Megapro', new Date(2019, 4), new Date(2019, 7)],
-    [ 'Highlights', 'Google', new Date(2020, 4), new Date()],
-  ]);
-
-  chart.draw(dataTable);
 }
