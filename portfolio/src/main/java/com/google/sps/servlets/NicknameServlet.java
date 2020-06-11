@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
+import javax.annotation.Nullable;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class NicknameServlet extends HttpServlet {
     String nickname = getUserNickname(userId);
     String displayName;
     // Display nickname if set, email otherwise.
-    if (nickname == "") {
+    if (nickname == null) {
       displayName = userService.getCurrentUser().getEmail();
     } else {
       displayName = nickname;
@@ -76,6 +77,7 @@ public class NicknameServlet extends HttpServlet {
   /**
    * Returns the nickname of the user with the specified id, or empty String if no nickname is set.
    */
+  @Nullable
   private String getUserNickname(String userId) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
@@ -85,7 +87,7 @@ public class NicknameServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     Entity entity = results.asSingleEntity();
     if (entity == null) {
-      return "";
+      return null;
     }
     String nickname = (String) entity.getProperty(NICKNAME);
     return nickname;
