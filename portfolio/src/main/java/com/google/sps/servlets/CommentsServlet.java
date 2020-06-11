@@ -23,6 +23,9 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -55,6 +58,8 @@ public class CommentsServlet extends HttpServlet {
       String name = (String) commentEntity.getProperty(NAME);
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(CONTENT);
+      content = translateText(content, languageCode);
+
       double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
@@ -66,7 +71,8 @@ public class CommentsServlet extends HttpServlet {
     String json = gson.toJson(comments);
 
     // Send the JSON as the response.
-    response.setContentType("application/json;");
+    response.setContentType("text/html; charset=UTF-8;");
+    response.setCharacterEncoding("UTF-8");
     response.getWriter().println(json);
   }
 
@@ -108,6 +114,16 @@ public class CommentsServlet extends HttpServlet {
     languageService.close();
 
     return score;
+  }
+
+  /** 
+   * Translates "originalText" to the language represented by "languageCode" and return the translated text.
+   */
+  private String translateText(String originalText, String languageCode) {
+    Translate translate = TranslateOptions.getDefaultInstance().getService();
+    Translation translation =
+        translate.translate(originalText, Translate.TranslateOption.targetLanguage(languageCode));
+    return translation.getTranslatedText();
   }
 }
 
