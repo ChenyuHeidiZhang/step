@@ -151,9 +151,10 @@ function changePage(event) {
 /**
  * Fetches the comments from the data server and displays them on the currently active page.
  * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
+ * @param {string=} languageCode The language in which the comments will be shown.
  */
-function fetchComments(createNewPagination = false) {
-  fetch('/comments').then(response => response.json()).then(comments => {
+function fetchComments(createNewPagination = false, languageCode = 'en') {
+  fetch('/comments?languageCode=' + languageCode).then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
 
@@ -255,4 +256,12 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-comments', {method: 'POST', body: params});
+}
+
+/**
+ * Fetches the comments again in the langauge specified. 
+ */
+function changeLanguage() {
+  const languageCode = document.getElementById('language').value;
+  fetchComments(false, languageCode);
 }

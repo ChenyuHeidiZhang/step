@@ -43,8 +43,9 @@ public class CommentsServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String languageCode = request.getParameter("languageCode");
+
     Query query = new Query("Comment").addSort(TIMESTAMP, SortDirection.DESCENDING);
-    
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
