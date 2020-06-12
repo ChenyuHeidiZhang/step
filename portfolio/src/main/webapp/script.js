@@ -189,8 +189,10 @@ function createCommentElement(comment) {
   const nameElement = document.createElement('strong');
   nameElement.className = 'text-success';
   nameElement.innerText = '@' + comment.name + ' - ' + comment.mood;
+
   const timeElement = document.createElement('span');
   timeElement.className = 'pull-right text-muted';  // Add Bootstrap classes to style the timeElement.
+
   timeElement.innerText = convertToDateTime(comment.timestamp);
   const contentElement = document.createElement('p');
   contentElement.innerText = comment.content;
@@ -198,6 +200,15 @@ function createCommentElement(comment) {
   commentContainer.appendChild(timeElement);
   commentContainer.appendChild(nameElement);
   commentContainer.appendChild(contentElement);
+
+  if (comment.imageUrl != null) {
+    const imageLink = document.createElement('a');
+    imageLink.href = comment.imageUrl;
+    const imageElement = document.createElement('img');
+    imageElement.src = comment.imageUrl;
+    imageLink.appendChild(imageElement);
+    commentContainer.appendChild(imageLink);
+  }
 
   const deleteButton = document.createElement('button');
   deleteButton.innerText = 'Delete';
@@ -250,3 +261,13 @@ function deleteComment(comment) {
   params.append('id', comment.id);
   fetch('/delete-comments', {method: 'POST', body: params});
 }
+
+function fetchBlobstoreUrl() {
+  fetch('/blobstore-upload-url').then(response => response.text())
+      .then((imageUploadUrl) => {
+        const inputForm = document.getElementById('input-form');
+        inputForm.action = imageUploadUrl;
+        inputForm.style.display = 'block';
+      });
+}
+
