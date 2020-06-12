@@ -19,8 +19,8 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.sps.data.Marker;
 import com.google.gson.Gson;
+import com.google.sps.data.Marker;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,11 +31,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-/** Handles fetching and saving markers data. */
+/** Servlet that handles the fetching and saving of markers data. */
 @WebServlet("/markers")
 public class MarkerServlet extends HttpServlet {
-  /** Responds with a JSON array containing marker data. */
+  private final String LAT = "lat";
+  private final String LNG = "lng";
+  private final String CONTENT = "content";
+
   @Override
+  /** Get a JSON array containing the marker data. */
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
 
@@ -46,8 +50,8 @@ public class MarkerServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  /** Accepts a POST request containing a new marker. */
   @Override
+  /** Accepts a POST request containing a new marker. */
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
@@ -66,12 +70,11 @@ public class MarkerServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
-      double lat = (double) entity.getProperty("lat");
-      double lng = (double) entity.getProperty("lng");
-      String content = (String) entity.getProperty("content");
+      double lat = (double) entity.getProperty(LAT);
+      double lng = (double) entity.getProperty(LNG);
+      String content = (String) entity.getProperty(CONTENT);
 
-      Marker marker = new Marker(lat, lng, content);
-      markers.add(marker);
+      markers.add(new Marker(lat, lng, content));
     }
     return markers;
   }
@@ -79,9 +82,9 @@ public class MarkerServlet extends HttpServlet {
   /** Stores a marker in Datastore. */
   public void storeMarker(Marker marker) {
     Entity markerEntity = new Entity("Marker");
-    markerEntity.setProperty("lat", marker.getLat());
-    markerEntity.setProperty("lng", marker.getLng());
-    markerEntity.setProperty("content", marker.getContent());
+    markerEntity.setProperty(LAT, marker.getLat());
+    markerEntity.setProperty(LNG, marker.getLng());
+    markerEntity.setProperty(CONTENT, marker.getContent());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(markerEntity);
