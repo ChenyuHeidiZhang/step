@@ -21,7 +21,7 @@ let editMarker;
 /** Creates a map that shows travel markers and allows user to input markers. */
 function createMap() {
   map = new google.maps.Map(
-      document.getElementById('map'),
+      document.getElementById('gallery-map'),
       {center: {lat: 39.329858, lng: -76.620540}, zoom: 5});
   
   // When the user clicks in the map, show a marker with a text box the user can edit.
