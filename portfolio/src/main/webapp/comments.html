@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="loadCommentsPage()">
+  <body onload="loadCommentsPage();">
     <div class="content container-fluid">
       <div class="row">
         <!-- The left info bar. -->
@@ -56,7 +56,7 @@
               </ul>
             </div>
           </nav>
-          
+      
           <div id="comments-header" class="row">
             <div class="col-sm-8">
               <h4 id="welcome-message">Welcome, </h4>
@@ -99,8 +99,8 @@
                 <option>Sad</option>
                 <option>Disappointed</option>
               </select>
-              <textarea name="comment-content" class="form-control" placeholder="Leave a comment..." rows="3"></textarea>
-              <input type="submit" class="btn btn-info pull-right" value="Post"/>
+              <textarea name="comment-content" class="form-control" placeholder="Leave a comment... (Image upload can't work on live server.)" rows="3"></textarea>
+              <input type="file" id="image-upload" name="image">
             </fieldset>
           </form>
           <hr>

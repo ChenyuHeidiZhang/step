@@ -190,15 +190,26 @@ function createCommentElement(comment) {
   fetch('/nickname?userId=' + comment.userId).then(response => response.text()).then(displayName => {
     nameElement.innerHTML = displayName + ' - ' + comment.mood;
   });
+
   const timeElement = document.createElement('span');
   timeElement.className = 'pull-right text-muted';  // Add Bootstrap classes to style the timeElement.
   timeElement.innerText = convertToDateTime(comment.timestamp);
+  
   const contentElement = document.createElement('p');
   contentElement.innerText = comment.content;
   
   commentContainer.appendChild(timeElement);
   commentContainer.appendChild(nameElement);
   commentContainer.appendChild(contentElement);
+
+  if (comment.imageUrl != null) {
+    const imageLink = document.createElement('a');
+    imageLink.href = comment.imageUrl;
+    const imageElement = document.createElement('img');
+    imageElement.src = comment.imageUrl;
+    imageLink.appendChild(imageElement);
+    commentContainer.appendChild(imageLink);
+  }
 
   const deleteButton = document.createElement('button');
   deleteButton.innerText = 'Delete';
@@ -282,11 +293,21 @@ function setupPageByLoginStatus() {
   });
 }
 
+function fetchBlobstoreUrl() {
+  fetch('/blobstore-upload-url').then(response => response.text())
+      .then((imageUploadUrl) => {
+        const inputForm = document.getElementById('input-form');
+        inputForm.action = imageUploadUrl;
+        inputForm.style.display = 'block';
+      });
+}
+
 /** 
  * Checks log in status to set up comments.html when the page is loading. 
- * Fetches all the comments and displays them.
+ * Fetches all the comments and displays them. Fetches the blobstore URL.
  */
 function loadCommentsPage() {
   setupPageByLoginStatus()
   fetchComments(true);
+  fetchBlobstoreUrl();
 }
