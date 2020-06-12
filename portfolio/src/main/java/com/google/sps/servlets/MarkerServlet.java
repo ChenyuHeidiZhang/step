@@ -34,7 +34,6 @@ import org.jsoup.safety.Whitelist;
 /** Handles fetching and saving markers data. */
 @WebServlet("/markers")
 public class MarkerServlet extends HttpServlet {
-    
   /** Responds with a JSON array containing marker data. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
