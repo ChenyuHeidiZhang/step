@@ -85,7 +85,7 @@ public class CommentsServlet extends HttpServlet {
     String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
 
-    // Get the URL of the image that the user uploaded to Blobstore.
+    // Get the URL of the image uploaded by the user to Blobstore.
     String imageUrl = getUploadedFileUrl(request, "image");
 
     long timestamp = System.currentTimeMillis();
@@ -126,7 +126,7 @@ public class CommentsServlet extends HttpServlet {
       return null;
     }
 
-    // We could check the validity of the file here, e.g. to make sure it's an image file
+    // TODO(chenyuz): Check the validity of the file here, e.g. to make sure it's an image file.
     // https://stackoverflow.com/q/10779564/873165
 
     // Use ImagesService to get a URL that points to the uploaded file.
