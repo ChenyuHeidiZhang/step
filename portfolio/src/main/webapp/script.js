@@ -283,8 +283,8 @@ function setupPageByLoginStatus() {
 }
 
 /** 
- * Checks log in status to set up comments.html when the page is loading; 
- * fetches all the comments and displays them.
+ * Checks log in status to set up comments.html when the page is loading. 
+ * Fetches all the comments and displays them.
  */
 function loadCommentsPage() {
   setupPageByLoginStatus()
