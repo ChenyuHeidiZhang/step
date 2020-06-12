@@ -254,7 +254,7 @@ function deleteComment(comment) {
 
 /**
  * Checks if the user is logged in and displays corresponding welcome messages and login/logout buttons.
- * Also, if user is logged in, enables posting comments and displays set-nickname button.
+ * Enables posting comments and displays set-nickname button if the user is logged in.
  */
 function setupPageByLoginStatus() {
   fetch('/login').then(response => response.json()).then(loginStatus => {
@@ -283,7 +283,8 @@ function setupPageByLoginStatus() {
 }
 
 /** 
- * Checks log in status and fetches all the comments to set up comments.html when the page is loading.
+ * Checks log in status to set up comments.html when the page is loading; 
+ * fetches all the comments and displays them.
  */
 function loadCommentsPage() {
   setupPageByLoginStatus()
