@@ -23,7 +23,7 @@ public final class Comment {
   private final String imageUrl;
   private final long timestamp;
 
-  public Comment(long id, String name, String mood, String content, String imageUrl, long timestamp) {
+  public Comment(long id, String userId, String mood, String content, String imageUrl, long timestamp) {
     this.id = id;
     this.userId = userId;
     this.mood = mood;

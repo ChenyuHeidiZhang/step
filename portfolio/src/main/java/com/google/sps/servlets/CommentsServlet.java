@@ -68,7 +68,7 @@ public class CommentsServlet extends HttpServlet {
       String imageUrl = (String) commentEntity.getProperty(IMAGEURL);
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
-      comments.add(new Comment(id, name, mood, content, imageUrl, timestamp));
+      comments.add(new Comment(id, userId, mood, content, imageUrl, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
