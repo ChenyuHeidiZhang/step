@@ -306,7 +306,7 @@ function fetchBlobstoreUrl() {
  * Checks log in status to set up comments.html when the page is loading. 
  * Fetches all the comments and displays them. Fetches the blobstore URL.
  */
-function loadCommentsPage() {
+function initiateCommentsPage() {
   setupPageByLoginStatus()
   fetchComments(true);
   fetchBlobstoreUrl();
