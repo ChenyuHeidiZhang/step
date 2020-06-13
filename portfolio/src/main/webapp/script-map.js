@@ -24,7 +24,7 @@ function createMap() {
       document.getElementById('gallery-map'),
       {center: {lat: 39.329858, lng: -76.620540}, zoom: 5});
   
-  // When the user clicks in the map, show a marker with a text box the user can edit.
+  // Show a marker with a text box that the user can edit when they click on the map.
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   });
@@ -52,7 +52,7 @@ function createMap() {
  * Adds a marker that shows an info window when clicked. 
  * @param {number} lat Latitude of the marker position.
  * @param {number} lng Longitude of the marker position.
- * @param {string} content The content of the marker, which is displayed onclick.
+ * @param {string} content The description of the marker, which is displayed onclick.
  * @param {string=} title Optional title of the marker, which is displayed on hover.
  * @param {boolean=} defaultIcon Whether to display the default marker icon or the flagIcon. 
  */
@@ -87,7 +87,7 @@ function fetchMarkers() {
  * @param {number} lng Longitude of the marker position.
  */
 function createMarkerForEdit(lat, lng) {
-  // If we're already showing an editable marker, then remove it.
+  // Remove any editable marker that is already being displayed.
   if (editMarker) {
     editMarker.setMap(null);
   }
@@ -96,7 +96,7 @@ function createMarkerForEdit(lat, lng) {
 
   const infoWindow = new google.maps.InfoWindow({content: buildInfoWindowInput(lat, lng)});
 
-  // When the user closes the editable info window, remove the marker.
+  // Remove the marker when the user closes the editable info window.
   google.maps.event.addListener(infoWindow, 'closeclick', () => {
     editMarker.setMap(null);
   });
@@ -106,8 +106,8 @@ function createMarkerForEdit(lat, lng) {
 
 /** 
  * Builds and returns HTML elements that show an editable textbox and a submit button. 
- * @param {number} lat Latitude of the marker with the infoWindow.
- * @param {number} lng Longitude of the marker with the infoWindow.
+ * @param {number} lat Latitude of the marker associated with the pop up window.
+ * @param {number} lng Longitude of the marker associated with the pop up window.
  */
 function buildInfoWindowInput(lat, lng) {
   const textBox = document.createElement('textarea');
@@ -120,12 +120,12 @@ function buildInfoWindowInput(lat, lng) {
     editMarker.setMap(null);
   };
 
-  const containerDiv = document.createElement('div');
-  containerDiv.appendChild(textBox);
-  containerDiv.appendChild(document.createElement('br'));
-  containerDiv.appendChild(button);
+  const infoWindowContainer = document.createElement('div');
+  infoWindowContainer.appendChild(textBox);
+  infoWindowContainer.appendChild(document.createElement('br'));
+  infoWindowContainer.appendChild(button);
 
-  return containerDiv;
+  return infoWindowContainer;
 }
 
 /**
