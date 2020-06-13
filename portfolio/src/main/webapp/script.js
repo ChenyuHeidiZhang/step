@@ -259,7 +259,7 @@ function deleteComment(comment) {
 }
 
 /**
- * Fetches the comments again in the langauge specified. 
+ * Fetches the comments in the langauge specified. 
  */
 function translateComments() {
   const languageCode = document.getElementById('language').value;
