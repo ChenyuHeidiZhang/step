@@ -38,11 +38,11 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that creates and lists comments data. */
 @WebServlet("/comments")
 public class CommentsServlet extends HttpServlet {
-  private final String NAME = "name";
-  private final String MOOD = "mood";
-  private final String CONTENT = "content";
-  private final String SENTIMENT = "sentiment";
-  private final String TIMESTAMP = "timestamp";
+  private final static String NAME = "name";
+  private final static String MOOD = "mood";
+  private final static String CONTENT = "content";
+  private final static String SENTIMENT = "sentiment";
+  private final static String TIMESTAMP = "timestamp";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -58,7 +58,7 @@ public class CommentsServlet extends HttpServlet {
       String name = (String) commentEntity.getProperty(NAME);
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(CONTENT);
-      if (!languageCode.equals("original")) {
+      if (!"original".equals(languageCode)) {
         content = translateText(content, languageCode);
       }
 
