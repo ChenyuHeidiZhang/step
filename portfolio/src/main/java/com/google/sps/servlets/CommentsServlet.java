@@ -14,12 +14,20 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
@@ -29,7 +37,11 @@ import com.google.cloud.translate.Translation;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +53,7 @@ public class CommentsServlet extends HttpServlet {
   private final static String NAME = "name";
   private final static String MOOD = "mood";
   private final static String CONTENT = "content";
+  private final static String IMAGEURL = "imageUrl";
   private final static String SENTIMENT = "sentiment";
   private final static String TIMESTAMP = "timestamp";
 
@@ -61,11 +74,12 @@ public class CommentsServlet extends HttpServlet {
       if (!"original".equals(languageCode)) {
         content = translateText(content, languageCode);
       }
-
+      
+      String imageUrl = (String) commentEntity.getProperty(IMAGEURL);
       double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
-      comments.add(new Comment(id, name, mood, content, (float) sentiment, timestamp));
+      comments.add(new Comment(id, name, mood, content, imageUrl, (float) sentiment, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -85,6 +99,9 @@ public class CommentsServlet extends HttpServlet {
     String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
 
+    // Get the URL of the image uploaded by the user to Blobstore.
+    String imageUrl = getUploadedFileUrl(request, "image");
+
     long timestamp = System.currentTimeMillis();
 
     // Create a new comment entity.
@@ -92,6 +109,7 @@ public class CommentsServlet extends HttpServlet {
     commentEntity.setProperty(NAME, name);
     commentEntity.setProperty(MOOD, mood);
     commentEntity.setProperty(CONTENT, content);
+    commentEntity.setProperty(IMAGEURL, imageUrl);
     commentEntity.setProperty(SENTIMENT, getSentimentScore(content));
     commentEntity.setProperty(TIMESTAMP, timestamp);
 
@@ -101,6 +119,43 @@ public class CommentsServlet extends HttpServlet {
 
     // Redirect back to the HTML page.
     response.sendRedirect("/comments.html");
+  }
+
+  /** Returns a URL that points to the uploaded file, or null if the user didn't upload a file. */
+  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get(formInputElementName);
+
+    // User submitted form without selecting a file, so we can't get a URL. (dev server)
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Our form only contains a single file input, so get the key at the first index.
+    BlobKey blobKey = blobKeys.get(0);
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    // User submitted form without selecting a file, so we can't get a URL. (live server)
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+
+    // TODO(chenyuz): Check the validity of the file here, e.g. to make sure it's an image file.
+    // https://stackoverflow.com/q/10779564/873165
+
+    // Use ImagesService to get a URL that points to the uploaded file.
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+
+    // To support running in Google Cloud Shell with AppEngine's devserver, we must use the relative
+    // path to the image, rather than the path returned by imagesService which contains a host.
+    try {
+      URL url = new URL(imagesService.getServingUrl(options));
+      return url.getPath();
+    } catch (MalformedURLException e) {
+      return imagesService.getServingUrl(options);
+    }
   }
   
   /** 

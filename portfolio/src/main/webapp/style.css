@@ -286,12 +286,16 @@ textarea {
 }
 
 .comment div {
-  max-height: 150px;
+  max-height: 250px;
   overflow: auto;
 }
 
 .comment div span {
   font-size: 15px;
+}
+
+.comment div img {
+  max-height: 200px;
 }
 
 .comment .sentiment {
