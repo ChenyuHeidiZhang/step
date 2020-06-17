@@ -52,10 +52,11 @@ import javax.servlet.http.HttpServletResponse;
 public class CommentsServlet extends HttpServlet {
   private final static String NAME = "name";
   private final static String MOOD = "mood";
-  private final static String CONTENT = "content";
+  private final static String COMMENT_CONTENT = "content";
   private final static String IMAGEURL = "imageUrl";
   private final static String SENTIMENT = "sentiment";
   private final static String TIMESTAMP = "timestamp";
+  private final static String LANGUAGE_CODE_ORIGINAL = "original";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,16 +71,16 @@ public class CommentsServlet extends HttpServlet {
       long id = commentEntity.getKey().getId();
       String name = (String) commentEntity.getProperty(NAME);
       String mood = (String) commentEntity.getProperty(MOOD);
-      String content = (String) commentEntity.getProperty(CONTENT);
-      if (!"original".equals(languageCode)) {
+      String content = (String) commentEntity.getProperty(COMMENT_CONTENT);
+      if (!LANGUAGE_CODE_ORIGINAL.equals(languageCode)) {
         content = translateText(content, languageCode);
       }
       
       String imageUrl = (String) commentEntity.getProperty(IMAGEURL);
-      double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
+      float sentiment = (float) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
-      comments.add(new Comment(id, name, mood, content, imageUrl, (float) sentiment, timestamp));
+      comments.add(new Comment(id, name, mood, content, imageUrl, sentiment, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -108,7 +109,7 @@ public class CommentsServlet extends HttpServlet {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty(NAME, name);
     commentEntity.setProperty(MOOD, mood);
-    commentEntity.setProperty(CONTENT, content);
+    commentEntity.setProperty(COMMENT_CONTENT, content);
     commentEntity.setProperty(IMAGEURL, imageUrl);
     commentEntity.setProperty(SENTIMENT, getSentimentScore(content));
     commentEntity.setProperty(TIMESTAMP, timestamp);
@@ -159,7 +160,7 @@ public class CommentsServlet extends HttpServlet {
   }
   
   /** 
-   * Returns the score of the sentiment of the given message, 
+   * Returns the score of the sentiment of the given message,
    * which is a float from -1 to 1 representing how negative or positive the text it.
    */
   private float getSentimentScore(String message) throws IOException {
@@ -167,19 +168,19 @@ public class CommentsServlet extends HttpServlet {
         Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
-    float score = sentiment.getScore();
+    //float score = sentiment.getScore();
     languageService.close();
 
-    return score;
+    return sentiment.getScore();
   }
 
   /** 
-   * Translates "originalText" to the language represented by "languageCode" and returns the translated text.
+   * Translates a piece of text to the language represented by {@code languageCode} and returns the translated text.
    */
   private String translateText(String originalText, String languageCode) {
-    Translate translate = TranslateOptions.getDefaultInstance().getService();
+    Translate translateService = TranslateOptions.getDefaultInstance().getService();
     Translation translation =
-        translate.translate(originalText, Translate.TranslateOption.targetLanguage(languageCode));
+        translateService.translate(originalText, Translate.TranslateOption.targetLanguage(languageCode));
     return translation.getTranslatedText();
   }
 }
