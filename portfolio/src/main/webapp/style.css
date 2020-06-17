@@ -193,6 +193,10 @@ h3 {
 
 /* gallery.html */
 
+#map-link {
+  text-align: center;
+}
+
 /* Side nav bar, contained in the gallery. */
 .side-nav {
   padding: 20px;
@@ -248,6 +252,12 @@ h3 {
 .text {
   color: black;
   font-size: 15px;
+}
+
+/* map.html */
+
+#map {
+  height: 100vh;
 }
 
 /* comments.html */
