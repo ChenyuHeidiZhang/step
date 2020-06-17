@@ -205,6 +205,10 @@ h3 {
 
 /* gallery.html */
 
+#map-link {
+  text-align: center;
+}
+
 /* Side nav bar, contained in the gallery. */
 .side-nav {
   padding: 20px;
@@ -262,7 +266,22 @@ h3 {
   font-size: 15px;
 }
 
+/* map.html */
+
+#map {
+  height: 100vh;
+}
+
 /* comments.html */
+
+#comments-header {
+  margin-top:20px;
+}
+
+#login-out, 
+#set-nickname-button {
+ float:right;
+}
 
 #input-form {
   margin: 20px 0px;
@@ -290,12 +309,16 @@ textarea {
 }
 
 .comment div {
-  max-height: 150px;
+  max-height: 250px;
   overflow: auto;
 }
 
 .comment div span {
   font-size: 15px;
+}
+
+.comment div img {
+  max-height: 200px;
 }
 
 .comment button {

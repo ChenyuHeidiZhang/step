@@ -178,8 +178,7 @@ function fetchComments(createNewPagination = false) {
 }
 
 /**
- * Creates an <li> element containing an individual comment. The element includes the 
- * following attributes associated with the comment: username, content, time, and delete button.
+ * Creates an <li> element containing a comment, including the username, content, time, and delete button.
  * @param {!Comment} comment The Comment object from which a <li> element is created.
  * @return {!Element<li>} The comment element created.
  */
@@ -191,10 +190,14 @@ function createCommentElement(comment) {
 
   const nameElement = document.createElement('strong');
   nameElement.className = 'text-success';
-  nameElement.innerText = '@' + comment.name + ' - ' + comment.mood;
+  fetch('/nickname?userId=' + comment.userId).then(response => response.text()).then(displayName => {
+    nameElement.innerHTML = displayName + ' - ' + comment.mood;
+  });
+
   const timeElement = document.createElement('span');
   timeElement.className = 'pull-right text-muted';  // Add Bootstrap classes to style the timeElement.
   timeElement.innerText = convertToDateTime(comment.timestamp);
+  
   const contentElement = document.createElement('p');
   contentElement.innerText = comment.content;
   
@@ -202,11 +205,20 @@ function createCommentElement(comment) {
   commentContainer.appendChild(nameElement);
   commentContainer.appendChild(contentElement);
 
+  if (comment.imageUrl != null) {
+    const imageLink = document.createElement('a');
+    imageLink.href = comment.imageUrl;
+    const imageElement = document.createElement('img');
+    imageElement.src = comment.imageUrl;
+    imageLink.appendChild(imageElement);
+    commentContainer.appendChild(imageLink);
+  }
+
   const deleteButton = document.createElement('button');
   deleteButton.innerText = 'Delete';
   deleteButton.addEventListener('click', () => {
     deleteComment(comment);
-    deleteButton.parentElement.remove();  // Remove the comment from the DOM.
+    commentElement.remove();  // Remove the comment from the DOM.
   });
 
   commentElement.appendChild(commentContainer);
@@ -252,4 +264,53 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-comments', {method: 'POST', body: params});
+}
+
+/**
+ * Checks if the user is logged in and displays corresponding welcome messages and login/logout buttons.
+ * Enables posting comments and displays set-nickname button if the user is logged in.
+ */
+function setupPageByLoginStatus() {
+  fetch('/login').then(response => response.json()).then(loginStatus => {
+    const isLoggedIn = loginStatus.isLoggedIn;
+    const loginOutLink = document.getElementById('login-out');
+    const welcomeElement = document.getElementById('welcome-message');
+
+    if (isLoggedIn) {
+      fetch('/nickname?userId=' + loginStatus.userId).then(response => response.text()).then(displayName => {
+        welcomeElement.innerText = 'Welcome, ' + displayName;
+      });
+
+      document.getElementById('input-form-fieldset').removeAttribute('disabled');
+      document.getElementById('set-nickname-button').style.display = 'block';
+      loginOutLink.href = loginStatus.logoutUrl;
+      loginOutLink.innerText = 'Logout';
+    } else {
+      welcomeElement.innerText = 'Welcome, please log in to post a comment.';
+      
+      document.getElementById('input-form-fieldset').setAttribute('disabled', 'true');
+      document.getElementById('set-nickname-button').style.display = 'none';
+      loginOutLink.href = loginStatus.loginUrl;
+      loginOutLink.innerText = 'Login';
+    }
+  });
+}
+
+function fetchBlobstoreUrl() {
+  fetch('/blobstore-upload-url').then(response => response.text())
+      .then((imageUploadUrl) => {
+        const inputForm = document.getElementById('input-form');
+        inputForm.action = imageUploadUrl;
+        inputForm.style.display = 'block';
+      });
+}
+
+/** 
+ * Checks log in status to set up comments.html when the page is loading. 
+ * Fetches all the comments and displays them. Fetches the blobstore URL.
+ */
+function initiateCommentsPage() {
+  setupPageByLoginStatus()
+  fetchComments(true);
+  fetchBlobstoreUrl();
 }

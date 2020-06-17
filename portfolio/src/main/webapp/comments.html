@@ -16,7 +16,7 @@
     <script src="script.js"></script>
     <script src="script-comments-mood-chart.js"></script>
   </head>
-  <body onload="fetchComments(true)">
+  <body onload="initiateCommentsPage();">
     <div class="content container-fluid">
       <div class="row">
         <!-- The left info bar. -->
@@ -59,26 +59,54 @@
               </ul>
             </div>
           </nav>
-        
-          <form id="input-form" action="/comments" method="POST">
-            <div class="form-row">
-              <div class="col-sm-8">
-                <input type="text" name="user-name" class="form-control" placeholder="Your name"></input>
-              </div>
-              <div class="col-sm-4">
-                <select id="mood" name="mood" class="form-control">
-                  <option selected>Your mood...</option>
-                  <option>Happy</option>
-                  <option>Excited</option>
-                  <option>Sad</option>
-                  <option>Disappointed</option>
-                </select>
+      
+          <div id="comments-header" class="row">
+            <div class="col-sm-8">
+              <h4 id="welcome-message">Welcome, </h4>
+            </div>
+            <div class="col-sm-4">          
+              <a id="login-out" href="#" class="btn btn-secondary">Login</a>
+              <button id="set-nickname-button" class="btn btn-light" data-toggle="modal" data-target="#nickname-modal">Set Nickname</button>
+            </div>
+          </div>
+
+          <!-- The modal for setting nickname. -->
+          <div id="nickname-modal" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Set your nickname</h5>
+                  <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                  <form action="/nickname" method="POST">
+                    <div class="form-group">
+                      <label for="nickname-input">New nickname</label>
+                      <input type="text" name="nickname-input" class="form-control" placeholder="Enter nickname">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  </form>
+                </div>
               </div>
             </div>
-            <textarea name="comment-content" class="form-control" placeholder="Leave a comment..." rows="3"></textarea>
-            <input type="submit" class="btn btn-info pull-right" value="Post"/>
+          </div>
+
+          <form id="input-form" action="/comments" method="POST" enctype="multipart/form-data">
+            <fieldset id="input-form-fieldset" disabled>
+              <select id="mood" name="mood" class="form-control pull-right">
+                <option selected>Your mood...</option>
+                <option>Happy</option>
+                <option>Excited</option>
+                <option>Sad</option>
+                <option>Disappointed</option>
+              </select>
+              <textarea name="comment-content" class="form-control" placeholder="Leave a comment... (Image upload can't work on live server.)" rows="3"></textarea>
+              <input type="file" id="image-upload" name="image">
+              <input type="submit" class="btn btn-info pull-right" value="Post"/>
+            </fieldset>
           </form>
-          <div class="clearfix"></div>
           <hr>
           
           <p>See a <a href="#" data-toggle="modal" data-target="#mood-chart-modal">pie chart</a> of user mood.</p>
@@ -132,7 +160,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- JS required for Bootstrap. -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
