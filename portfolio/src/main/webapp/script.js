@@ -211,9 +211,9 @@ function createCommentElement(comment) {
     commentContainer.appendChild(imageLink);
   }
 
-  const sentimentScore = document.createElement('span');
-  sentimentScore.className = 'sentiment';
-  sentimentScore.innerText = 'sentiment score: ' + comment.sentiment;
+  const sentimentScoreSpan = document.createElement('span');
+  sentimentScoreSpan.className = 'sentiment';
+  sentimentScoreSpan.innerText = 'Sentiment Score: ' + comment.sentiment;
 
   const deleteButton = document.createElement('button');
   deleteButton.className = 'delete-btn';
@@ -224,7 +224,7 @@ function createCommentElement(comment) {
   });
 
   commentElement.appendChild(commentContainer);
-  commentElement.appendChild(sentimentScore);
+  commentElement.appendChild(sentimentScoreSpan);
   commentElement.appendChild(deleteButton);
   return commentElement;
 }
@@ -281,7 +281,7 @@ function fetchBlobstoreUrl() {
 /**
  * Fetches the comments in the langauge specified. 
  */
-function translateComments() {
+function fetchTranslatedComments() {
   const languageCode = document.getElementById('language').value;
   fetchComments(false, languageCode);
 }

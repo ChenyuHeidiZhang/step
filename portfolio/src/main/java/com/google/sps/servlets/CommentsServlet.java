@@ -168,7 +168,6 @@ public class CommentsServlet extends HttpServlet {
         Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
-    //float score = sentiment.getScore();
     languageService.close();
 
     return sentiment.getScore();
