@@ -262,6 +262,15 @@ h3 {
 
 /* comments.html */
 
+#comments-header {
+  margin-top:20px;
+}
+
+#login-out, 
+#set-nickname-button {
+ float:right;
+}
+
 #input-form {
   margin: 20px 0px;
 }
