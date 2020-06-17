@@ -73,14 +73,14 @@ public class CommentsServlet extends HttpServlet {
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(COMMENT_CONTENT);
       if (!LANGUAGE_CODE_ORIGINAL.equals(languageCode)) {
-        content = translateText(content, languageCode);
+        content = getTranslatedComment(content, languageCode);
       }
       
       String imageUrl = (String) commentEntity.getProperty(IMAGEURL);
-      float sentiment = (float) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
+      double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
-      comments.add(new Comment(id, name, mood, content, imageUrl, sentiment, timestamp));
+      comments.add(new Comment(id, name, mood, content, imageUrl, (float) sentiment, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -169,17 +169,16 @@ public class CommentsServlet extends HttpServlet {
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     languageService.close();
-
     return sentiment.getScore();
   }
 
   /** 
-   * Translates a piece of text to the language represented by {@code languageCode} and returns the translated text.
+   * Translates a piece of comment to the language represented by {@code languageCode}.
    */
-  private String translateText(String originalText, String languageCode) {
+  private String getTranslatedComment(String originalComment, String languageCode) {
     Translate translateService = TranslateOptions.getDefaultInstance().getService();
     Translation translation =
-        translateService.translate(originalText, Translate.TranslateOption.targetLanguage(languageCode));
+        translateService.translate(originalComment, Translate.TranslateOption.targetLanguage(languageCode));
     return translation.getTranslatedText();
   }
 }
