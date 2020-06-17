@@ -13,11 +13,14 @@
 // limitations under the License.
 
 /**
- * Toggles the drop down text.
+ * Toggles the dropdown text and the direction of the dropdown arrow.
  * @param {string} id The id of the dropdown content to be toggled.
+ * @param {!Event} event The click event on a dropdown bar.
  */
-function toggleDropDown(id) {
-  document.getElementById(id).classList.toggle("show");
+function toggleDropDown(id, event) {
+  document.getElementById(id).classList.toggle('show');
+  const dropdownArrow = event.currentTarget.firstElementChild;
+  dropdownArrow.classList.toggle('up');
 }
 
 /**
