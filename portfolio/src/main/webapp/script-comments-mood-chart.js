@@ -15,9 +15,7 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawCommentsMoodChart);
 
-/** 
- * Creates a pie chart for comments mood and adds it to the page. 
- */
+/** Creates a pie chart for comments mood and adds it to the page. */
 function drawCommentsMoodChart() {
   fetch('/comments-mood').then(response => response.json()).then((moodCounts) => {
     const data = new google.visualization.DataTable();

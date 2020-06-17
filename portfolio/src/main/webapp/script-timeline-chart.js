@@ -15,9 +15,7 @@
 google.charts.load('current', {packages:['timeline']});
 google.charts.setOnLoadCallback(drawTimelineChart);
 
-/** 
- * Draws the timeline chart onto the DOM.
- */
+/** Draws a timeline chart about my life experiences onto the DOM. */
 function drawTimelineChart() {
   var timelineContainer = document.getElementById('timeline-container');
   var chart = new google.visualization.Timeline(timelineContainer);

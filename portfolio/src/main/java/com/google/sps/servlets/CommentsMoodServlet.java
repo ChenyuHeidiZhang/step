@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that fetches counts for different types of comment mood. */
+/** Servlet that fetches counts for different types of mood that users input together with their comments. */
 @WebServlet("/comments-mood")
 public class CommentsMoodServlet extends HttpServlet {
   @Override
