@@ -156,6 +156,7 @@ h3 {
   text-align: center;
 }
 
+/* The dropdown arrow that appears to the right of a dropdown button. */
 .dropdown-arrow {
   border: solid black;
   border-width: 0 4px 4px 0;
@@ -177,7 +178,7 @@ h3 {
   -webkit-transform: rotate(-135deg);
 }
 
-/* Dropdown button. */
+/* The dropdown button that includes a dropdown arrow. */
 .dropdown-click {
   background-color: rgb(159, 204, 234);
   color: rgb(54, 53, 53);
