@@ -20,9 +20,7 @@ function toggleDropDown(id) {
   document.getElementById(id).classList.toggle("show");
 }
 
-/**
- * Adds a random favorite quote to the page.
- */
+/** Adds a random favorite quote to the page. */
 function addRandomFavoriteQuote() {
   const favoriteQuotes = [
     'Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice. \n —Gabriel García Márquez, One Hundred Years of Solitude',
@@ -38,9 +36,7 @@ function addRandomFavoriteQuote() {
   favoriteQuoteContainer.innerText = randomFavoriteQuote;
 }
 
-/**
- * Adds a random fun fact to the page.
- */
+/** Adds a random fun fact to the page. */
 function addRandomFunFact() {
   const funFactsJsIds = [
     'fun-fact-sister',
@@ -251,9 +247,7 @@ function convertToDateTime(timestamp) {
   return dateFormatted;
 }
 
-/**
- * Tells the server to delete all comments data in the Datastore.
- */
+/** Tells the server to delete all comments data in the Datastore. */
 function deleteAllComments() {
   const responsePromise = fetch('/delete-comments', {method: 'POST'});
   responsePromise.then(fetchComments);
@@ -278,9 +272,7 @@ function fetchBlobstoreUrl() {
       });
 }
 
-/**
- * Fetches the comments in the langauge specified. 
- */
+/** Fetches the comments in the langauge specified. */
 function fetchTranslatedComments() {
   const languageCode = document.getElementById('language').value;
   fetchComments(false, languageCode);

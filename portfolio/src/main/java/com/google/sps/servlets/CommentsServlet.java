@@ -173,7 +173,7 @@ public class CommentsServlet extends HttpServlet {
   }
 
   /** 
-   * Translates a piece of comment to the language represented by {@code languageCode}.
+   * Translates a comment to the language represented by {@code languageCode}.
    */
   private String getTranslatedComment(String originalComment, String languageCode) {
     Translate translateService = TranslateOptions.getDefaultInstance().getService();
