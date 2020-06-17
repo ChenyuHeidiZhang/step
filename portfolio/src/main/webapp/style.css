@@ -164,11 +164,13 @@ h3 {
   padding: 5px;
 }
 
+/* Make the dropdown arrow point downward. */
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
 
+/* Make the dropdown arrow point upward. */
 .up {
   margin-top: 8px;
   transform: rotate(-135deg);

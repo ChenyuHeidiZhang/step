@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Toggles the dropdown text and dropdown arrow.
+ * Toggles the dropdown text and the direction of the dropdown arrow.
  * @param {string} id The id of the dropdown content to be toggled.
  * @param {!Event} event The click event on a dropdown bar.
  */
