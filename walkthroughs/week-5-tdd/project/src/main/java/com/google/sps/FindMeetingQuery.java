@@ -35,8 +35,12 @@ public final class FindMeetingQuery {
    * given the list of current events and the request information. 
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    Collection<String> attendees = request.getAttendees();
-    Collection<String> optionalAttendees = request.getOptionalAttendees();
+    Collection<String> attendees = new ArrayList<>(request.getAttendees());
+    Collection<String> optionalAttendees = new ArrayList<>(request.getOptionalAttendees());
+    // On the webapp, if form is left empty, an empty string is obtained. Remove them here.
+    attendees.remove("");
+    optionalAttendees.remove("");
+
     long duration = request.getDuration();
 
     // Populate {@code attendeesEventTimes} and {@code optionalAttendeesEventTimes}.
@@ -56,7 +60,7 @@ public final class FindMeetingQuery {
     } else {
       // If there are mandatory attendees, consider optional attendees who can possibly attend and ignore those who can't. 
 
-      List<TimeRange> eventTimes = new ArrayList<>(attendeesEventTimes);;
+      List<TimeRange> eventTimes = new ArrayList<>(attendeesEventTimes);
 
       // Find the time slot(s) that maximize the number of optional attendees who can attend.
       // Count down from the maximum number of optional attendees and find all combinations of that number of attendees.
@@ -64,6 +68,7 @@ public final class FindMeetingQuery {
       for (int num = optionalAttendees.size(); num > 0; num--) {
         String[] arr = optionalAttendees.toArray(new String[optionalAttendees.size()]);
         getAllCombinations(arr, arr.length, num);
+
         for (List<String> optionalAttendeesChosen : optionalAttendeesCombs) {
           for (String attendee : optionalAttendeesChosen) {
             eventTimes.addAll(optionalAttendeesEventTimes.get(attendee));
@@ -112,7 +117,7 @@ public final class FindMeetingQuery {
    */
   private void getAllCombinations(String arr[], int n, int r) { 
     optionalAttendeesCombs = new ArrayList<>();
-    
+
     // A temporary array to store all combination one by one.
     String chosen[] = new String[r]; 
 
@@ -172,7 +177,8 @@ public final class FindMeetingQuery {
           if (optionalAttendeesEventTimes.containsKey(currentAttendee)) {
             optionalAttendeesEventTimes.get(currentAttendee).add(currentEvent.getWhen());
           } else {
-            optionalAttendeesEventTimes.put(currentAttendee, Arrays.asList(currentEvent.getWhen()));
+            optionalAttendeesEventTimes.put(currentAttendee, 
+                new ArrayList<>(Arrays.asList(currentEvent.getWhen())));
           }
         }
       }
