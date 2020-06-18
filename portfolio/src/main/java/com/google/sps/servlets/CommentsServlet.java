@@ -50,7 +50,7 @@ public class CommentsServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort(TIMESTAMP, SortDirection.DESCENDING);
-    
+
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
@@ -90,9 +90,9 @@ public class CommentsServlet extends HttpServlet {
     String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
 
-    // Get the blobKey of the image uploaded by the user to Blobstore.
+    // Get the BlobKey of the image uploaded by the user to Blobstore.
     String blobKeyString = getUploadedBlobKey(request, "image");
-    
+
     long timestamp = System.currentTimeMillis();
 
     // Create a new comment entity.
@@ -112,29 +112,29 @@ public class CommentsServlet extends HttpServlet {
   }
   
   /**
-   * Returns the String representation of the blobKey of the file uploaded by the user to Blobstore. 
-   * Returns null if the user did not upload a file.
+   * Returns the String representation of the blobKey of the file uploaded by the user to Blobstore
+   * or {@code null} if the user did not upload a file.
    */
   private String getUploadedBlobKey(HttpServletRequest request, String formInputElementName) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get(formInputElementName);
-    
-    // User submitted form without selecting a file, so we can't get a blobKey. (dev server)
+
+    // User submitted form without selecting a file, so we can't get a BlobKey. (dev server)
     if (blobKeys == null || blobKeys.isEmpty()) {
       return null;
     }
 
-    // Our form only contains a single file input, so get the first index.
+    // Our form only contains a single file input, so get the key at the first index.
     BlobKey blobKey = blobKeys.get(0);
 
-    // User submitted form without selecting a file, so we can't get a blobKey. (live server)
+    // User submitted form without selecting a file, so we can't get a BlobKey. (live server)
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
     if (blobInfo.getSize() == 0) {
       blobstoreService.delete(blobKey);
       return null;
     }
-    
+
     // TODO(chenyuz): Check the validity of the file here, e.g. to make sure it's an image file.
     // https://stackoverflow.com/q/10779564/873165
 

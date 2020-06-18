@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that serves an image given a blobKey. */
+/** Servlet that serves an image when given a BlobKey. */
 @WebServlet("/serve-image")
 public class ServeImageServlet extends HttpServlet {
   @Override

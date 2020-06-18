@@ -215,7 +215,7 @@ function createCommentElement(comment) {
       commentContainer.appendChild(imageLink);
     })    
   }
-  
+
   const deleteButton = document.createElement('button');
   deleteButton.innerText = 'Delete';
   deleteButton.addEventListener('click', () => {
