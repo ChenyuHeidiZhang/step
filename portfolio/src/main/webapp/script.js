@@ -127,7 +127,6 @@ function changePage(event) {
       // Current page is the first page, no previous page to open.
       return; 
     }
-
     currentPage.previousSibling.classList.add('active');
   } else if (pageText == 'Next') {
     const numPages = document.querySelectorAll('#page-list li').length;
@@ -135,7 +134,6 @@ function changePage(event) {
       // Current page is the last page, no next page to open.
       return; 
     }
-
     currentPage.nextSibling.classList.add('active');
   } else {
     event.currentTarget.classList.add('active');
@@ -143,8 +141,17 @@ function changePage(event) {
 
   currentPage.classList.remove('active');
 
-  // Fetch comments on that page without recreating pagination.
-  fetchComments(false);
+  // Fetch comments on that page without recreating pagination in the current language.
+  fetchTranslatedComments(false);
+}
+
+/** 
+ * Fetches the comments in the langauge specified. 
+ * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
+ */
+function fetchTranslatedComments(createNewPagination = false) {
+  const languageCode = document.getElementById('language').value;
+  fetchComments(createNewPagination, languageCode);
 }
 
 /**
@@ -304,12 +311,6 @@ function fetchBlobstoreUrl() {
         inputForm.action = imageUploadUrl;
         inputForm.style.display = 'block';
       });
-}
-
-/** Fetches the comments in the langauge specified. */
-function fetchTranslatedComments() {
-  const languageCode = document.getElementById('language').value;
-  fetchComments(false, languageCode);
 }
 
 /** 
