@@ -23,11 +23,13 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
@@ -69,7 +71,7 @@ public class CommentsServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       long id = commentEntity.getKey().getId();
-      String name = (String) commentEntity.getProperty(NAME);
+      String userId = (String) commentEntity.getProperty(USERID);
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(COMMENT_CONTENT);
       if (!LANGUAGE_CODE_ORIGINAL.equals(languageCode)) {
@@ -79,7 +81,7 @@ public class CommentsServlet extends HttpServlet {
       String imageUrl = (String) commentEntity.getProperty(IMAGEURL);
       double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
-
+      
       comments.add(new Comment(id, name, mood, content, imageUrl, (float) sentiment, timestamp));
     }
 
@@ -95,8 +97,16 @@ public class CommentsServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    UserService userService = UserServiceFactory.getUserService();
+
+    // Only logged-in users can post comments.
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/comments.html");
+      return;
+    }
+
+    String userId = userService.getCurrentUser().getUserId();
     // Get the input parameters from the form.
-    String name = request.getParameter("user-name");
     String mood = request.getParameter("mood");
     String content = request.getParameter("comment-content");
 
@@ -107,7 +117,7 @@ public class CommentsServlet extends HttpServlet {
 
     // Create a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty(NAME, name);
+    commentEntity.setProperty(USERID, userId);
     commentEntity.setProperty(MOOD, mood);
     commentEntity.setProperty(COMMENT_CONTENT, content);
     commentEntity.setProperty(IMAGEURL, imageUrl);
@@ -158,7 +168,7 @@ public class CommentsServlet extends HttpServlet {
       return imagesService.getServingUrl(options);
     }
   }
-  
+
   /** 
    * Returns the score of the sentiment of the given message,
    * which is a float from -1 to 1 representing how negative or positive the text it.
