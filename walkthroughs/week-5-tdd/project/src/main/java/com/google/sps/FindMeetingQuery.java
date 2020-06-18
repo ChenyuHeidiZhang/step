@@ -27,6 +27,8 @@ import java.util.Set;
 
 public final class FindMeetingQuery {
   private List<TimeRange> attendeesEventTimes;
+  private Map<String, List<TimeRange>> optionalAttendeesEventTimes;
+  private List<List<String>> optionalAttendeesCombs;
 
   /** 
    * Finds a list of times when the requested event can happen, 
@@ -37,12 +39,14 @@ public final class FindMeetingQuery {
     Collection<String> optionalAttendees = request.getOptionalAttendees();
     long duration = request.getDuration();
 
-    Map<String, List<TimeRange>> optionalAttendeesEventTimes = 
-        getAttendeesEventTimes(events, attendees, optionalAttendees);
+    // Populate {@code attendeesEventTimes} and {@code optionalAttendeesEventTimes}.
+    getAttendeesEventTimes(events, attendees, optionalAttendees);
 
     Collection<TimeRange> possibleTimes = new ArrayList<>();
     if (attendees.isEmpty()) {
       // If there is no mandatory attendee, only consider availabilities of optional attendees.
+
+      // {@code eventTimes} is the list of current events' time ranges that need to be avoided when scheduling.
       List<TimeRange> eventTimes = new ArrayList<>();
       for (List<TimeRange> timeList : optionalAttendeesEventTimes.values()) {
         eventTimes.addAll(timeList);
@@ -51,22 +55,70 @@ public final class FindMeetingQuery {
       possibleTimes = findTimeRangeGaps(eventTimes, duration);
     } else {
       // If there are mandatory attendees, consider optional attendees who can possibly attend and ignore those who can't. 
-      // TODO: Find time slot(s) that maximize the number of optional attendees who can attend.
-      List<TimeRange> eventTimes = new ArrayList<>(attendeesEventTimes);
-      for (List<TimeRange> timeList : optionalAttendeesEventTimes.values()) {
-        eventTimes.addAll(timeList);
-        Collections.sort(eventTimes, TimeRange.ORDER_BY_START);
-        possibleTimes = findTimeRangeGaps(eventTimes, duration);
-        if (possibleTimes.isEmpty()) {
-          // If adding the optional attendee leaves no time slot for the event, remove them.
-          eventTimes.removeAll(timeList);
+
+      List<TimeRange> eventTimes = new ArrayList<>(attendeesEventTimes);;
+
+      // Find the time slot(s) that maximize the number of optional attendees who can attend.
+      // Count down from the maximum number of optional attendees and find all combinations of that number of attendees.
+      // Once we find a combination where scheduling is possible, we've found the maximal group of attendees.
+      for (int num = optionalAttendees.size(); num > 0; num--) {
+        String[] arr = optionalAttendees.toArray(new String[optionalAttendees.size()]);
+        getAllCombinations(arr, arr.length, num);
+        for (List<String> optionalAttendeesChosen : optionalAttendeesCombs) {
+          for (String attendee : optionalAttendeesChosen) {
+            eventTimes.addAll(optionalAttendeesEventTimes.get(attendee));
+          }
+          Collections.sort(eventTimes, TimeRange.ORDER_BY_START);
+          possibleTimes = findTimeRangeGaps(eventTimes, duration);
+          if (!possibleTimes.isEmpty()) {
+            // We've found a combination where scheduling is possible, so those are the desired time slot(s).
+            return possibleTimes;
+          }
+          // Re-initialize unavailable time ranges with those of the mandatory attendees.
+          eventTimes = new ArrayList<>(attendeesEventTimes);
         }
       }
+      // Calculate time ranges when there are no optional attendees, or none of the optional attendees can fit the schedule.
       possibleTimes = findTimeRangeGaps(eventTimes, duration);
     }
     return possibleTimes;
   }
-  
+
+  /**
+   * Recursive helper function used to find all combinations of size r of the input array arr[].
+   * chosen[]: temporary array to store current combination.
+   * start & end: staring and ending indexes in arr[].
+   * index: current index in data[].
+   */
+  private void combinationUtil(String arr[], String chosen[], int start, int end, int index, int r) { 
+    // If current combination is ready to be added, then add it.
+    if (index == r) {
+      optionalAttendeesCombs.add(Arrays.asList(chosen));
+      return;
+    }
+
+    // Replace index with all possible elements. 
+    // The condition "end-i+1 >= r-index" makes sure that including one element
+    // at index will make a combination with remaining elements at remaining positions.
+    for (int i = start; i <= end && end-i+1 >= r-index; i++) { 
+      chosen[index] = arr[i];
+      combinationUtil(arr, chosen, i+1, end, index+1, r);
+    }
+  }
+
+  /**
+   * Returns all combinations of size r in arr[], which has size n.
+   * This function mainly uses combinationUtil().
+   */
+  private void getAllCombinations(String arr[], int n, int r) { 
+    optionalAttendeesCombs = new ArrayList<>();
+    
+    // A temporary array to store all combination one by one.
+    String chosen[] = new String[r]; 
+
+    combinationUtil(arr, chosen, 0, n-1, 0, r); 
+  }
+
   /** 
    * Finds a collection of timeRanges that are gaps among the timeRanges in {@code eventTimes}
    * that have lengths longer than {@code duration}.
@@ -96,13 +148,14 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Loads the timeRanges of events that involve any of the mandatory attendees.
-   * Returns a map from the names of optional attendees to lists of time ranges of events that involve them.
+   * Loads {@code attendeesEventTimes} with the time ranges of events that involve any of the mandatory attendees.
+   * Loads {@code optionalAttendeesEventTimes} with a map from the names of optional attendees 
+   * to lists of time ranges of events that involve them.
    */
-  private Map<String, List<TimeRange>> getAttendeesEventTimes(
+  private void getAttendeesEventTimes(
       Collection<Event> events, Collection<String> attendees, Collection<String> optionalAttendees) {
     attendeesEventTimes = new ArrayList<>();
-    Map<String, List<TimeRange>> optionalAttendeesEventTimes = new HashMap<>();
+    optionalAttendeesEventTimes = new HashMap<>();
     Iterator<Event> eventsIterator = events.iterator();
     while (eventsIterator.hasNext()) {
       Event currentEvent = eventsIterator.next();
@@ -124,6 +177,5 @@ public final class FindMeetingQuery {
         }
       }
     }
-    return optionalAttendeesEventTimes;
   }
 }
