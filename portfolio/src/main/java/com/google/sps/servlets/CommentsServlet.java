@@ -52,7 +52,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that creates and lists comments data. */
 @WebServlet("/comments")
 public class CommentsServlet extends HttpServlet {
-  private final static String NAME = "name";
+  private final static String USERID = "userId";
   private final static String MOOD = "mood";
   private final static String COMMENT_CONTENT = "content";
   private final static String IMAGEURL = "imageUrl";
@@ -82,7 +82,7 @@ public class CommentsServlet extends HttpServlet {
       double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
       
-      comments.add(new Comment(id, name, mood, content, imageUrl, (float) sentiment, timestamp));
+      comments.add(new Comment(id, userId, mood, content, imageUrl, (float) sentiment, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
