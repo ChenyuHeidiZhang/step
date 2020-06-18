@@ -205,13 +205,18 @@ function createCommentElement(comment) {
   commentContainer.appendChild(nameElement);
   commentContainer.appendChild(contentElement);
 
-  if (comment.imageUrl != null) {
-    const imageLink = document.createElement('a');
-    imageLink.href = comment.imageUrl;
-    const imageElement = document.createElement('img');
-    imageElement.src = comment.imageUrl;
-    imageLink.appendChild(imageElement);
-    commentContainer.appendChild(imageLink);
+  if (comment.blobKeyString != null) {
+    fetch('/serve-image?blob-key=' + comment.blobKeyString).then(response => response.blob()).then(image => {
+      const urlCreator = window.URL || window.webkitURL;
+      const imageUrl = urlCreator.createObjectURL(image);
+
+      const imageLink = document.createElement('a');
+      imageLink.href = imageUrl;
+      const imageElement = document.createElement('img');
+      imageElement.src = imageUrl;
+      imageLink.appendChild(imageElement);
+      commentContainer.appendChild(imageLink);
+    })    
   }
 
   const deleteButton = document.createElement('button');
