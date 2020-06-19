@@ -47,10 +47,10 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that creates and lists comments data. */
 @WebServlet("/comments")
 public class CommentsServlet extends HttpServlet {
-  private final static String USERID = "userId";
+  private final static String USER_ID = "userId";
   private final static String MOOD = "mood";
   private final static String COMMENT_CONTENT = "content";
-  private final static String BLOBKEY = "blobkey";
+  private final static String BLOB_KEY = "blobkey";
   private final static String SENTIMENT = "sentiment";
   private final static String TIMESTAMP = "timestamp";
   private final static String LANGUAGE_CODE_ORIGINAL = "original";
@@ -67,14 +67,14 @@ public class CommentsServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       long id = commentEntity.getKey().getId();
-      String userId = (String) commentEntity.getProperty(USERID);
+      String userId = (String) commentEntity.getProperty(USER_ID);
       String mood = (String) commentEntity.getProperty(MOOD);
       String content = (String) commentEntity.getProperty(COMMENT_CONTENT);
       if (!LANGUAGE_CODE_ORIGINAL.equals(languageCode)) {
         content = getTranslatedComment(content, languageCode);
       }
 
-      String blobKeyString = (String) commentEntity.getProperty(BLOBKEY);
+      String blobKeyString = (String) commentEntity.getProperty(BLOB_KEY);
       double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
@@ -113,10 +113,10 @@ public class CommentsServlet extends HttpServlet {
 
     // Create a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty(USERID, userId);
+    commentEntity.setProperty(USER_ID, userId);
     commentEntity.setProperty(MOOD, mood);
     commentEntity.setProperty(COMMENT_CONTENT, content);
-    commentEntity.setProperty(BLOBKEY, blobKeyString);
+    commentEntity.setProperty(BLOB_KEY, blobKeyString);
     commentEntity.setProperty(SENTIMENT, getSentimentScore(content));
     commentEntity.setProperty(TIMESTAMP, timestamp);
 

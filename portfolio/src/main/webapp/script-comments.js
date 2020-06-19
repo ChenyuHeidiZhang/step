@@ -19,7 +19,7 @@
  * @return {number} The currently active page number.
  */
 function createPaginationBar(numPages, activePageNumber) {
-  // Set the currently active page number to 1 if the previously active page number no longer exists.
+  // Set the currently active page number to 1 if the page associated with the previously active page number no longer exists.
   if (activePageNumber > numPages) {
     activePageNumber = 1;
   }
@@ -29,11 +29,7 @@ function createPaginationBar(numPages, activePageNumber) {
 
   pageListElement.appendChild(createPageElement('Previous'));
   for (var i = 1; i <= numPages; i++) {
-    if (i == activePageNumber) {
-      pageListElement.appendChild(createPageElement(i, true));
-    } else {
-      pageListElement.appendChild(createPageElement(i, false));
-    }
+    pageListElement.appendChild(createPageElement(i, i == activePageNumber));
   }
   pageListElement.appendChild(createPageElement('Next'));
 
@@ -52,21 +48,21 @@ function createPageElement(text, active) {
   if (active) { 
     pageElement.classList.add('active'); 
   }
-  
+
   const linkElement = document.createElement('a');
   linkElement.className = 'page-link';
   linkElement.innerText = text;
-  pageElement.appendChild(linkElement);
 
-  pageElement.addEventListener('click', event => changePage(event));
+  pageElement.appendChild(linkElement);
+  pageElement.addEventListener('click', event => loadPage(event));
   return pageElement;
 }
 
 /**
- * Changes the active page element and displays the comments on that page when a page element is clicked.
+ * Changes the active page element and displays comments on that page when a page element is clicked.
  * @param {!Event} event The click event that triggered the change in active page.
  */
-function changePage(event) {
+function loadPage(event) {
   const currentPage = document.querySelector('.page-item.active');
   const pageText = event.currentTarget.firstElementChild.innerText;
   
@@ -99,7 +95,7 @@ function changePage(event) {
  */
 function fetchTranslatedComments(createNewPagination = false) {
   const languageCode = document.getElementById('language').value;
-  fetchComments(createNewPagination, languageCode);
+  fetchActivePageComments(createNewPagination, languageCode);
 }
 
 /**
@@ -107,7 +103,7 @@ function fetchTranslatedComments(createNewPagination = false) {
  * @param {boolean=} createNewPagination Whether a new pagination bar should be created.
  * @param {string=} languageCode The language in which the comments will be shown.
  */
-function fetchComments(createNewPagination = false, languageCode = 'original') {
+function fetchActivePageComments(createNewPagination = false, languageCode = 'original') {
   fetch('/comments?languageCode=' + languageCode).then(response => response.json()).then(comments => {
     const commentsListElement = document.getElementById('comments-list');
     commentsListElement.innerHTML = '';
@@ -214,7 +210,7 @@ function convertToDateTime(timestamp) {
 /** Tells the server to delete all comments data in the Datastore. */
 function deleteAllComments() {
   const responsePromise = fetch('/delete-comments', {method: 'POST'});
-  responsePromise.then(fetchComments);
+  responsePromise.then(fetchActivePageComments);
 }
 
 /** 
@@ -272,6 +268,6 @@ function fetchBlobstoreUrl() {
  */
 function initiateCommentsPage() {
   setupPageByLoginStatus()
-  fetchComments(true);
+  fetchActivePageComments(true);
   fetchBlobstoreUrl();
 }
