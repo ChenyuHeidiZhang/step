@@ -21,14 +21,16 @@ public final class Comment {
   private final String mood;
   private final String content;
   private final String blobKeyString;
+  private final float sentiment;
   private final long timestamp;
 
-  public Comment(long id, String userId, String mood, String content, String blobKeyString, long timestamp) {
+  public Comment(long id, String userId, String mood, String content, String blobKeyString, float sentiment, long timestamp) {
     this.id = id;
     this.userId = userId;
     this.mood = mood;
     this.content = content;
     this.blobKeyString = blobKeyString;
+    this.sentiment = sentiment;
     this.timestamp = timestamp;
   }
 }

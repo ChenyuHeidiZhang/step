@@ -27,6 +27,12 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -41,14 +47,18 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that creates and lists comments data. */
 @WebServlet("/comments")
 public class CommentsServlet extends HttpServlet {
-  private final String USERID = "userId";
-  private final String MOOD = "mood";
-  private final String CONTENT = "content";
-  private final String BLOBKEY = "blobkey";
-  private final String TIMESTAMP = "timestamp";
+  private final static String USER_ID = "userId";
+  private final static String MOOD = "mood";
+  private final static String COMMENT_CONTENT = "content";
+  private final static String BLOB_KEY = "blobkey";
+  private final static String SENTIMENT = "sentiment";
+  private final static String TIMESTAMP = "timestamp";
+  private final static String LANGUAGE_CODE_ORIGINAL = "original";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String languageCode = request.getParameter("languageCode");
+
     Query query = new Query("Comment").addSort(TIMESTAMP, SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -57,13 +67,18 @@ public class CommentsServlet extends HttpServlet {
     ArrayList<Comment> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       long id = commentEntity.getKey().getId();
-      String userId = (String) commentEntity.getProperty(USERID);
+      String userId = (String) commentEntity.getProperty(USER_ID);
       String mood = (String) commentEntity.getProperty(MOOD);
-      String content = (String) commentEntity.getProperty(CONTENT);
-      String blobKeyString = (String) commentEntity.getProperty(BLOBKEY);
+      String content = (String) commentEntity.getProperty(COMMENT_CONTENT);
+      if (!LANGUAGE_CODE_ORIGINAL.equals(languageCode)) {
+        content = getTranslatedComment(content, languageCode);
+      }
+
+      String blobKeyString = (String) commentEntity.getProperty(BLOB_KEY);
+      double sentiment = (double) commentEntity.getProperty(SENTIMENT);  // Datastore keeps double by default.
       long timestamp = (long) commentEntity.getProperty(TIMESTAMP);
 
-      comments.add(new Comment(id, userId, mood, content, blobKeyString, timestamp));
+      comments.add(new Comment(id, userId, mood, content, blobKeyString, (float) sentiment, timestamp));
     }
 
     // Convert the ArrayList into a JSON string using the Gson library.
@@ -71,7 +86,8 @@ public class CommentsServlet extends HttpServlet {
     String json = gson.toJson(comments);
 
     // Send the JSON as the response.
-    response.setContentType("application/json;");
+    response.setContentType("text/html; charset=UTF-8;");
+    response.setCharacterEncoding("UTF-8");
     response.getWriter().println(json);
   }
 
@@ -97,10 +113,11 @@ public class CommentsServlet extends HttpServlet {
 
     // Create a new comment entity.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty(USERID, userId);
+    commentEntity.setProperty(USER_ID, userId);
     commentEntity.setProperty(MOOD, mood);
-    commentEntity.setProperty(CONTENT, content);
-    commentEntity.setProperty(BLOBKEY, blobKeyString);
+    commentEntity.setProperty(COMMENT_CONTENT, content);
+    commentEntity.setProperty(BLOB_KEY, blobKeyString);
+    commentEntity.setProperty(SENTIMENT, getSentimentScore(content));
     commentEntity.setProperty(TIMESTAMP, timestamp);
 
     // Store the comment entity to datastore.
@@ -139,5 +156,28 @@ public class CommentsServlet extends HttpServlet {
     // https://stackoverflow.com/q/10779564/873165
 
     return blobKey.getKeyString();
+  }
+
+  /** 
+   * Returns the score of the sentiment of the given message,
+   * which is a float from -1 to 1 representing how negative or positive the text it.
+   */
+  private float getSentimentScore(String message) throws IOException {
+    Document doc =
+        Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
+    LanguageServiceClient languageService = LanguageServiceClient.create();
+    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+    languageService.close();
+    return sentiment.getScore();
+  }
+
+  /** 
+   * Translates a comment to the language represented by {@code languageCode}.
+   */
+  private String getTranslatedComment(String originalComment, String languageCode) {
+    Translate translateService = TranslateOptions.getDefaultInstance().getService();
+    Translation translation =
+        translateService.translate(originalComment, Translate.TranslateOption.targetLanguage(languageCode));
+    return translation.getTranslatedText();
   }
 }
