@@ -38,8 +38,8 @@ public final class FindMeetingQuery {
     Collection<String> attendees = new ArrayList<>(request.getAttendees());
     Collection<String> optionalAttendees = new ArrayList<>(request.getOptionalAttendees());
     // On the webapp, if form is left empty, an empty string is obtained. Remove them here.
-    attendees.remove("");
-    optionalAttendees.remove("");
+    attendees.removeAll(Collections.singleton(""));
+    optionalAttendees.removeAll(Collections.singleton(""));
 
     long duration = request.getDuration();
 
@@ -105,9 +105,9 @@ public final class FindMeetingQuery {
     // Replace index with all possible elements. 
     // The condition "end-i+1 >= r-index" makes sure that including one element
     // at index will make a combination with remaining elements at remaining positions.
-    for (int i = start; i <= end && end-i+1 >= r-index; i++) { 
+    for (int i = start; i <= end && end - i + 1 >= r - index; i++) { 
       chosen[index] = arr[i];
-      combinationUtil(arr, chosen, i+1, end, index+1, r);
+      combinationUtil(arr, chosen, i + 1, end, index + 1, r);
     }
   }
 
@@ -121,7 +121,7 @@ public final class FindMeetingQuery {
     // A temporary array to store all combination one by one.
     String chosen[] = new String[r]; 
 
-    combinationUtil(arr, chosen, 0, n-1, 0, r); 
+    combinationUtil(arr, chosen, 0, n - 1, 0, r); 
   }
 
   /** 
