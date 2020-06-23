@@ -36,8 +36,8 @@ public final class FindMeetingQuery {
    * The request includes lists of mandatory and optional attendees (either list can be empty) and a duration of the meeting in minutes.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    Collection<String> attendees = new ArrayList<>(request.getAttendees());
-    Collection<String> optionalAttendees = new ArrayList<>(request.getOptionalAttendees());
+    HashSet<String> attendees = new HashSet<>(request.getAttendees());
+    HashSet<String> optionalAttendees = new HashSet<>(request.getOptionalAttendees());
     // On the webapp, if form is left empty, an empty string is obtained. Remove them here.
     attendees.removeAll(Collections.singleton(""));
     optionalAttendees.removeAll(Collections.singleton(""));
@@ -159,7 +159,7 @@ public final class FindMeetingQuery {
    * Records the optional attendees and the corresponding event times that involve each of them.
    */
   private void getAttendeesEventTimes(
-      Collection<Event> events, Collection<String> attendees, Collection<String> optionalAttendees) {
+      Collection<Event> events, HashSet<String> attendees, HashSet<String> optionalAttendees) {
     this.attendeesEventTimes = new ArrayList<>();
     this.optionalAttendeesEventTimes = new HashMap<>();
     Iterator<Event> eventsIterator = events.iterator();
@@ -168,7 +168,6 @@ public final class FindMeetingQuery {
       Iterator<String> attendeesItr = currentEvent.getAttendees().iterator();
       while (attendeesItr.hasNext()) {
         String currentAttendee = attendeesItr.next();
-        // QUESTION: does attendees still work as a HashSet here as it is originally initialized?
         if (attendees.contains(currentAttendee)) {
           // If a mandatory attendee is in a current event, add the event time to the list.
           this.attendeesEventTimes.add(currentEvent.getWhen());
