@@ -14,6 +14,7 @@
 
 package com.google.sps;
 
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -60,15 +61,15 @@ public final class FindMeetingQuery {
       possibleTimes = findTimeRangeGaps(eventTimes, duration);
     } else {
       // Case: There are mandatory attendees, consider optional attendees who can possibly attend and ignore those who can't. 
-
       List<TimeRange> eventTimes = new ArrayList<>(this.attendeesEventTimes);
 
       // Find the time slot(s) that maximize the number of optional attendees who can attend.
       // Count down from the maximum number of optional attendees and find all combinations of that number of attendees.
       // Once we find a combination where scheduling is possible, we've found the maximal group of attendees.
       for (int num = optionalAttendees.size(); num > 0; num--) {
-        String[] optionalAttendeesArr = optionalAttendees.toArray(new String[optionalAttendees.size()]);
-        getAllCombinations(optionalAttendeesArr, optionalAttendeesArr.length, num);
+        //String[] optionalAttendeesArr = optionalAttendees.toArray(new String[optionalAttendees.size()]);
+        ImmutableList<String> optionalAttendeesArr = ImmutableList.copyOf(optionalAttendees);
+        getAllCombinations(optionalAttendeesArr, optionalAttendeesArr.size(), num);
 
         for (List<String> optionalAttendeesChosen : optionalAttendeesCombinations) {
           for (String attendee : optionalAttendeesChosen) {
@@ -91,18 +92,19 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Recursive helper function used to find all combinations of size r of the input array arr[].
-   * @param arr[] The input array.
-   * @param chosen[] Temporary array to store current combination.
-   * @param start Starting index in arr[].
-   * @param end Ending index in arr[].
-   * @param index Current index in chosen[].
+   * Recursive helper function used to find all combinations of size r of the input array.
+   * @param array The input array that is immutable.
+   * @param chosen Temporary array to store current combination.
+   * @param start Starting index in the input array.
+   * @param end Ending index in the input array.
+   * @param index Current index in the chosen array.
    * @param r The size of combinations to be found.
    */
-  private void combinationUtil(String arr[], String chosen[], int start, int end, int index, int r) { 
+  private void combinationUtil(
+      ImmutableList<String> array, ArrayList<String> chosen, int start, int end, int index, int r) {
     if (index == r) {
       // Combination is ready to be added, add it to the list.
-      this.optionalAttendeesCombinations.add(Arrays.asList(chosen));
+      this.optionalAttendeesCombinations.add(chosen);
       return;
     }
 
@@ -110,21 +112,21 @@ public final class FindMeetingQuery {
     // The condition "end-i+1 >= r-index" makes sure that including one element
     // at index will make a combination with remaining elements at remaining positions.
     for (int i = start; i <= end && end - i + 1 >= r - index; i++) { 
-      chosen[index] = arr[i];
-      combinationUtil(arr, chosen, i + 1, end, index + 1, r);
+      chosen.set(index, array.get(i));
+      combinationUtil(array, chosen, i + 1, end, index + 1, r);
     }
   }
 
   /**
-   * Returns all combinations of size r in arr[], which has size n.
+   * Returns all combinations of size r in the given array, which has size n.
    */
-  private void getAllCombinations(String arr[], int n, int r) { 
+  private void getAllCombinations(ImmutableList<String> array, int n, int r) { 
     this.optionalAttendeesCombinations = new ArrayList<>();
 
     // A temporary array to store all possible combinations, one at a time.
-    String chosen[] = new String[r]; 
+    ArrayList<String> chosen = new ArrayList(Arrays.asList(new String[r]));
 
-    combinationUtil(arr, chosen, 0, n - 1, 0, r); 
+    combinationUtil(array, chosen, 0, n - 1, 0, r); 
   }
 
   /** 
@@ -169,11 +171,11 @@ public final class FindMeetingQuery {
       while (attendeesItr.hasNext()) {
         String currentAttendee = attendeesItr.next();
         if (attendees.contains(currentAttendee)) {
-          // If a mandatory attendee is in a current event, add the event time to the list.
+          // Add event time to list if it has a mandatory attendee.
           this.attendeesEventTimes.add(currentEvent.getWhen());
         }
         if (optionalAttendees.contains(currentAttendee)) {
-          // If an optional attendee is in a current event, add the event time to the map.
+          // Add event time to map if it has an optional attendee.
           if (this.optionalAttendeesEventTimes.containsKey(currentAttendee)) {
             this.optionalAttendeesEventTimes.get(currentAttendee).add(currentEvent.getWhen());
           } else {
