@@ -1,16 +1,16 @@
 // Copyright 2019 Google LLC
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not
+// use this file except in compliance with the License. You may obtain a copy of
+// the License at
 //
 //     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations under
+// the License.
 
 package com.google.sps;
 
@@ -32,27 +32,33 @@ public final class FindMeetingQuery {
   private List<List<String>> optionalAttendeesCombinations;
 
   /** 
-   * Finds a list of times when the requested event can happen, given the list of current events and the request information.
-   * An event includes a list of attendees, a title, and a time range of the event.
-   * The request includes lists of mandatory and optional attendees (either list can be empty) and a duration of the meeting in minutes.
+   * Finds a list of times when the requested event can happen, given the list
+   * of current events and the request information. An event includes a list of
+   * attendees, a title, and a time range of the event. The request includes
+   * lists of mandatory and optional attendees (either list can be empty) and a
+   * duration of the meeting in minutes.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     HashSet<String> attendees = new HashSet<>(request.getAttendees());
     HashSet<String> optionalAttendees = new HashSet<>(request.getOptionalAttendees());
-    // On the webapp, if form is left empty, an empty string is obtained. Remove them here.
+    // On the webapp, if form is left empty, an empty string is obtained. Remove
+    // them here.
     attendees.removeAll(Collections.singleton(""));
     optionalAttendees.removeAll(Collections.singleton(""));
 
     long duration = request.getDuration();
 
-    // Populate {@code attendeesEventTimes} and {@code optionalAttendeesEventTimes}.
+    // Populate {@code attendeesEventTimes} and
+    // {@code optionalAttendeesEventTimes}.
     getAttendeesEventTimes(events, attendees, optionalAttendees);
 
     Collection<TimeRange> possibleTimes = new ArrayList<>();
     if (attendees.isEmpty()) {
-      // Case: No mandatory attendee, only consider availabilities of optional attendees.
+      // Case: No mandatory attendee, only consider availabilities of optional
+      // attendees.
 
-      // A list of current events' time ranges that need to be avoided when scheduling.
+      // A list of current events' time ranges that need to be avoided when
+      // scheduling.
       List<TimeRange> eventTimes = new ArrayList<>();
       for (List<TimeRange> timeList : this.optionalAttendeesEventTimes.values()) {
         eventTimes.addAll(timeList);
@@ -60,12 +66,15 @@ public final class FindMeetingQuery {
       Collections.sort(eventTimes, TimeRange.ORDER_BY_START);
       possibleTimes = findTimeRangeGaps(eventTimes, duration);
     } else {
-      // Case: There are mandatory attendees, consider optional attendees who can possibly attend and ignore those who can't. 
+      // Case: There are mandatory attendees, consider optional attendees who
+      // can possibly attend and ignore those who can't. 
       List<TimeRange> eventTimes = new ArrayList<>(this.attendeesEventTimes);
 
-      // Find the time slot(s) that maximize the number of optional attendees who can attend.
-      // Count down from the maximum number of optional attendees and find all combinations of that number of attendees.
-      // Once we find a combination where scheduling is possible, we've found the maximal group of attendees.
+      // Find the time slot(s) that maximize the number of optional attendees
+      // who can attend. Count down from the maximum number of optional
+      // attendees and find all combinations of that number of attendees. Once
+      // we find a combination where scheduling is possible, we've found the
+      // maximal group of attendees.
       for (int num = optionalAttendees.size(); num > 0; num--) {
         ImmutableList<String> optionalAttendeesList = ImmutableList.copyOf(optionalAttendees);
         // Get all combinations of size num of the optional attendees.
@@ -78,25 +87,32 @@ public final class FindMeetingQuery {
           Collections.sort(eventTimes, TimeRange.ORDER_BY_START);
           possibleTimes = findTimeRangeGaps(eventTimes, duration);
           if (!possibleTimes.isEmpty()) {
-            // We've found a combination where scheduling is possible, so those are the desired time slot(s).
+            // We've found a combination where scheduling is possible, so those
+            // are the desired time slot(s).
             return possibleTimes;
           }
-          // Re-initialize unavailable time ranges with those of the mandatory attendees.
+          // Re-initialize unavailable time ranges with those of the mandatory
+          // attendees.
           eventTimes = new ArrayList<>(attendeesEventTimes);
         }
       }
-      // Calculate time ranges when there are no optional attendees, or none of the optional attendees can fit the schedule.
+      // Calculate time ranges when there are no optional attendees, or none of
+      // the optional attendees can fit the schedule.
       possibleTimes = findTimeRangeGaps(eventTimes, duration);
     }
     return possibleTimes;
   }
 
   /**
-   * Recursive helper function used to find all combinations of size r of the input array of optional attendees.
+   * Recursive helper function used to find all combinations of size r of the
+   * input array of optional attendees.
    * @param array The input array of optional attendees that is immutable.
-   * @param chosen Temporary array to store current combination of optional attendees.
-   * @param start Starting index in the input array to consider for the current combination.
-   * @param end Ending index in the input array to consider for the current combination.
+   * @param chosen Temporary array to store current combination of optional
+   * attendees.
+   * @param start Starting index in the input array to consider for the current
+   * combination.
+   * @param end Ending index in the input array to consider for the current
+   * combination.
    * @param index Current index to be set in the chosen array.
    * @param r The size of combinations to be found.
    */
@@ -108,9 +124,9 @@ public final class FindMeetingQuery {
       return;
     }
 
-    // Replace index with all possible elements.
-    // The condition "end-i+1 >= r-index" makes sure that including one element
-    // at index will make a combination with remaining elements at remaining positions.
+    // Replace index with all possible elements. The condition "end-i+1 >=
+    // r-index" makes sure that including one element at index will make a
+    // combination with remaining elements at remaining positions.
     for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
       chosen.set(index, array.get(i));
       combinationUtil(array, chosen, i + 1, end, index + 1, r);
@@ -118,7 +134,8 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Returns all combinations of size r in the given array of optional attendees, which has size n.
+   * Returns all combinations of size r in the given array of optional
+   * attendees, which has size n.
    */
   private void getAllCombinations(ImmutableList<String> array, int n, int r) { 
     this.optionalAttendeesCombinations = new ArrayList<>();
@@ -130,7 +147,8 @@ public final class FindMeetingQuery {
   }
 
   /** 
-   * Finds a collection of time ranges that occur as gaps between the specified event times and have length longer than the specified duration.
+   * Finds a collection of time ranges that occur as gaps between the specified
+   * event times and have length longer than the specified duration.
    */
   private Collection<TimeRange> findTimeRangeGaps(List<TimeRange> eventTimes, long duration) {
     Collection<TimeRange> possibleTimes = new ArrayList<>();
@@ -157,8 +175,9 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Records the time ranges of events that involve any of the mandatory attendees.
-   * Records the optional attendees and the corresponding event times that involve each of them.
+   * Records the time ranges of events that involve any of the mandatory
+   * attendees. Records the optional attendees and the corresponding event times
+   * that involve each of them.
    */
   private void getAttendeesEventTimes(
       Collection<Event> events, HashSet<String> attendees, HashSet<String> optionalAttendees) {
