@@ -67,7 +67,6 @@ public final class FindMeetingQuery {
       // Count down from the maximum number of optional attendees and find all combinations of that number of attendees.
       // Once we find a combination where scheduling is possible, we've found the maximal group of attendees.
       for (int num = optionalAttendees.size(); num > 0; num--) {
-        //String[] optionalAttendeesArr = optionalAttendees.toArray(new String[optionalAttendees.size()]);
         ImmutableList<String> optionalAttendeesArr = ImmutableList.copyOf(optionalAttendees);
         getAllCombinations(optionalAttendeesArr, optionalAttendeesArr.size(), num);
 
