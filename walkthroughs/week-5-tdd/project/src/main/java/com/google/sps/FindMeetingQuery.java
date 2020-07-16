@@ -96,15 +96,15 @@ public final class FindMeetingQuery {
 
   /**
    * Recursive helper function used to find all combinations of size r of the elements of a given list.
-   * @param inputList The input list of optional attendees that is immutable.
+   * @param inputList The list of optional attendees to consider. This is immutable.
    * @param currentCombination Temporary array to store current combination of optional attendees.
    * @param startIndex Starting index in the input array to consider for the current combination.
    * @param endIndex Ending index in the input array to consider for the current combination.
    * @param index Current index to be set in the current combination list.
    * @param r The size of combinations to be found.
    */
-  private void combinationUtil(
-      ImmutableList<String> inputList, ArrayList<String> currentCombination, int startIndex, int endIndex, int index, int r) {
+  private void combinationUtil(ImmutableList<String> inputList, ArrayList<String> currentCombination,
+      int startIndex, int endIndex, int index, int r) {
     if (index == r) {
       // Combination is ready to be added, add it to the list.
       this.optionalAttendeesCombinations.add(currentCombination);
