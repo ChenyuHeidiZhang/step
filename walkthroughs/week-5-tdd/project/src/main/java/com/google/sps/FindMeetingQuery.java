@@ -103,8 +103,13 @@ public final class FindMeetingQuery {
    * @param index Current index to be set in the current combination list.
    * @param r The size of combinations to be found.
    */
-  private void combinationUtil(ImmutableList<String> inputList, ArrayList<String> currentCombination,
-      int startIndex, int endIndex, int index, int r) {
+  private void combinationUtil(
+      ImmutableList<String> inputList,
+      ArrayList<String> currentCombination,
+      int startIndex,
+      int endIndex,
+      int index,
+      int r) {
     if (index == r) {
       // Combination is ready to be added, add it to the list.
       this.optionalAttendeesCombinations.add(currentCombination);
