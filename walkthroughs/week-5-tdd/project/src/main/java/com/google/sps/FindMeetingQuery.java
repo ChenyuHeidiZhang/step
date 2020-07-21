@@ -95,13 +95,14 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Recursive helper function used to find all combinations of size r of the elements of a given list.
+   * Recursive helper function used to find all combinations of the given size of the elements of
+   * a given list.
    * @param inputList The list of optional attendees to consider. This is immutable.
    * @param currentCombination Temporary array to store current combination of optional attendees.
    * @param startIndex Starting index in the input array to consider for the current combination.
    * @param endIndex Ending index in the input array to consider for the current combination.
    * @param index Current index to be set in the current combination list.
-   * @param r The size of combinations to be found.
+   * @param size The size of combinations to be found.
    */
   private void combinationUtil(
       ImmutableList<String> inputList,
@@ -109,8 +110,8 @@ public final class FindMeetingQuery {
       int startIndex,
       int endIndex,
       int index,
-      int r) {
-    if (index == r) {
+      int size) {
+    if (index == size) {
       // Combination is ready to be added, add it to the list.
       this.optionalAttendeesCombinations.add(currentCombination);
       return;
@@ -119,22 +120,23 @@ public final class FindMeetingQuery {
     // Replace index with all possible elements. The condition "end-i+1 >= r-index" makes sure that
     // including one element at index will make a combination with remaining elements at remaining
     // positions.
-    for (int i = startIndex; i <= endIndex && endIndex - i + 1 >= r - index; i++) {
+    for (int i = startIndex; i <= endIndex && endIndex - i + 1 >= size - index; i++) {
       currentCombination.set(index, inputList.get(i));
-      combinationUtil(inputList, currentCombination, i + 1, endIndex, index + 1, r);
+      combinationUtil(inputList, currentCombination, i + 1, endIndex, index + 1, size);
     }
   }
 
   /**
-   * Returns all combinations of size r in the given list of optional attendees, which has size n.
+   * Returns all combinations of the given size in the given list of optional attendees, which has 
+   * size n.
    */
-  private void getAllCombinations(ImmutableList<String> inputList, int n, int r) { 
+  private void getAllCombinations(ImmutableList<String> inputList, int n, int size) { 
     this.optionalAttendeesCombinations = new ArrayList<>();
 
     // A temporary array to store all possible combinations, one at a time.
-    ArrayList<String> currentCombination = new ArrayList(Arrays.asList(new String[r]));
+    ArrayList<String> currentCombination = new ArrayList(Arrays.asList(new String[size]));
 
-    combinationUtil(inputList, currentCombination, 0, n - 1, 0, r); 
+    combinationUtil(inputList, currentCombination, 0, n - 1, 0, size); 
   }
 
   /** 
