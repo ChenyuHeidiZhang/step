@@ -1,5 +1,6 @@
 body {
   background-image: url('images/floral_bg.jpg');
+  font-family: "Times New Roman", Times, serif;
 }
 
 .content {
@@ -226,7 +227,8 @@ h3 {
 
 .column {
   flex: 10%;
-  max-width: 25%;
+  /* max-width: 25%; */
+  max-width: 33%;
   padding: 0 4px;
 }
 
